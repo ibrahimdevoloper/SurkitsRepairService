@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/main" />
+  </component>
+  <component name="ProjectId" id="1t9PRIYZG5kA53Im9Fq6XpyDeBA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="" />
+      <created>1622178321721</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622178321721</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/Surkits-Repair-Service" />
+      <path value="$PROJECT_DIR$/main" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1622180465638">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1622180465638" />
+    <state x="92" y="92" width="1182" height="554" key="AVDManager" timestamp="1622312163514">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="92" y="92" width="1182" height="554" key="AVDManager/0.0.1366.738@0.0.1366.738" timestamp="1622312163514" />
+    <state x="502" y="115" key="AndroidProcessChooserDialog" timestamp="1622226995271">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1622314427588">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
+    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1622314427588">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
+    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1622314427588">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1622314427588">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
+    <state x="184" y="13" key="SettingsEditor" timestamp="1622314272261">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
+    <state x="390" y="102" width="585" height="534" key="find.popup" timestamp="1622227873565">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="390" y="102" width="585" height="534" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1622227873565" />
+  </component>
+</project>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.arthenica:mobile-ffmpeg-full:4.4.LTS@aar" type="AndroidModuleLibraryType">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7892e2df0ba510b277707b7cc669ecee/jetified-mobile-ffmpeg-full-4.4.LTS/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7892e2df0ba510b277707b7cc669ecee/jetified-mobile-ffmpeg-full-4.4.LTS/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
