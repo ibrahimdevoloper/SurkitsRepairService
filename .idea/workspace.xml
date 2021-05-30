@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="" />
+    <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/App_IB_IB_04052021.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/App_IB_IB_04052021.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/user_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/user_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/main" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1t9PRIYZG5kA53Im9Fq6XpyDeBA" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
@@ -46,16 +66,17 @@
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/Surkits-Repair-Service" />
       <path value="$PROJECT_DIR$/main" />
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1622180465638">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1622320651675">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1622180465638" />
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1622320651675" />
     <state x="92" y="92" width="1182" height="554" key="AVDManager" timestamp="1622312163514">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -64,22 +85,22 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
-    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1622314427588">
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1622360814909">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
-    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1622314427588">
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622360814909" />
+    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1622360814908">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
-    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1622314427588">
+    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622360814908" />
+    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1622360814908">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
-    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1622314427588">
+    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622360814908" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1622360814909">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622314427588" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622360814909" />
     <state x="184" y="13" key="SettingsEditor" timestamp="1622314272261">
       <screen x="0" y="0" width="1366" height="738" />
     </state>

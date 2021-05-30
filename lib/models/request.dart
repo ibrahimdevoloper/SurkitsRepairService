@@ -136,21 +136,21 @@ class Request {
     return map;
   }
 
-  static const String Request_Text = "requestText";
-  static const String Requester_Id = "requesterId";
-  static const String Request_Address = "requesterAddress";
-  static const String Appointment_Microseconds_Since_Epoch =
+  static const String REQUEST_TEXT = "requestText";
+  static const String REQUESTER_ID = "requesterId";
+  static const String REQUEST_ADDRESS = "requesterAddress";
+  static const String APPOINTMENT_MICROSECONDS_SINCE_EPOCH =
       "appointmentMicrosecondsSinceEpoch";
-  static const String Request_Name = "requesterName";
-  static const String Image_Path = "imagePath";
-  static const String Appointment_Time_Zone_Name = "appointmentTimeZoneName";
-  static const String Location = "location";
-  static const String Category = "category";
-  static const String Appointment_Date = "appointmentDate";
-  static const String Record_Path = "recordPath";
-  static const String Worker_Name = "workerName";
-  static const String Worker_Id = "workerId";
-  static const String Worker_Email = "workerEmail";
-  static const String Worker_Phone_Number = "workerPhoneNumber";
+  static const String REQUEST_NAME = "requesterName";
+  static const String IMAGE_PATH = "imagePath";
+  static const String APPOINTMENT_TIME_ZONE_NAME = "appointmentTimeZoneName";
+  static const String LOCATION = "location";
+  static const String CATEGORY = "category";
+  static const String APPOINTMENT_DATE = "appointmentDate";
+  static const String RECORD_PATH = "recordPath";
+  static const String WORKER_NAME = "workerName";
+  static const String WORKER_ID = "workerId";
+  static const String WORKER_EMAIL = "workerEmail";
+  static const String WORKER_PHONE_NUMBER = "workerPhoneNumber";
 
 }

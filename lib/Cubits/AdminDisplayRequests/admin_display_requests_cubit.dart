@@ -35,9 +35,9 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
         var query = FirebaseFirestore.instance
             .collection('requests')
             .orderBy(
-            Request.Appointment_Date,
+            Request.APPOINTMENT_DATE,
             descending: _isDescending
-        ).where(Request.Category, isEqualTo: _selectedCategory,);
+        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,);
         var mapList =await query.get();
 
         _requests= [];
@@ -52,7 +52,7 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
       var query = FirebaseFirestore.instance
           .collection('requests')
           .orderBy(
-          Request.Appointment_Date,
+          Request.APPOINTMENT_DATE,
           descending: _isDescending
       );
       var mapList =await query.get();
