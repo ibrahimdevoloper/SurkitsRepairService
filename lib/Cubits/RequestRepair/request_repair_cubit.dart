@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -86,9 +87,68 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       });
     }
     else pathMap.addAll({"imagePath": imagePath});
-    print(pathMap);
+    // print(pathMap);
     if (pathMap.isNotEmpty) await requestRef.update(pathMap);
     emit(RequestRepairLoaded());
+  }
+
+  Future<Request> returnRequest(GeoPoint geoPoint) async {
+    User user = _firebaseAuth.currentUser;
+
+    var userDoc =
+        await _firebaseFirestore.collection("users").doc(user.uid).get();
+    // print (userData.data());
+    UserData userData = UserData.fromJson(userDoc.data());
+    Map<String,dynamic> map = {
+      "requesterId": user.uid,
+      //TODO: Change this when category needed
+      "category": "Heating",
+      "requesterName": userData.fullName,
+      "requesterAddress": userData.address,
+      "requestText": requestText,
+      "appointmentDate": Timestamp.fromDate(_appointmentDate),
+      "appointmentMicrosecondsSinceEpoch":
+      _appointmentDate.microsecondsSinceEpoch,
+      "appointmentTimeZoneName": _appointmentDate.timeZoneName,
+      "location":geoPoint
+    };
+    var request = Request(
+        location: geoPoint,
+        requesterId: user.uid,
+      category: "Heating",
+      requesterName: userData.fullName,
+        requesterAddress: userData.address,
+      requestText: requestText,
+      appointmentDate: Timestamp.fromDate(_appointmentDate),
+      appointmentMicrosecondsSinceEpoch:  _appointmentDate.microsecondsSinceEpoch,
+      appointmentTimeZoneName: _appointmentDate.timeZoneName,
+      recordPath: recordPath,
+      imagePath: imagePath,
+    );
+    return request;
+    // var submitRef = _firebaseFirestore.collection("requests");
+    // var requestRef = await submitRef.add(map);
+    // var storageRef =
+    // _firebaseStorage.ref().child("requests").child(requestRef.id);
+    // Map<String,dynamic> pathMap = {};
+    // if (recordPath.isNotEmpty) {
+      // File recordFile = File(recordPath);
+      // var recordRef = await storageRef.child("note.acc").putFile(recordFile);
+      // pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
+    // }
+    // else pathMap.addAll({"recordPath": recordPath});
+
+    // if (imagePath.isNotEmpty) {
+    //   File imageFile = File(imagePath);
+    //   var imageRef = await storageRef.child("image.jpeg").putFile(imageFile);
+    //   pathMap.addAll({
+    //     "imagePath": await imageRef.ref.getDownloadURL(),
+    //   });
+    // }
+    // else pathMap.addAll({"imagePath": imagePath});
+    // print(pathMap);
+    // if (pathMap.isNotEmpty) await requestRef.update(pathMap);
+    // emit(RequestRepairLoaded());
   }
 
   @override

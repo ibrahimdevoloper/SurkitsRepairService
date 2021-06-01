@@ -61,6 +61,13 @@ class Request {
 
   String get workerPhoneNumber => _workerPhoneNumber;
 
+  String get requestId => _requestId;
+
+
+  set requestId(String value) {
+    _requestId = value;
+  }
+
   Request({
     String requestText,
     String requesterId,
@@ -95,7 +102,7 @@ class Request {
     _workerPhoneNumber = workerPhoneNumber;
   }
 
-  Request.fromJson(dynamic json, String requestId) {
+  Request.fromJson(dynamic json, [String requestId]) {
     _requestId = requestId;
     _requestText = json["requestText"];
     _requesterId = json["requesterId"];
@@ -153,4 +160,63 @@ class Request {
   static const String WORKER_EMAIL = "workerEmail";
   static const String WORKER_PHONE_NUMBER = "workerPhoneNumber";
 
+  set requestText(String value) {
+    _requestText = value;
+  }
+
+  set requesterId(String value) {
+    _requesterId = value;
+  }
+
+  set requesterAddress(String value) {
+    _requesterAddress = value;
+  }
+
+  set appointmentMicrosecondsSinceEpoch(int value) {
+    _appointmentMicrosecondsSinceEpoch = value;
+  }
+
+  set requesterName(String value) {
+    _requesterName = value;
+  }
+
+  set imagePath(String value) {
+    _imagePath = value;
+  }
+
+  set appointmentTimeZoneName(String value) {
+    _appointmentTimeZoneName = value;
+  }
+
+  set location(GeoPoint value) {
+    _location = value;
+  }
+
+  set category(String value) {
+    _category = value;
+  }
+
+  set appointmentDate(Timestamp value) {
+    _appointmentDate = value;
+  }
+
+  set recordPath(String value) {
+    _recordPath = value;
+  }
+
+  set workerName(String value) {
+    _workerName = value;
+  }
+
+  set workerId(String value) {
+    _workerId = value;
+  }
+
+  set workerEmail(String value) {
+    _workerEmail = value;
+  }
+
+  set workerPhoneNumber(String value) {
+    _workerPhoneNumber = value;
+  }
 }

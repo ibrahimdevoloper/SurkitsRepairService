@@ -12,6 +12,8 @@ import 'package:an_app/Widgets/ImageBanner.dart';
 import 'package:an_app/Widgets/RecordWidget.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
+import 'package:an_app/models/request.dart';
+import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,17 +31,16 @@ import '../Cubits/RequestRepair/request_repair_cubit.dart';
 import '../Cubits/RequestRepair/request_repair_cubit.dart';
 // import '../global.dart';
 
-class RequestRepairPage extends StatefulWidget {
+class AdminRequestRepairPage extends StatefulWidget {
   final String enTxt;
 
-  RequestRepairPage(this.enTxt);
+  AdminRequestRepairPage(this.enTxt);
 
   @override
-  _RequestRepairPageState createState() => _RequestRepairPageState();
+  _AdminRequestRepairPageState createState() => _AdminRequestRepairPageState();
 }
 
-class _RequestRepairPageState extends State<RequestRepairPage> {
-
+class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RequestRepairCubit>(
@@ -54,8 +55,8 @@ class _RequestRepairPageState extends State<RequestRepairPage> {
             content: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Text("Please Reserve An Appointment")),
-                Expanded(child: Text("رجاءً احجز موعداً")),
+                Expanded(child: Text("Add A Request")),
+                Expanded(child: Text("أضف طلباً")),
               ],
             ),
             duration: Duration(milliseconds: 1000),
@@ -117,9 +118,29 @@ class _RequestRepairPageState extends State<RequestRepairPage> {
                       // print(cubit.validator());
                       cubit.emit(RequestRepairLoading());
                       LocationData _locationData = await getLocation(context);
-
-                      cubit.submitRequest(GeoPoint(
+                      var request = await cubit.returnRequest(GeoPoint(
                           _locationData.latitude, _locationData.longitude));
+                      cubit.emit(RequestRepairLoaded());
+                      // cubit.submitRequest(GeoPoint(
+                      //     _locationData.latitude, _locationData.longitude));
+                      //   "requesterId": user.uid,
+                      // //TODO: Change this when category needed
+                      // "category": "Heating",
+                      // "requesterName": userData.fullName,
+                      // "requesterAddress": userData.address,
+                      // "requestText": requestText,
+                      // "appointmentDate": Timestamp.fromDate(_appointmentDate),
+                      // "appointmentMicrosecondsSinceEpoch":
+                      // _appointmentDate.microsecondsSinceEpoch,
+                      // "appointmentTimeZoneName": _appointmentDate.timeZoneName,
+                      // "location":geoPoint
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AdminSelectWorkerForADisplayedRequestPage(
+                                  request: request),
+                        ),
+                      );
                     }
                   },
                   child: Center(
@@ -443,6 +464,7 @@ class CapturedImageWidget extends StatelessWidget {
               ),
               elevation: 15,
               onPressed: () async {
+                //TODO: add photo from gallery by choice
                 BlocProvider.of<RequestRepairCubit>(context).imagePath =
                     await myImagePicker();
                 BlocProvider.of<RequestRepairCubit>(context).emit(
@@ -490,12 +512,13 @@ class CapturedImageWidget extends StatelessWidget {
               ),
               elevation: 15,
               onPressed: () async {
+                //TODO: add photo from gallery by choice
                 BlocProvider.of<RequestRepairCubit>(context).imagePath =
                     await myImagePicker();
                 BlocProvider.of<RequestRepairCubit>(context).emit(
-                    RequestRepairPreviewPhoto(
-                        BlocProvider.of<RequestRepairCubit>(context)
-                            .imagePath));
+                  RequestRepairPreviewPhoto(
+                      BlocProvider.of<RequestRepairCubit>(context).imagePath),
+                );
               },
             ),
           );

@@ -61,8 +61,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                             );
                           },
                         );
-                      }
-                      else {
+                      } else {
                         return Container(
                           height: 0,
                           width: 0,
@@ -91,8 +90,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    }
-                    else if (state is AdminDisplayRequestsLoaded) {
+                    } else if (state is AdminDisplayRequestsLoaded) {
                       var list = state.requests;
                       return ListView.builder(
                           padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
@@ -100,6 +98,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                           itemBuilder: (context, i) {
                             var item = list[i];
                             return RequestListItem(
+                              request: item,
                               imagePath: item.imagePath,
                               requestText: item.requestText,
                               category: item.category,
@@ -192,8 +191,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                               ),
                             );
                           });
-                    }
-                    else if (state
+                    } else if (state
                         is AdminDisplayRequestsPlayRecordButtonStateChange) {
                       var cubit =
                           BlocProvider.of<AdminDisplayRequestsCubit>(context);
@@ -204,6 +202,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                           itemBuilder: (context, i) {
                             var item = list[i];
                             return RequestListItem(
+                              request: item,
                               imagePath: item.imagePath,
                               requestText: item.requestText,
                               category: item.category,
@@ -332,8 +331,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                               // },
                             );
                           });
-                    }
-                    else if (state is AdminDisplayRequestsError) {
+                    } else if (state is AdminDisplayRequestsError) {
                       return Center(
                         child: Text("Error"),
                       );
@@ -348,6 +346,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
 }
 
 class RequestListItem extends StatelessWidget {
+  Request _request;
   String _requesterName;
   String _category;
   String _imagePath;
@@ -363,6 +362,7 @@ class RequestListItem extends StatelessWidget {
 
   RequestListItem(
       {Key key,
+      @required Request request,
       @required String requesterName,
       @required String category,
       @required String imagePath,
@@ -380,7 +380,7 @@ class RequestListItem extends StatelessWidget {
         // this._isPlaying = isPlaying,
         this._appointmentDate = appointmentDate,
         // this._onPlayButtonPressed = onPlayButtonPressed,
-        this._playIconButton = playIconButton,
+        this._playIconButton = playIconButton,this._request = request,
         super(key: key);
 
   @override
@@ -390,7 +390,9 @@ class RequestListItem extends StatelessWidget {
       onTap: () {
         //TODO: assign to repairman
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AdminSelectWorkerForADisplayedRequestPage(),
+          builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
+            requestId: _request.requestId,
+          ),
         ));
       },
       child: Center(

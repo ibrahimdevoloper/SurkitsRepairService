@@ -3,14 +3,21 @@ import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/models/TextPair.dart';
+import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
-import '../Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
 
 class AdminSelectWorkerForADisplayedRequestPage extends StatefulWidget {
+
+  String requestId;
+  Request request;
+
+
+  AdminSelectWorkerForADisplayedRequestPage({this.requestId, this.request});
+
   @override
   _AdminSelectWorkerForADisplayedRequestPageState createState() => _AdminSelectWorkerForADisplayedRequestPageState();
 }
@@ -49,6 +56,15 @@ class _AdminSelectWorkerForADisplayedRequestPageState extends State<AdminSelectW
                           child: InkWell(
                         onTap: () {
                           //TODO: assign to repairman
+                          print("request:${widget.request}");
+                          print("requestId:${widget.requestId}");
+                          var cubit = BlocProvider.of<AdminSelectWorkerForAdisplayedRequestCubit>(context);
+                          if(widget.request !=null ){
+                            cubit.addRequest(widget.request, item);
+                          }
+                          else if (widget.requestId !=null ){
+                            cubit.assignRequest(widget.requestId, item);
+                          }
                         },
                         child: Center(
                           child: Padding(

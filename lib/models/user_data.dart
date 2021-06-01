@@ -104,6 +104,10 @@ class UserData {
 
   static const String ROLE = "role";
 
+  static const String ROLE_ADMIN = "admin";
+  static const String ROLE_WORKER = "worker";
+  static const String ROLE_CUSTOMER = "customer";
+
   static const String PASSWORD = "password";
 
   static const String START_HOUR = "startHour";
