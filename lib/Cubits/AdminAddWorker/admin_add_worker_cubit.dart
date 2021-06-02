@@ -26,7 +26,6 @@ class AdminAddWorkerCubit extends Cubit<AdminAddWorkerState> {
     _firebaseFirestore = FirebaseFirestore.instance;
   }
 
-  //TODO: Set up Validator
 
   Future<String> AdminAddWorker(// {String email, String password}
       ) async {

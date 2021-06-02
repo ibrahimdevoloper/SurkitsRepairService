@@ -2,6 +2,7 @@ import 'package:an_app/Functions/dateFormatter.dart';
 import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
+import 'package:an_app/dialogs/AdminSelectWorkerFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
@@ -36,11 +37,43 @@ class _AdminSelectWorkerForADisplayedRequestPageState extends State<AdminSelectW
                 AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
+                  actions: [
+                    BlocBuilder<AdminSelectWorkerForAdisplayedRequestCubit,
+                        AdminSelectWorkerForAdisplayedRequestState>(builder: (context, state) {
+                      if (state is! AdminSelectWorkerForAdisplayedRequestLoading) {
+                        return IconButton(
+                          icon: Icon(
+                            Icons.filter_list_sharp,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            //TODO: show filter dialog
+                            showDialog(
+                              context: context,
+                              builder: (context1) => BlocProvider.value(
+                                  value: BlocProvider.of<
+                                      AdminSelectWorkerForAdisplayedRequestCubit>(context),
+                                  child:
+                                  adminSelectWorkerFilterDialog(context)),
+                            );
+                          },
+                        );
+                      } else {
+                        return Container(
+                          height: 0,
+                          width: 0,
+                        );
+                      }
+                    }),
+                  ],
                 )
               ],
             ),
             Expanded(
               child: BlocBuilder<AdminSelectWorkerForAdisplayedRequestCubit,AdminSelectWorkerForAdisplayedRequestState>(
+                buildWhen: (previous,current){
+                  return current is!  AdminSelectWorkerForAdisplayedRequestFilterStateChanged;
+                },
                 builder: (context, state) {
                   if (state is AdminSelectWorkerForAdisplayedRequestLoading)
                     return Center(
@@ -65,6 +98,7 @@ class _AdminSelectWorkerForADisplayedRequestPageState extends State<AdminSelectW
                           else if (widget.requestId !=null ){
                             cubit.assignRequest(widget.requestId, item);
                           }
+                          //TODO: handle Error
                         },
                         child: Center(
                           child: Padding(

@@ -53,3 +53,7 @@ class RequestRepairAppointmentError extends RequestRepairState {
 class RequestRepairFormError extends RequestRepairState {
   RequestRepairFormError();
 }
+class RequestRepairCategorySelected extends RequestRepairState {
+  final String category;
+  RequestRepairCategorySelected(this.category);
+}

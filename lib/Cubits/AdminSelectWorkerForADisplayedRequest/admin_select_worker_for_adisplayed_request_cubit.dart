@@ -26,54 +26,36 @@ class AdminSelectWorkerForAdisplayedRequestCubit
     emit(AdminSelectWorkerForAdisplayedRequestLoading());
 
     try {
-      // var query = FirebaseFirestore.instance
-      //     .collection('requests')
-      //     .orderBy(
-      //       Request.Appointment_Date,
-      //   descending: _isDescending
-      //     ).where(Request.Category, isEqualTo: _selectedCategory,);
-      var query = FirebaseFirestore.instance
-          .collection('users')
-          .where("role", isEqualTo: "worker");
-      var mapList = await FirebaseFirestore.instance
-          .collection('users')
-          .where("role", isEqualTo: "worker")
-          .get();
+      if (_selectedCategory.isEmpty) {
+        var mapList = await FirebaseFirestore.instance
+            .collection('users')
+            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+            .get();
 
-      _usersData = [];
-      mapList.docs
-        ..forEach((element) {
-          print(element.data());
-          _usersData.add(UserData.fromJson(element.data()));
-        });
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
-
-      if (_selectedCategory.isNotEmpty) {
+        _usersData = [];
+        mapList.docs
+          ..forEach((element) {
+            print(element.data());
+            _usersData.add(UserData.fromJson(element.data()));
+          });
+        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
       } else {
-        // var query = FirebaseFirestore.instance
-        //     .collection('requests')
-        //     .orderBy(
-        //     Request.Appointment_Date,
-        //     descending: _isDescending
-        // );
-        // var mapList =await query.get();
-        //
-        // _requests= [];
-        // mapList.docs
-        //   ..forEach((element) {
-        //     // print(element.data());
-        //     _requests.add(Request.fromJson(element.data(), element.id));
-        //   });
-        // emit(AdminDisplayRequestsLoaded(_requests));
+        var mapList = await FirebaseFirestore.instance
+            .collection('users')
+            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+        .where(UserData.CATEGORY,isEqualTo: _selectedCategory)
+            .get();
+
+        _usersData = [];
+        mapList.docs
+          ..forEach((element) {
+            print(element.data());
+            _usersData.add(UserData.fromJson(element.data()));
+          });
+        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+
       }
-      // var mapList =await query.get();
-      //
-      //   _requests= [];
-      //   mapList.docs
-      //     ..forEach((element) {
-      //       // print(element.data());
-      //       _requests.add(Request.fromJson(element.data(), element.id));
-      //     });
+
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
@@ -113,8 +95,10 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       request.workerEmail = worker.email;
       request.workerPhoneNumber = worker.phoneNumber;
 
+      print(request.recordPath);
+
       var doc = await FirebaseFirestore.instance
-          .collection('request')
+          .collection('requests')
           .add(request.toJson());
 
       var submitRef = await FirebaseFirestore.instance.collection("requests");

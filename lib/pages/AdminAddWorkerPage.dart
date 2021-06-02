@@ -288,7 +288,6 @@ class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
                               },
                             );
                           }),
-                          // TODO : Radio Value
                           BlocBuilder<AdminAddWorkerCubit, AdminAddWorkerState>(
                               buildWhen: (previous, current) {
                             return current is AdminAddWorkerInitial ||

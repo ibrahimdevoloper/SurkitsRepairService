@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/dialogs/AdminDisplayRequestFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
+import 'package:an_app/pages/AdminRequestRepairPage.dart';
 import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
             elevation: 16,
             onPressed: () {
               // TODO: Add request
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminRequestRepairPage(),),);
             }),
         body: Column(
           children: [
@@ -388,7 +390,6 @@ class RequestListItem extends StatelessWidget {
     return Card(
         child: InkWell(
       onTap: () {
-        //TODO: assign to repairman
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
             requestId: _request.requestId,

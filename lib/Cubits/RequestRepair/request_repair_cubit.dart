@@ -23,22 +23,27 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
   String recordPath = "";
   String imagePath = "";
 
+  String _category = "Electrical";
+
   //TODO: set Appointment
   DateTime _appointmentDate;
 
-  bool validator(){
-    if(_appointmentDate==null){
+  bool validator() {
+    if (_appointmentDate == null) {
       emit(RequestRepairAppointmentError());
-    }
-    else if(!(requestText.isNotEmpty||recordPath.isNotEmpty||imagePath.isNotEmpty)){
+    } else if (!(requestText.isNotEmpty ||
+        recordPath.isNotEmpty ||
+        imagePath.isNotEmpty)) {
       emit(RequestRepairFormError());
     }
 
-    return (_appointmentDate!=null)&&(requestText.isNotEmpty||recordPath.isNotEmpty||imagePath.isNotEmpty);
-
+    return (_appointmentDate != null) &&
+        (requestText.isNotEmpty ||
+            recordPath.isNotEmpty ||
+            imagePath.isNotEmpty);
   }
 
-  RequestRepairCubit() : super(RequestRepairInitial()) {
+  RequestRepairCubit([String category]) : super(RequestRepairInitial()) {
     _player.openAudioSession();
     _recorder.openAudioSession();
     _firebaseFirestore = FirebaseFirestore.instance;
@@ -54,10 +59,10 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
         await _firebaseFirestore.collection("users").doc(user.uid).get();
     // print (userData.data());
     UserData userData = UserData.fromJson(userDoc.data());
-    Map<String,dynamic> map = {
+    Map<String, dynamic> map = {
       "requesterId": user.uid,
       //TODO: Change this when category needed
-      "category": "Heating",
+      "category": _category,
       "requesterName": userData.fullName,
       "requesterAddress": userData.address,
       "requestText": requestText,
@@ -65,19 +70,19 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       "appointmentMicrosecondsSinceEpoch":
           _appointmentDate.microsecondsSinceEpoch,
       "appointmentTimeZoneName": _appointmentDate.timeZoneName,
-      "location":geoPoint
+      "location": geoPoint
     };
     var submitRef = _firebaseFirestore.collection("requests");
     var requestRef = await submitRef.add(map);
     var storageRef =
         _firebaseStorage.ref().child("requests").child(requestRef.id);
-    Map<String,dynamic> pathMap = {};
+    Map<String, dynamic> pathMap = {};
     if (recordPath.isNotEmpty) {
       File recordFile = File(recordPath);
       var recordRef = await storageRef.child("note.acc").putFile(recordFile);
       pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
-    }
-    else pathMap.addAll({"recordPath": recordPath});
+    } else
+      pathMap.addAll({"recordPath": recordPath});
 
     if (imagePath.isNotEmpty) {
       File imageFile = File(imagePath);
@@ -85,8 +90,8 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       pathMap.addAll({
         "imagePath": await imageRef.ref.getDownloadURL(),
       });
-    }
-    else pathMap.addAll({"imagePath": imagePath});
+    } else
+      pathMap.addAll({"imagePath": imagePath});
     // print(pathMap);
     if (pathMap.isNotEmpty) await requestRef.update(pathMap);
     emit(RequestRepairLoaded());
@@ -99,28 +104,29 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
         await _firebaseFirestore.collection("users").doc(user.uid).get();
     // print (userData.data());
     UserData userData = UserData.fromJson(userDoc.data());
-    Map<String,dynamic> map = {
+    Map<String, dynamic> map = {
       "requesterId": user.uid,
       //TODO: Change this when category needed
-      "category": "Heating",
+      "category": _category,
       "requesterName": userData.fullName,
       "requesterAddress": userData.address,
       "requestText": requestText,
       "appointmentDate": Timestamp.fromDate(_appointmentDate),
       "appointmentMicrosecondsSinceEpoch":
-      _appointmentDate.microsecondsSinceEpoch,
+          _appointmentDate.microsecondsSinceEpoch,
       "appointmentTimeZoneName": _appointmentDate.timeZoneName,
-      "location":geoPoint
+      "location": geoPoint
     };
     var request = Request(
-        location: geoPoint,
-        requesterId: user.uid,
-      category: "Heating",
+      location: geoPoint,
+      requesterId: user.uid,
+      category: _category,
       requesterName: userData.fullName,
-        requesterAddress: userData.address,
+      requesterAddress: userData.address,
       requestText: requestText,
       appointmentDate: Timestamp.fromDate(_appointmentDate),
-      appointmentMicrosecondsSinceEpoch:  _appointmentDate.microsecondsSinceEpoch,
+      appointmentMicrosecondsSinceEpoch:
+          _appointmentDate.microsecondsSinceEpoch,
       appointmentTimeZoneName: _appointmentDate.timeZoneName,
       recordPath: recordPath,
       imagePath: imagePath,
@@ -132,9 +138,9 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     // _firebaseStorage.ref().child("requests").child(requestRef.id);
     // Map<String,dynamic> pathMap = {};
     // if (recordPath.isNotEmpty) {
-      // File recordFile = File(recordPath);
-      // var recordRef = await storageRef.child("note.acc").putFile(recordFile);
-      // pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
+    // File recordFile = File(recordPath);
+    // var recordRef = await storageRef.child("note.acc").putFile(recordFile);
+    // pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
     // }
     // else pathMap.addAll({"recordPath": recordPath});
 
@@ -166,5 +172,11 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
 
   set appointmentDate(DateTime value) {
     _appointmentDate = value;
+  }
+
+  String get category => _category;
+
+  set category(String value) {
+    _category = value;
   }
 }

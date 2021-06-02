@@ -32,9 +32,9 @@ import '../Cubits/RequestRepair/request_repair_cubit.dart';
 // import '../global.dart';
 
 class AdminRequestRepairPage extends StatefulWidget {
-  final String enTxt;
-
-  AdminRequestRepairPage(this.enTxt);
+  // final String enTxt;
+  //
+  // AdminRequestRepairPage(this.enTxt);
 
   @override
   _AdminRequestRepairPageState createState() => _AdminRequestRepairPageState();
@@ -120,6 +120,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                       LocationData _locationData = await getLocation(context);
                       var request = await cubit.returnRequest(GeoPoint(
                           _locationData.latitude, _locationData.longitude));
+                      print("returnRequest:${request.recordPath}");
                       cubit.emit(RequestRepairLoaded());
                       // cubit.submitRequest(GeoPoint(
                       //     _locationData.latitude, _locationData.longitude));
@@ -160,7 +161,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                 // getTopContainer(TextPair(this.enTxt, jobCatToAr[this.enTxt])),
                 Stack(
                   children: [
-                    BlueGradientAppBar(TextPair("Electrical", "كهربائيات")),
+                    BlueGradientAppBar(TextPair("Add a Request", "أضف طلباً")),
                     AppBar(
                       backgroundColor: Colors.transparent,
                       elevation: 0,
@@ -169,11 +170,114 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                 ),
                 Expanded(
                   child: ListView(
-                    // mainAxisSize: MainAxisSize.max,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(16),
                     children: <Widget>[
+                      BlocBuilder<RequestRepairCubit, RequestRepairState>(
+                          buildWhen: (previous, current) {
+                            return current is RequestRepairInitial ||
+                                current is RequestRepairCategorySelected;
+                          }, builder: (context, state) {
+                        return IntrinsicHeight(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: RadioListTile<String>(
+                                  title: Text("Electrical"),
+                                  onChanged: (value) {
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .category = value;
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .emit(
+                                        RequestRepairCategorySelected(
+                                            value));
+                                  },
+                                  groupValue: BlocProvider.of<
+                                      RequestRepairCubit>(context)
+                                      .category,
+                                  value: "Electrical",
+                                ),
+                              ),
+                              Expanded(
+                                child: RadioListTile<String>(
+                                  title: Text("Pluming"),
+                                  onChanged: (value) {
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .category = value;
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .emit(
+                                        RequestRepairCategorySelected(
+                                            value));
+                                  },
+                                  groupValue: BlocProvider.of<
+                                      RequestRepairCubit>(context)
+                                      .category,
+                                  value: "Pluming",
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                      BlocBuilder<RequestRepairCubit, RequestRepairState>(
+                          buildWhen: (previous, current) {
+                            return current is RequestRepairInitial ||
+                                current is RequestRepairCategorySelected;
+                          }, builder: (context, state) {
+                        return IntrinsicHeight(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: RadioListTile<String>(
+                                  title: Text("Heating"),
+                                  onChanged: (value) {
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .category = value;
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .emit(
+                                        RequestRepairCategorySelected(
+                                            value));
+                                  },
+                                  groupValue: BlocProvider.of<
+                                      RequestRepairCubit>(context)
+                                      .category,
+                                  value: "Heating",
+                                ),
+                              ),
+                              Expanded(
+                                child: RadioListTile<String>(
+                                  title: Text("Electronics"),
+                                  onChanged: (value) {
+                                    print(value);
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .category = value;
+                                    BlocProvider.of<RequestRepairCubit>(
+                                        context)
+                                        .emit(
+                                        RequestRepairCategorySelected(
+                                            value));
+                                  },
+                                  groupValue: BlocProvider.of<
+                                      RequestRepairCubit>(context)
+                                      .category,
+                                  value: "Electronics",
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                       TextField(
                         keyboardType: TextInputType.multiline,
                         minLines: 4,
