@@ -1,21 +1,16 @@
 import 'dart:io';
 
 import 'package:an_app/models/request.dart';
+import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/user_data.dart';
+part 'admin_assign_request_state.dart';
 
-part 'admin_select_worker_for_adisplayed_request_state.dart';
-
-class AdminSelectWorkerForAdisplayedRequestCubit
-    extends Cubit<AdminSelectWorkerForAdisplayedRequestState> {
-  AdminSelectWorkerForAdisplayedRequestCubit()
-      : super(AdminSelectWorkerForAdisplayedRequestInitial()) {
-    // print("AdminSelectWorkerForAdisplayedRequestCubit");
+class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
+  AdminAssignRequestCubit() : super(AdminAssignRequestInitial()){
     getWorkers();
   }
 
@@ -23,7 +18,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
   List<UserData> _usersData = [];
 
   getWorkers() async {
-    emit(AdminSelectWorkerForAdisplayedRequestLoading());
+    emit(AdminAssignRequestLoading());
 
     try {
       if (_selectedCategory.isEmpty) {
@@ -38,12 +33,12 @@ class AdminSelectWorkerForAdisplayedRequestCubit
             print(element.data());
             _usersData.add(UserData.fromJson(element.data()));
           });
-        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+        emit(AdminAssignRequestLoaded(_usersData));
       } else {
         var mapList = await FirebaseFirestore.instance
             .collection('users')
             .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
-        .where(UserData.CATEGORY,isEqualTo: _selectedCategory)
+            .where(UserData.CATEGORY,isEqualTo: _selectedCategory)
             .get();
 
         _usersData = [];
@@ -52,19 +47,19 @@ class AdminSelectWorkerForAdisplayedRequestCubit
             print(element.data());
             _usersData.add(UserData.fromJson(element.data()));
           });
-        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+        emit(AdminAssignRequestLoaded(_usersData));
 
       }
 
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
-      emit(AdminSelectWorkerForAdisplayedRequestError());
+      emit(AdminAssignRequestError());
     }
   }
 
   assignRequest(String id, UserData user) async {
-    emit(AdminSelectWorkerForAdisplayedRequestLoading());
+    emit(AdminAssignRequestLoading());
 
     try {
       Map<String, dynamic> map = {
@@ -78,16 +73,16 @@ class AdminSelectWorkerForAdisplayedRequestCubit
           .doc(id)
           .update(map);
 
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+      emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
-      emit(AdminSelectWorkerForAdisplayedRequestError());
+      emit(AdminAssignRequestError());
     }
   }
 
   addRequest(Request request, UserData worker) async {
-    emit(AdminSelectWorkerForAdisplayedRequestLoading());
+    emit(AdminAssignRequestLoading());
 
     try {
       request.workerId = worker.uid;
@@ -105,7 +100,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       // var requestRef = await submitRef.add(map);
 
       var storageRef =
-          FirebaseStorage.instance.ref().child("requests").child(doc.id);
+      FirebaseStorage.instance.ref().child("requests").child(doc.id);
       Map<String, dynamic> pathMap = {};
       if (request.recordPath.isNotEmpty) {
         File recordFile = File(request.recordPath);
@@ -125,11 +120,11 @@ class AdminSelectWorkerForAdisplayedRequestCubit
 
       submitRef.doc(doc.id).update(pathMap);
 
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+      emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
-      emit(AdminSelectWorkerForAdisplayedRequestError());
+      emit(AdminAssignRequestError());
     }
   }
 

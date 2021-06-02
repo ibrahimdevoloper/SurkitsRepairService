@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/dialogs/AdminSelectWorkerFilterDialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dialogs/AdminAssignRequestFilterDialog.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminAddWorker/admin_add_worker_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminAddWorker/admin_add_worker_cubit.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/AdminAddWorkerPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminAddWorkerPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminAssignRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminAssignRequestPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,29 +84,29 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
-    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1622629814878">
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom" timestamp="1622632707716">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622629814878" />
-    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1622629814878">
+    <state width="1323" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622632707716" />
+    <state width="1323" height="182" key="GridCell.Tab.0.center" timestamp="1622632707716">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622629814878" />
-    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1622629814878">
+    <state width="1323" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622632707716" />
+    <state width="1323" height="182" key="GridCell.Tab.0.left" timestamp="1622632707715">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622629814878" />
-    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1622629814878">
+    <state width="1323" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622632707715" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right" timestamp="1622632707716">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622629814878" />
+    <state width="1323" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622632707716" />
     <state x="184" y="13" key="SettingsEditor" timestamp="1622314272261">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
-    <state x="390" y="102" width="610" height="534" key="find.popup" timestamp="1622582824846">
+    <state x="390" y="102" width="610" height="592" key="find.popup" timestamp="1622632989947">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="390" y="102" width="610" height="534" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1622582824846" />
+    <state x="390" y="102" width="610" height="592" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1622632989947" />
   </component>
 </project>

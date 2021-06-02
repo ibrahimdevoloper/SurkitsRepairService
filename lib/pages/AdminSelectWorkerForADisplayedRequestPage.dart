@@ -153,7 +153,7 @@ class _AdminSelectWorkerForADisplayedRequestPageState extends State<AdminSelectW
                                     ),
                                     Icon(Icons.arrow_forward),
                                     Text(
-                                      dateFormater(item.startHour.toDate(),'hh:mm a'),
+                                      dateFormater(item.endHour.toDate(),'hh:mm a'),
                                       style: TextStyle(
                                           fontFamily: 'Avenir',
                                           color: Colors.black,
