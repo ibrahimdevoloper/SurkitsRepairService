@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'sign_up_state.dart';
 
@@ -23,23 +27,30 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   //TODO: Set up Validator
 
-  Future<String> SignUp(// {String email, String password}
-      ) async {
+  Future<String> SignUp(SharedPreferences pref) async {
     emit(SignUpLoading());
     try {
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: _email, password: _password);
       User user = await _firebaseAuth.currentUser;
-      Map<String, dynamic> map = {
-        "uid": user.uid,
-        "fullName": _fullName,
-        "email": _email,
-        "phoneNumber": _phoneNumber,
-        "address": _address,
-        "role":"customer"
-      };
-      await _firebaseFirestore.collection("users").doc(user.uid).set(map);
-      print("email: $_email, password: $_password");
+      UserData userData=
+      UserData(
+        uid: user.uid,
+        fullName: _fullName,
+        email: _email,
+        phoneNumber: _phoneNumber,
+        address: _address,
+        role: UserData.ROLE_CUSTOMER,
+        password: stringToBase64.encode(_password),
+        category: UserData.ROLE_CUSTOMER,
+        startHour: Timestamp.now(),
+        endHour: Timestamp.now(),
+      );
+      await _firebaseFirestore.collection("users").doc(user.uid).set(userData.toJson());
+      pref.setString(UserData.ROLE, userData.role);
+      pref.setString(UserData.UID, userData.uid);
+      pref.setString(UserData.FULL_NAME, userData.fullName);
       emit(SignUpSignedIn());
     } on FirebaseAuthException catch (e) {
       //TODO: State error

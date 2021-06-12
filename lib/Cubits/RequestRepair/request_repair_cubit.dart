@@ -43,12 +43,13 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
             imagePath.isNotEmpty);
   }
 
-  RequestRepairCubit([String category]) : super(RequestRepairInitial()) {
+  RequestRepairCubit([String category="Electrical"]) : super(RequestRepairInitial()) {
     _player.openAudioSession();
     _recorder.openAudioSession();
     _firebaseFirestore = FirebaseFirestore.instance;
     _firebaseStorage = FirebaseStorage.instance;
     _firebaseAuth = FirebaseAuth.instance;
+    _category = category;
   }
 
   submitRequest(GeoPoint geoPoint) async {
@@ -59,30 +60,53 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
         await _firebaseFirestore.collection("users").doc(user.uid).get();
     // print (userData.data());
     UserData userData = UserData.fromJson(userDoc.data());
-    Map<String, dynamic> map = {
-      "requesterId": user.uid,
-      //TODO: Change this when category needed
-      "category": _category,
-      "requesterName": userData.fullName,
-      "requesterAddress": userData.address,
-      "requestText": requestText,
-      "appointmentDate": Timestamp.fromDate(_appointmentDate),
-      "appointmentMicrosecondsSinceEpoch":
-          _appointmentDate.microsecondsSinceEpoch,
-      "appointmentTimeZoneName": _appointmentDate.timeZoneName,
-      "location": geoPoint
-    };
+    // Map<String, dynamic> map = {
+    //   "requesterId": user.uid,
+    //   //TODO: Change this when category needed
+    //   "category": _category,
+    //   "requesterName": userData.fullName,
+    //   "requesterAddress": userData.address,
+    //   "requestText": requestText,
+    //   "appointmentDate": Timestamp.fromDate(_appointmentDate),
+    //   "appointmentMicrosecondsSinceEpoch":
+    //       _appointmentDate.microsecondsSinceEpoch,
+    //   "appointmentTimeZoneName": _appointmentDate.timeZoneName,
+    //   "location": geoPoint
+    // };
+    Request request = Request(
+      category: _category,
+      requestText: requestText,
+      requesterId: user.uid,
+      imagePath: "",
+      recordPath: "",
+      appointmentTimeZoneName: _appointmentDate.timeZoneName,
+      appointmentMicrosecondsSinceEpoch: _appointmentDate.microsecondsSinceEpoch,
+      appointmentDate: Timestamp.fromDate(_appointmentDate),
+      requesterAddress: userData.address,
+      requesterName: userData.fullName,
+      location: geoPoint,
+      workerEmail: "",
+      workerId: "",
+      workerName: "",
+      workerPhoneNumber: "",
+      assignedById: "",
+      assignedByName: "",
+      status: Request.STATUS_REQUESTED,
+    );
     var submitRef = _firebaseFirestore.collection("requests");
-    var requestRef = await submitRef.add(map);
+    var requestRef = await submitRef.add(request.toJson());
     var storageRef =
         _firebaseStorage.ref().child("requests").child(requestRef.id);
     Map<String, dynamic> pathMap = {};
     if (recordPath.isNotEmpty) {
       File recordFile = File(recordPath);
       var recordRef = await storageRef.child("note.acc").putFile(recordFile);
-      pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
-    } else
-      pathMap.addAll({"recordPath": recordPath});
+      // pathMap.addAll({"recordPath": await recordRef.ref.getDownloadURL()});
+      request.recordPath = await recordRef.ref.getDownloadURL();
+    } else {
+      // pathMap.addAll({"recordPath": recordPath});
+      request.recordPath = recordPath;
+    }
 
     if (imagePath.isNotEmpty) {
       File imageFile = File(imagePath);
@@ -90,10 +114,13 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       pathMap.addAll({
         "imagePath": await imageRef.ref.getDownloadURL(),
       });
-    } else
+      request.imagePath = await imageRef.ref.getDownloadURL();
+    } else {
       pathMap.addAll({"imagePath": imagePath});
+      request.imagePath = imagePath;
+    }
     // print(pathMap);
-    if (pathMap.isNotEmpty) await requestRef.update(pathMap);
+    if (pathMap.isNotEmpty) await requestRef.update(request.toJson());
     emit(RequestRepairLoaded());
   }
 
@@ -104,19 +131,18 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
         await _firebaseFirestore.collection("users").doc(user.uid).get();
     // print (userData.data());
     UserData userData = UserData.fromJson(userDoc.data());
-    Map<String, dynamic> map = {
-      "requesterId": user.uid,
-      //TODO: Change this when category needed
-      "category": _category,
-      "requesterName": userData.fullName,
-      "requesterAddress": userData.address,
-      "requestText": requestText,
-      "appointmentDate": Timestamp.fromDate(_appointmentDate),
-      "appointmentMicrosecondsSinceEpoch":
-          _appointmentDate.microsecondsSinceEpoch,
-      "appointmentTimeZoneName": _appointmentDate.timeZoneName,
-      "location": geoPoint
-    };
+    // Map<String, dynamic> map = {
+    //   "requesterId": user.uid,
+    //   //TODO: Change this when category needed
+    //   "category": _category,
+    //   "requesterName": userData.fullName,
+    //   "requesterAddress": userData.address,    //   "appointmentDate": Timestamp.fromDate(_appointmentDate),
+    //   "requestText": requestText,
+    //   "appointmentMicrosecondsSinceEpoch":
+    //       _appointmentDate.microsecondsSinceEpoch,
+    //   "appointmentTimeZoneName": _appointmentDate.timeZoneName,
+    //   "location": geoPoint
+    // };
     var request = Request(
       location: geoPoint,
       requesterId: user.uid,
@@ -130,6 +156,13 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       appointmentTimeZoneName: _appointmentDate.timeZoneName,
       recordPath: recordPath,
       imagePath: imagePath,
+      status: Request.STATUS_REQUESTED,
+      assignedByName: "",
+      assignedById: "",
+      workerPhoneNumber: "",
+      workerName: "",
+      workerId: "",
+      workerEmail: "",
     );
     return request;
     // var submitRef = _firebaseFirestore.collection("requests");

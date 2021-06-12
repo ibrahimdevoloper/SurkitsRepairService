@@ -1,5 +1,6 @@
 import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart';
 import 'package:an_app/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
+import 'package:an_app/models/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +58,7 @@ AlertDialog adminSelectWorkerFilterDialog(BuildContext context) {
                 ],
               ), groupValue: cubit.selectedCategory,
             ),RadioListTile(
-              value: "Electrical",
+              value: Request.CATEGORY_ELECTRICAL,
               onChanged: (value) {
                 cubit.selectedCategory=value;
                 cubit.emit(AdminSelectWorkerForAdisplayedRequestFilterStateChanged());
@@ -70,7 +71,7 @@ AlertDialog adminSelectWorkerFilterDialog(BuildContext context) {
                 ],
               ), groupValue: cubit.selectedCategory,
             ),RadioListTile(
-              value: "Heating",
+              value: Request.CATEGORY_HEATING,
               onChanged: (value) {
                 cubit.selectedCategory=value;
                 cubit.emit(AdminSelectWorkerForAdisplayedRequestFilterStateChanged());
@@ -83,7 +84,7 @@ AlertDialog adminSelectWorkerFilterDialog(BuildContext context) {
                 ],
               ), groupValue: cubit.selectedCategory,
             ),RadioListTile(
-              value: "pluming",
+              value: Request.CATEGORY_PLUMING,
               onChanged: (value) {
                 cubit.selectedCategory=value;
                 cubit.emit(AdminSelectWorkerForAdisplayedRequestFilterStateChanged());
@@ -96,7 +97,7 @@ AlertDialog adminSelectWorkerFilterDialog(BuildContext context) {
                 ],
               ), groupValue: cubit.selectedCategory,
             ),RadioListTile(
-              value: "Electronics",
+              value: Request.CATEGORY_ELECTRONICS,
               onChanged: (value) {
                 cubit.selectedCategory=value;
                 cubit.emit(AdminSelectWorkerForAdisplayedRequestFilterStateChanged());

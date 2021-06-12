@@ -7,6 +7,11 @@ TextStyle titleStyleWhite = new TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 25);
+TextStyle dateTitleStyleWhite = new TextStyle(
+    fontFamily: 'Helvetica',
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 16);
 TextStyle bannerStyleWhite = new TextStyle(
     fontFamily: 'Helvetica',
     color: Colors.white,

@@ -1,51 +1,164 @@
+import 'dart:async';
+
+import 'package:an_app/models/request.dart';
+import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/AdminHomePage.dart';
 import 'package:an_app/pages/CustomerHomePage.dart';
 import 'package:an_app/pages/IntroWithSignInPage.dart';
+import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SharedPreferencesProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<FirebaseApp>(
-        future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
-          // if (snapshot.connectionState ==ConnectionState.waiting)
-          //   return Center(
-          //     child: CircularProgressIndicator(),
-          //   );
-          // else
-          return MaterialApp(
-            title: 'AN App',
-            debugShowCheckedModeBanner: false,
-            routes: <String, WidgetBuilder>{
-              // '/signupScreen': (BuildContext context) => new SignupPage(),
-              // '/firstScreen': (BuildContext context) => new HomePage(),
-              // '/calendarScreen': (BuildContext context) => new calendarPage(),
-              // '/repairmanScreen': (BuildContext context) => new repairmanPage()
-            },
-            home: snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : StreamBuilder<User>(
+    return Consumer<SharedPreferencesProvider>(builder: (context, provider, _) {
+      return FutureBuilder(
+          future: Future.wait(
+              [Firebase.initializeApp(), SharedPreferences.getInstance()]),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if(snapshot.hasData){ print(snapshot.data[1]);
+              SharedPreferences myPref = snapshot.data[1];
+              provider.pref = myPref;
+              return MaterialApp(
+                title: 'AN App',
+                debugShowCheckedModeBanner: false,
+                routes: <String, WidgetBuilder>{
+                  // '/signupScreen': (BuildContext context) => new SignupPage(),
+                  // '/firstScreen': (BuildContext context) => new HomePage(),
+                  // '/calendarScreen': (BuildContext context) => new calendarPage(),
+                  // '/repairmanScreen': (BuildContext context) => new repairmanPage()
+                },
+                home:  StreamBuilder<User>(
                     stream: FirebaseAuth.instance.authStateChanges(),
                     builder: (context, snapshot) {
                       User user = snapshot.data;
                       if (user == null)
                         return IntroPage();
-                      else
-                        //TODO: future builder to check the user role.
-                        return AdminHomePage();
-                        // return CustomerHomePage();
+                      else if (provider.pref.containsKey(UserData.ROLE)) {
+                        // print(provider.pref.get(UserData.ROLE));
+                        switch (provider.pref.get(UserData.ROLE)) {
+                          case UserData.ROLE_ADMIN:
+                            return AdminHomePage();
+                            break;
+                          case UserData.ROLE_CUSTOMER:
+                            return CustomerHomePage();
+                            break;
+                          case UserData.ROLE_WORKER:
+                            return CustomerHomePage();
+                            break;
+                          default:
+                            return Scaffold(
+                              body: Center(
+                                child: Text("error"),
+                              ),
+                            );
+                            break;
+                        }
+                      } else if (!provider.pref
+                          .containsKey(UserData.ROLE)) {
+                        return FutureBuilder<DocumentSnapshot>(
+                            future: FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (snapshot.hasData) {
+                                  UserData userData = UserData.fromJson(
+                                      snapshot.data.data());
+
+                                  provider.pref.setString(
+                                      UserData.ROLE, userData.role);
+                                  provider.pref.setString(
+                                      UserData.FULL_NAME, userData.fullName);
+                                  provider.pref.setString(
+                                      UserData.UID, userData.uid);
+                                  // print(provider.pref.get(userData.role));
+                                  switch (userData.role) {
+                                    case UserData.ROLE_ADMIN:
+                                      return AdminHomePage();
+                                      break;
+                                    case UserData.ROLE_CUSTOMER:
+                                      return CustomerHomePage();
+                                      break;
+                                    case UserData.ROLE_WORKER:
+                                      return CustomerHomePage();
+                                      break;
+                                    default:
+                                      return Scaffold(
+                                        body: Center(
+                                          child: Text("error"),
+                                        ),
+                                      );
+                                      break;
+                                  }
+                                } else {
+                                  return Scaffold(
+                                    body: Center(
+                                      child: Text("error"),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                return Scaffold(
+                                  body: Center(
+                                      child: CircularProgressIndicator()),
+                                );
+                              }
+                            });
+                      } else {
+                        return Scaffold(
+                          body: Center(
+                            child: Text("error"),
+                          ),
+                        );
+                      }
                     }),
-          );
-        });
+              );}
+              else{
+                print(snapshot.error.toString());
+                // SharedPreferences myPref = snapshot.data[1];
+                // provider.pref = myPref;
+                return MaterialApp(
+                  title: 'AN App',
+                  debugShowCheckedModeBanner: false,
+                  routes: <String, WidgetBuilder>{
+                    // '/signupScreen': (BuildContext context) => new SignupPage(),
+                    // '/firstScreen': (BuildContext context) => new HomePage(),
+                    // '/calendarScreen': (BuildContext context) => new calendarPage(),
+                    // '/repairmanScreen': (BuildContext context) => new repairmanPage()
+                  },
+                  home: Scaffold(
+                    body: Center(
+                      child: Text("error"),
+                    ),
+                  )
+                );
+              }
+
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          });
+    });
   }
 }
 //

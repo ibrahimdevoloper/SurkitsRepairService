@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
@@ -35,22 +36,35 @@ class AdminAddWorkerCubit extends Cubit<AdminAddWorkerState> {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: _email, password: _password);
       User user = await _firebaseAuth.currentUser;
-      Map<String, dynamic> map = {
-        "uid": user.uid,
-        "fullName": _fullName,
-        "password": stringToBase64.encode(_password),
-        "email": _email,
-        "phoneNumber": _phoneNumber,
-        "address": _address,
-        "role": "worker",
-        "category": _category,
-        "endHour": Timestamp.fromDate(_endHour),
-        "startHour": Timestamp.fromDate(_startHour)
-      };
+      // Map<String, dynamic> map = {
+      //   "uid": user.uid,
+      //   "fullName": _fullName,
+      //   "password": stringToBase64.encode(_password),
+      //   "email": _email,
+      //   "phoneNumber": _phoneNumber,
+      //   "address": _address,
+      //   "role": "worker",
+      //   "category": _category,
+      //   "endHour": Timestamp.fromDate(_endHour),
+      //   "startHour": Timestamp.fromDate(_startHour)
+      // };
+      UserData userData=
+      UserData(
+        uid: user.uid,
+        fullName: _fullName,
+        email: _email,
+        phoneNumber: _phoneNumber,
+        address: _address,
+        role: UserData.ROLE_WORKER,
+        password: stringToBase64.encode(_password),
+        category: _category,
+        startHour: Timestamp.fromDate(_startHour),
+        endHour: Timestamp.fromDate(_endHour),
+      );
       // print(Timestamp.fromDate(_startHour).toDate());
-      print(map);
+      // print(map);
 
-      await _firebaseFirestore.collection("users").doc(user.uid).set(map);
+      await _firebaseFirestore.collection("users").doc(user.uid).set(userData.toJson());
       print("email: $_email, password: $_password");
       emit(AdminAddWorkerLoaded());
     } on FirebaseAuthException catch (e) {

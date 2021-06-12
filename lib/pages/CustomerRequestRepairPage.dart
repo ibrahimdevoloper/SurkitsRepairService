@@ -12,6 +12,7 @@ import 'package:an_app/Widgets/ImageBanner.dart';
 import 'package:an_app/Widgets/RecordWidget.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
+import 'package:an_app/models/request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,10 +41,17 @@ class RequestRepairPage extends StatefulWidget {
 
 class _RequestRepairPageState extends State<RequestRepairPage> {
 
+  var map = {
+    Request.CATEGORY_ELECTRONICS:"الكترونيات",
+    Request.CATEGORY_ELECTRICAL:"كهربائيات",
+    Request.CATEGORY_PLUMING:"صحية",
+    Request.CATEGORY_HEATING:"تدفئة",
+  };
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RequestRepairCubit>(
-      create: (context) => RequestRepairCubit(),
+      create: (context) => RequestRepairCubit(widget.enTxt),
       child: BlocConsumer<RequestRepairCubit, RequestRepairState>(
           listenWhen: (previous, current) {
         return current is RequestRepairAppointmentError ||
@@ -139,7 +147,7 @@ class _RequestRepairPageState extends State<RequestRepairPage> {
                 // getTopContainer(TextPair(this.enTxt, jobCatToAr[this.enTxt])),
                 Stack(
                   children: [
-                    BlueGradientAppBar(TextPair("Electrical", "كهربائيات")),
+                    BlueGradientAppBar(TextPair(widget.enTxt,map[widget.enTxt])),
                     AppBar(
                       backgroundColor: Colors.transparent,
                       elevation: 0,

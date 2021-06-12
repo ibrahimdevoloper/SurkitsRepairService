@@ -1,16 +1,20 @@
+import 'package:an_app/models/user_data.dart';
+import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'intro_with_sign_in_state.dart';
 
 class IntroWithSignInCubit extends Cubit<IntroWithSignInState> {
   FirebaseAuth _firebaseAuth;
+
   // FirebaseFirestore _firebaseFirestore;
-  String _email="";
-  String _password="";
+  String _email = "";
+  String _password = "";
 
   IntroWithSignInCubit() : super(IntroWithSignInInitial()) {
     _firebaseAuth = FirebaseAuth.instance;
@@ -26,8 +30,7 @@ class IntroWithSignInCubit extends Cubit<IntroWithSignInState> {
   //   });
   // }
 
-  Future<String> SignIn(// {String email, String password}
-      ) async {
+  Future<String> SignIn(SharedPreferences pref) async {
     emit(IntroWithSignInLoading());
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
@@ -35,7 +38,14 @@ class IntroWithSignInCubit extends Cubit<IntroWithSignInState> {
       // print("email: $_email, password: $_password");
       User user = await _firebaseAuth.currentUser;
 
-      // var userData = await _firebaseFirestore.collection("users").doc(user.uid);
+      var userDataMap = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get();
+      var userData = UserData.fromJson(userDataMap.data());
+      pref.setString(UserData.ROLE, userData.role);
+      pref.setString(UserData.UID, userData.uid);
+      pref.setString(UserData.FULL_NAME, userData.fullName);
     } on FirebaseAuthException catch (e) {
       // print(e.toString().contains("There is no user record corresponding to this identifier"));
       print(e);
@@ -55,7 +65,7 @@ class IntroWithSignInCubit extends Cubit<IntroWithSignInState> {
       } else if (e.toString().contains(
           "The password is invalid or the user does not have a password.")) {
         emit(IntroWithSignInError("Incorrect Password", "كلمة سر غير صحيحة"));
-      }else if (e.toString().contains(
+      } else if (e.toString().contains(
           "We have blocked all requests from this device due to unusual activity. Try again later.")) {
         emit(IntroWithSignInError("Try Again Later", "جرب التسجيل لاحقاً"));
       } else

@@ -21,6 +21,13 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
     getRequests();
   }
 
+
+  @override
+  Future<Function> close() {
+    _player.closeAudioSession();
+    _player = null;
+  }
+
   getRequests() async {
     emit(AdminDisplayRequestsLoading());
     try {

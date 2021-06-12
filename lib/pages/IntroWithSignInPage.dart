@@ -3,11 +3,15 @@ import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/IntroTopContainer.dart';
 import 'package:an_app/models/TextPair.dart';
+import 'package:an_app/models/request.dart';
+import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/SignupPage.dart';
+import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 class IntroPage extends StatelessWidget {
   @override
@@ -42,6 +46,7 @@ class IntroPage extends StatelessWidget {
               current is IntroWithSignInError ||
               current is IntroWithSignInInitial;
         }, builder: (context, state) {
+
           return ModalProgressHUD(
             inAsyncCall: state is IntroWithSignInLoading,
             child: Column(
@@ -176,30 +181,32 @@ class IntroPage extends StatelessWidget {
                                     bottomLeft: Radius.circular(10),
                                     bottomRight: Radius.circular(10))),
                             //child: GestureDetector(
-                            child: InkWell(
-                              onTap: () {
-                                // Navigator.of(context).pushNamed('/firstScreen');
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => HomePage()));
-                                var cubit =
-                                    BlocProvider.of<IntroWithSignInCubit>(
-                                        context);
-                                if (cubit.validator()) {
-                                  cubit.SignIn();
-                                } else {
-                                  cubit.emit(IntroWithSignInError("Check Input Fields", "تحقق من حقول الإدخال"));
-                                }
-                              },
-                              child: Center(
-                                child: Text(
-                                  'LOGIN',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 17),
+                            child: Consumer<SharedPreferencesProvider>(
+                              builder:(context,provider,_)=> InkWell(
+                                onTap: () {
+                                  // Navigator.of(context).pushNamed('/firstScreen');
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => HomePage()));
+                                  var cubit =
+                                      BlocProvider.of<IntroWithSignInCubit>(
+                                          context);
+                                  if (cubit.validator()) {
+                                    cubit.SignIn(provider.pref);
+                                  } else {
+                                    cubit.emit(IntroWithSignInError("Check Input Fields", "تحقق من حقول الإدخال"));
+                                  }
+                                },
+                                child: Center(
+                                  child: Text(
+                                    'LOGIN',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 17),
+                                  ),
                                 ),
                               ),
                             )),

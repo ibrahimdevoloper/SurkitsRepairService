@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user_data.dart';
 
@@ -43,7 +44,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
         var mapList = await FirebaseFirestore.instance
             .collection('users')
             .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
-        .where(UserData.CATEGORY,isEqualTo: _selectedCategory)
+            .where(UserData.CATEGORY, isEqualTo: _selectedCategory)
             .get();
 
         _usersData = [];
@@ -53,9 +54,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
             _usersData.add(UserData.fromJson(element.data()));
           });
         emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
-
       }
-
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
@@ -63,30 +62,34 @@ class AdminSelectWorkerForAdisplayedRequestCubit
     }
   }
 
-  assignRequest(String id, UserData user) async {
+  assignRequest(String documentId, UserData worker,
+      SharedPreferences pref) async {
     emit(AdminSelectWorkerForAdisplayedRequestLoading());
 
     try {
       Map<String, dynamic> map = {
-        Request.WORKER_ID: user.uid,
-        Request.WORKER_NAME: user.fullName,
-        Request.WORKER_EMAIL: user.email,
-        Request.WORKER_PHONE_NUMBER: user.phoneNumber,
-      };
-      await FirebaseFirestore.instance
-          .collection('requests')
-          .doc(id)
-          .update(map);
+      Request.WORKER_ID: worker.uid,
+      Request.WORKER_NAME: worker.fullName,
+      Request.WORKER_EMAIL: worker.email,
+      Request.WORKER_PHONE_NUMBER: worker.phoneNumber,
+      Request.STATUS:Request.STATUS_ASSIGNED,
+      Request.ASSIGNED_BY_NAME : pref.get(UserData.FULL_NAME),
+      Request.ASSIGNED_BY_ID: pref.get(UserData.UID),
+    };
+    await FirebaseFirestore.instance
+        .collection('requests')
+        .doc(documentId)
+        .update(map);
 
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
-    } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
-      emit(AdminSelectWorkerForAdisplayedRequestError());
+    emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+  } catch (e) {
+    //TODO: handle errors
+    print("error: $e");
+    emit(AdminSelectWorkerForAdisplayedRequestError());
     }
   }
 
-  addRequest(Request request, UserData worker) async {
+  addRequest(Request request, UserData worker, SharedPreferences pref) async {
     emit(AdminSelectWorkerForAdisplayedRequestLoading());
 
     try {
@@ -94,6 +97,10 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       request.workerName = worker.fullName;
       request.workerEmail = worker.email;
       request.workerPhoneNumber = worker.phoneNumber;
+      request.status = Request.STATUS_ASSIGNED;
+      request.assignedByName = pref.get(UserData.FULL_NAME);
+      request.assignedById = pref.get(UserData.UID);
+
 
       print(request.recordPath);
 
@@ -105,12 +112,13 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       // var requestRef = await submitRef.add(map);
 
       var storageRef =
-          FirebaseStorage.instance.ref().child("requests").child(doc.id);
+      FirebaseStorage.instance.ref().child("requests").child(doc.id);
       Map<String, dynamic> pathMap = {};
       if (request.recordPath.isNotEmpty) {
         File recordFile = File(request.recordPath);
         var recordRef = await storageRef.child("note.acc").putFile(recordFile);
-        pathMap.addAll({Request.RECORD_PATH: await recordRef.ref.getDownloadURL()});
+        pathMap.addAll(
+            {Request.RECORD_PATH: await recordRef.ref.getDownloadURL()});
       } else
         pathMap.addAll({"recordPath": ""});
 

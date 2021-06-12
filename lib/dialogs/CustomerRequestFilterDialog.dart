@@ -1,9 +1,10 @@
 import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart';
+import 'package:an_app/Cubits/CustomerRequests/customer_requests_cubit.dart';
 import 'package:an_app/models/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
+AlertDialog customerRequestFilterDialog(BuildContext context) {
   // FirebaseAnalytics().setCurrentScreen(
   //     screenName: "aboutCompanyDialog",
   //     screenClassOverride: "aboutCompanyDialog");
@@ -15,39 +16,39 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
         Text("صنف عبر"),
       ],
     ),
-    content: BlocBuilder<AdminDisplayRequestsCubit,AdminDisplayRequestsState>(
-      bloc: BlocProvider.of<AdminDisplayRequestsCubit>(context),
+    content: BlocBuilder<CustomerRequestsCubit,CustomerRequestsState>(
+      bloc: BlocProvider.of<CustomerRequestsCubit>(context),
       buildWhen: (previous,current){
-        return current is AdminDisplayRequestsFilterStateChanged;
+        return current is CustomerRequestsFilterStateChanged;
       },
       builder: (context, state) {
-        var cubit =BlocProvider.of<AdminDisplayRequestsCubit>(context);
+        var cubit =BlocProvider.of<CustomerRequestsCubit>(context);
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Directionality(
-              textDirection: TextDirection.rtl,
-              child: SwitchListTile(
-                value: cubit.isDescending,
-                onChanged: (value) {
-                  print(value);
-                  cubit.isDescending=value;
-                  cubit.emit(AdminDisplayRequestsFilterStateChanged());
-                },
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("تنازلي"),
-                    Text("Descending"),
-                  ],
-                ),
-              ),
-            ),
+            // Directionality(
+            //   textDirection: TextDirection.rtl,
+            //   child: SwitchListTile(
+            //     value: cubit.isDescending,
+            //     onChanged: (value) {
+            //       print(value);
+            //       cubit.isDescending=value;
+            //       cubit.emit(CustomerRequestsFilterStateChanged());
+            //     },
+            //     title: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text("تنازلي"),
+            //         Text("Descending"),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             RadioListTile(
               value: "",
               onChanged: (value) {
                 cubit.selectedCategory=value;
-                cubit.emit(AdminDisplayRequestsFilterStateChanged());
+                cubit.emit(CustomerRequestsFilterStateChanged());
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +61,7 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
               value: Request.CATEGORY_ELECTRICAL,
               onChanged: (value) {
                 cubit.selectedCategory=value;
-                cubit.emit(AdminDisplayRequestsFilterStateChanged());
+                cubit.emit(CustomerRequestsFilterStateChanged());
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +74,7 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
               value: Request.CATEGORY_HEATING,
               onChanged: (value) {
                 cubit.selectedCategory=value;
-                cubit.emit(AdminDisplayRequestsFilterStateChanged());
+                cubit.emit(CustomerRequestsFilterStateChanged());
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +87,7 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
               value:Request.CATEGORY_PLUMING,
               onChanged: (value) {
                 cubit.selectedCategory=value;
-                cubit.emit(AdminDisplayRequestsFilterStateChanged());
+                cubit.emit(CustomerRequestsFilterStateChanged());
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +100,7 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
               value: Request.CATEGORY_ELECTRONICS,
               onChanged: (value) {
                 cubit.selectedCategory=value;
-                cubit.emit(AdminDisplayRequestsFilterStateChanged());
+                cubit.emit(CustomerRequestsFilterStateChanged());
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,7 +122,7 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
         child: Text("Cancel"),
       ),ElevatedButton(
         onPressed: () {
-          BlocProvider.of<AdminDisplayRequestsCubit>(context).getRequests();
+          BlocProvider.of<CustomerRequestsCubit>(context).getRequests();
           Navigator.pop(context);
         },
         child: Text("Ok"),

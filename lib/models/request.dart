@@ -29,6 +29,9 @@ class Request {
   String _workerId;
   String _workerEmail;
   String _workerPhoneNumber;
+  String _status;
+  String _assignedByName;
+  String _assignedById;
 
   String get requestText => _requestText;
 
@@ -63,6 +66,11 @@ class Request {
 
   String get requestId => _requestId;
 
+  String get status => _status;
+
+  String get assignedByName => _assignedByName;
+
+  String get assignedById => _assignedById;
 
   set requestId(String value) {
     _requestId = value;
@@ -84,6 +92,9 @@ class Request {
     String workerId,
     String workerEmail,
     String workerPhoneNumber,
+    String status,
+    String assignedByName,
+    String assignedById,
   }) {
     _requestText = requestText;
     _requesterId = requesterId;
@@ -100,6 +111,9 @@ class Request {
     _workerId = workerId;
     _workerEmail = workerEmail;
     _workerPhoneNumber = workerPhoneNumber;
+    _status = status;
+    _assignedById = assignedById;
+    _assignedByName = assignedByName;
   }
 
   Request.fromJson(dynamic json, [String requestId]) {
@@ -120,6 +134,9 @@ class Request {
     _workerId = json["workerId"];
     _workerEmail = json["workerEmail"];
     _workerPhoneNumber = json["workerPhoneNumber"];
+    _status = json["status"];
+    _assignedByName = json["assignedByName"];
+    _assignedById = json["assignedById"];
   }
 
   Map<String, dynamic> toJson() {
@@ -140,6 +157,9 @@ class Request {
     map["workerId"] = _workerId;
     map["workerEmail"] = _workerEmail;
     map["workerPhoneNumber"] = _workerPhoneNumber;
+    map["status"] = _status;
+    map["assignedByName"] = _assignedByName;
+    map["assignedById"] = _assignedById;
     return map;
   }
 
@@ -153,12 +173,22 @@ class Request {
   static const String APPOINTMENT_TIME_ZONE_NAME = "appointmentTimeZoneName";
   static const String LOCATION = "location";
   static const String CATEGORY = "category";
+  static const String CATEGORY_ELECTRICAL = "Electrical";
+  static const String CATEGORY_HEATING = "Heating";
+  static const String CATEGORY_PLUMING = "Pluming";
+  static const String CATEGORY_ELECTRONICS = "Electronics";
   static const String APPOINTMENT_DATE = "appointmentDate";
   static const String RECORD_PATH = "recordPath";
   static const String WORKER_NAME = "workerName";
   static const String WORKER_ID = "workerId";
   static const String WORKER_EMAIL = "workerEmail";
   static const String WORKER_PHONE_NUMBER = "workerPhoneNumber";
+  static const String STATUS = "status";
+  static const String STATUS_REQUESTED = "requested";
+  static const String STATUS_ASSIGNED = "assigned";
+  static const String STATUS_COMPLETED = "completed";
+  static const String ASSIGNED_BY_NAME = "assignedByName";
+  static const String ASSIGNED_BY_ID = "_assignedById";
 
   set requestText(String value) {
     _requestText = value;
@@ -218,5 +248,17 @@ class Request {
 
   set workerPhoneNumber(String value) {
     _workerPhoneNumber = value;
+  }
+
+  set status(String value) {
+    _status = value;
+  }
+
+  set assignedById(String value) {
+    _assignedById = value;
+  }
+
+  set assignedByName(String value) {
+    _assignedByName = value;
   }
 }

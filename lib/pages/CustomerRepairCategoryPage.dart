@@ -4,15 +4,16 @@ import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/Widgets/CustomCardButton.dart';
 import 'package:an_app/Widgets/GoBackButton.dart';
 import 'package:an_app/models/TextPair.dart';
+import 'package:an_app/models/request.dart';
 import 'package:flutter/material.dart';
-import 'RequestRepairPage.dart';
+import 'CustomerRequestRepairPage.dart';
 
-class ContentPage extends StatefulWidget {
+class CustomerRepairCategoryPage extends StatefulWidget {
   @override
-  _ContentPageState createState() => _ContentPageState();
+  _CustomerRepairCategoryPageState createState() => _CustomerRepairCategoryPageState();
 }
 
-class _ContentPageState extends State<ContentPage> {
+class _CustomerRepairCategoryPageState extends State<CustomerRepairCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +38,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RequestRepairPage("Electrical"),
+                            builder: (context) => RequestRepairPage(Request.CATEGORY_ELECTRICAL),
                           ),
                         );
                       },
@@ -50,7 +51,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RequestRepairPage("Pluming"),
+                            builder: (context) => RequestRepairPage(Request.CATEGORY_PLUMING),
                           ),
                         );
                       },
@@ -68,7 +69,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RequestRepairPage("Heating"),
+                            builder: (context) => RequestRepairPage(Request.CATEGORY_HEATING),
                           ),
                         );
                       },
@@ -81,7 +82,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RequestRepairPage("Electronic"),
+                            builder: (context) => RequestRepairPage(Request.CATEGORY_ELECTRONICS),
                           ),
                         );
                       },

@@ -9,7 +9,7 @@ import 'package:an_app/pages/AdminAssignRequestPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'AdminDisplayRequestsPage.dart';
-import 'RepairCategoryPage.dart';
+import 'CustomerRepairCategoryPage.dart';
 // import '../global.dart';
 
 class AdminHomePage extends StatefulWidget {

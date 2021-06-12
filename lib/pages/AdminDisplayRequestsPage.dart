@@ -2,6 +2,7 @@ import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.
 import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
+import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/dialogs/AdminDisplayRequestFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
@@ -100,6 +101,13 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                           itemBuilder: (context, i) {
                             var item = list[i];
                             return RequestListItem(
+                              onItemClicked: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
+                                    requestId: item.requestId,
+                                  ),
+                                ));
+                              },
                               request: item,
                               imagePath: item.imagePath,
                               requestText: item.requestText,
@@ -165,6 +173,14 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                     CircularProgressIndicator(
                                                   value: data.progress,
                                                 ),
+                                              );
+                                            }else if (value
+                                                .connectionState ==
+                                                ConnectionState
+                                                    .done|| value.data is DownloadProgress) {
+                                              return Container(
+                                                child:
+                                                CircularProgressIndicator(),
                                               );
                                             } else {
                                               var file = value.data as FileInfo;
@@ -261,7 +277,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                   elevation: 16,
                                                   onPressed: () {});
                                             } else if (value.connectionState ==
-                                                ConnectionState.waiting) {
+                                                ConnectionState.waiting|| value.data is DownloadProgress) {
                                               return Container(
                                                 child:
                                                     CircularProgressIndicator(),
@@ -313,24 +329,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                         ),
                                 ),
                               ),
-                              //TODO: control playing button
-                              // isPlaying:
-                              //     BlocProvider.of<AdminDisplayRequestsCubit>(
-                              //                 context)
-                              //             .playerIndex ==
-                              //         i,
-                              // onPlayButtonPressed: () {
-                              //   // TODO: play using list upgrade right now using dialog
-                              //   var cubit =
-                              //       BlocProvider.of<AdminDisplayRequestsCubit>(
-                              //           context);
-                              //   // if(cubit.player.isOpen()){
-                              //   //   cubit.player.stopPlayer();
-                              //   // }
-                              //   cubit.playerIndex = i;
-                              //   cubit.emit(
-                              //       AdminDisplayRequestsPlayRecordButtonStateChange());
-                              // },
+
                             );
                           });
                     } else if (state is AdminDisplayRequestsError) {
@@ -347,151 +346,151 @@ class AdminDisplayRequestsPage extends StatelessWidget {
   }
 }
 
-class RequestListItem extends StatelessWidget {
-  Request _request;
-  String _requesterName;
-  String _category;
-  String _imagePath;
-  String _requestText;
-  String _recordURL;
-
-  // bool _isPlaying;
-  String _appointmentDate;
-
-  // Function _onPlayButtonPressed;
-
-  Widget _playIconButton;
-
-  RequestListItem(
-      {Key key,
-      @required Request request,
-      @required String requesterName,
-      @required String category,
-      @required String imagePath,
-      @required String requestText,
-      @required String recordURL,
-      // @required bool isPlaying,
-      @required String appointmentDate,
-      // @required Function onPlayButtonPressed,
-      @required Widget playIconButton})
-      : this._requesterName = requesterName,
-        this._category = category,
-        this._imagePath = imagePath,
-        this._requestText = requestText,
-        this._recordURL = recordURL,
-        // this._isPlaying = isPlaying,
-        this._appointmentDate = appointmentDate,
-        // this._onPlayButtonPressed = onPlayButtonPressed,
-        this._playIconButton = playIconButton,this._request = request,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
-            requestId: _request.requestId,
-          ),
-        ));
-      },
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Customer:$_requesterName",
-                              style: titileStyleBlack,
-                              textDirection: TextDirection.ltr,
-                            ),
-                            Text(
-                              "Category: $_category",
-                              style: TextStyle(
-                                  fontFamily: 'Avenir',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                              textDirection: TextDirection.ltr,
-                            ),
-                            Text(
-                              "Appointment: $_appointmentDate",
-                              style: TextStyle(
-                                  fontFamily: 'Avenir',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                              textDirection: TextDirection.ltr,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.location_on,
-                        color: Colors.red,
-                      ),
-                      onPressed: () {
-                        //TODO : go to location
-                      },
-                    ),
-                  ],
-                ),
-                _imagePath.isNotEmpty
-                    ? AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Image.network(
-                          _imagePath,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    : Container(
-                        height: 0,
-                        width: 0,
-                      ),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    _recordURL.isNotEmpty
-                        ? _playIconButton
-                        : Container(
-                            height: 0,
-                            width: 0,
-                          ),
-                    _requestText.isNotEmpty
-                        ? Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                _requestText,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          )
-                        : Container(
-                            height: 0,
-                            width: 0,
-                          ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    ));
-  }
-}
+// class RequestListItem extends StatelessWidget {
+//   Request _request;
+//   String _requesterName;
+//   String _category;
+//   String _imagePath;
+//   String _requestText;
+//   String _recordURL;
+//
+//   // bool _isPlaying;
+//   String _appointmentDate;
+//
+//   // Function _onPlayButtonPressed;
+//
+//   Widget _playIconButton;
+//
+//   RequestListItem(
+//       {Key key,
+//       @required Request request,
+//       @required String requesterName,
+//       @required String category,
+//       @required String imagePath,
+//       @required String requestText,
+//       @required String recordURL,
+//       // @required bool isPlaying,
+//       @required String appointmentDate,
+//       // @required Function onPlayButtonPressed,
+//       @required Widget playIconButton})
+//       : this._requesterName = requesterName,
+//         this._category = category,
+//         this._imagePath = imagePath,
+//         this._requestText = requestText,
+//         this._recordURL = recordURL,
+//         // this._isPlaying = isPlaying,
+//         this._appointmentDate = appointmentDate,
+//         // this._onPlayButtonPressed = onPlayButtonPressed,
+//         this._playIconButton = playIconButton,this._request = request,
+//         super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//         child: InkWell(
+//       onTap: () {
+//         Navigator.of(context).push(MaterialPageRoute(
+//           builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
+//             requestId: _request.requestId,
+//           ),
+//         ));
+//       },
+//       child: Center(
+//         child: Padding(
+//           padding: const EdgeInsets.all(8.0),
+//           child: Center(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Expanded(
+//                       child: Padding(
+//                         padding: const EdgeInsets.all(8.0),
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.stretch,
+//                           children: [
+//                             Text(
+//                               "Customer:$_requesterName",
+//                               style: titileStyleBlack,
+//                               textDirection: TextDirection.ltr,
+//                             ),
+//                             Text(
+//                               "Category: $_category",
+//                               style: TextStyle(
+//                                   fontFamily: 'Avenir',
+//                                   color: Colors.black,
+//                                   fontWeight: FontWeight.bold,
+//                                   fontSize: 16),
+//                               textDirection: TextDirection.ltr,
+//                             ),
+//                             Text(
+//                               "Appointment: $_appointmentDate",
+//                               style: TextStyle(
+//                                   fontFamily: 'Avenir',
+//                                   color: Colors.black,
+//                                   fontWeight: FontWeight.bold,
+//                                   fontSize: 16),
+//                               textDirection: TextDirection.ltr,
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                     IconButton(
+//                       icon: Icon(
+//                         Icons.location_on,
+//                         color: Colors.red,
+//                       ),
+//                       onPressed: () {
+//                         //TODO : go to location
+//                       },
+//                     ),
+//                   ],
+//                 ),
+//                 _imagePath.isNotEmpty
+//                     ? AspectRatio(
+//                         aspectRatio: 16 / 9,
+//                         child: Image.network(
+//                           _imagePath,
+//                           fit: BoxFit.cover,
+//                         ),
+//                       )
+//                     : Container(
+//                         height: 0,
+//                         width: 0,
+//                       ),
+//                 Row(
+//                   mainAxisSize: MainAxisSize.max,
+//                   children: [
+//                     _recordURL.isNotEmpty
+//                         ? _playIconButton
+//                         : Container(
+//                             height: 0,
+//                             width: 0,
+//                           ),
+//                     _requestText.isNotEmpty
+//                         ? Expanded(
+//                             child: Padding(
+//                               padding: const EdgeInsets.all(8.0),
+//                               child: Text(
+//                                 _requestText,
+//                                 textAlign: TextAlign.center,
+//                               ),
+//                             ),
+//                           )
+//                         : Container(
+//                             height: 0,
+//                             width: 0,
+//                           ),
+//                   ],
+//                 )
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     ));
+//   }
+// }

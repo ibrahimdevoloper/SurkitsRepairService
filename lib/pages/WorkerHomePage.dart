@@ -6,6 +6,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/CustomerRequestsPage.dart';
+import 'package:an_app/pages/WorkerAssignmentsPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,12 @@ import 'package:provider/provider.dart';
 import 'CustomerRepairCategoryPage.dart';
 // import '../global.dart';
 
-class CustomerHomePage extends StatefulWidget {
+class WorkerHomePage extends StatefulWidget {
   @override
-  _CustomerHomePageState createState() => _CustomerHomePageState();
+  _WorkerHomePageState createState() => _WorkerHomePageState();
 }
 
-class _CustomerHomePageState extends State<CustomerHomePage> {
+class _WorkerHomePageState extends State<WorkerHomePage> {
   bool pressed = false;
 
   @override
@@ -54,30 +55,17 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CustomCardButton(
-                  englishTitle: "New Request",
-                  arabicTitle: "طلب جديد",
-                  icon: Icons.miscellaneous_services,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CustomerRepairCategoryPage(),
-                      ),
-                    );
-                  },
-                ),
                 Consumer<SharedPreferencesProvider>(
                   builder: (_, provider, __) => CustomCardButton(
-                    englishTitle: "Active Request",
-                    arabicTitle: "طلب حالي",
+                    englishTitle: "My Assignments",
+                    arabicTitle: "مهماتي",
                     icon: Icons.miscellaneous_services,
                     onPressed: () {
-                      print("pressed ${provider.pref.get(UserData.UID)}");
+                      // print("pressed ${provider.pref.get(UserData.UID)}");
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  CustomerRequestsPage(provider.pref.getString(UserData.UID)),
+                          builder: (context) =>  WorkerAssignmentsPage(pref: provider.pref,),
                         ),
                       );
                     },

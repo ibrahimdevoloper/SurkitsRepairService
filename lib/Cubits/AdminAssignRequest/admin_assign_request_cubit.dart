@@ -6,11 +6,12 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'admin_assign_request_state.dart';
 
 class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
-  AdminAssignRequestCubit() : super(AdminAssignRequestInitial()){
+  AdminAssignRequestCubit() : super(AdminAssignRequestInitial()) {
     getWorkers();
   }
 
@@ -38,7 +39,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
         var mapList = await FirebaseFirestore.instance
             .collection('users')
             .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
-            .where(UserData.CATEGORY,isEqualTo: _selectedCategory)
+            .where(UserData.CATEGORY, isEqualTo: _selectedCategory)
             .get();
 
         _usersData = [];
@@ -48,9 +49,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
             _usersData.add(UserData.fromJson(element.data()));
           });
         emit(AdminAssignRequestLoaded(_usersData));
-
       }
-
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
@@ -58,7 +57,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
     }
   }
 
-  assignRequest(String id, UserData user) async {
+  assignRequest(String id, UserData user, SharedPreferences pref) async {
     emit(AdminAssignRequestLoading());
 
     try {
@@ -67,6 +66,10 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
         Request.WORKER_NAME: user.fullName,
         Request.WORKER_EMAIL: user.email,
         Request.WORKER_PHONE_NUMBER: user.phoneNumber,
+        Request.STATUS: Request.STATUS_ASSIGNED,
+        //TODO: add admin name from pref
+        Request.ASSIGNED_BY_NAME: pref.get(UserData.FULL_NAME),
+        Request.ASSIGNED_BY_ID: pref.get(UserData.UID),
       };
       await FirebaseFirestore.instance
           .collection('requests')
@@ -81,7 +84,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
     }
   }
 
-  addRequest(Request request, UserData worker) async {
+  addRequest(Request request, UserData worker, SharedPreferences pref) async {
     emit(AdminAssignRequestLoading());
 
     try {
@@ -89,6 +92,10 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       request.workerName = worker.fullName;
       request.workerEmail = worker.email;
       request.workerPhoneNumber = worker.phoneNumber;
+      request.status = Request.STATUS_ASSIGNED;
+      //TODO: add admin name from pref
+      request.assignedByName = pref.get(UserData.FULL_NAME);
+      request.assignedById = pref.get(UserData.UID);
 
       print(request.recordPath);
 
@@ -100,12 +107,13 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       // var requestRef = await submitRef.add(map);
 
       var storageRef =
-      FirebaseStorage.instance.ref().child("requests").child(doc.id);
+          FirebaseStorage.instance.ref().child("requests").child(doc.id);
       Map<String, dynamic> pathMap = {};
       if (request.recordPath.isNotEmpty) {
         File recordFile = File(request.recordPath);
         var recordRef = await storageRef.child("note.acc").putFile(recordFile);
-        pathMap.addAll({Request.RECORD_PATH: await recordRef.ref.getDownloadURL()});
+        pathMap.addAll(
+            {Request.RECORD_PATH: await recordRef.ref.getDownloadURL()});
       } else
         pathMap.addAll({"recordPath": ""});
 

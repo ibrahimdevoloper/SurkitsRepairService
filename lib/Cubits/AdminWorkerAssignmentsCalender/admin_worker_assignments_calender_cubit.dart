@@ -1,21 +1,36 @@
 import 'package:an_app/models/request.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:meta/meta.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 part 'admin_worker_assignments_calender_state.dart';
 
 class AdminWorkerAssignmentsCalenderCubit
     extends Cubit<AdminWorkerAssignmentsCalenderState> {
   AdminWorkerAssignmentsCalenderCubit(this._workerId)
-      : super(AdminWorkerAssignmentsCalenderInitial());
+      : super(AdminWorkerAssignmentsCalenderInitial()){
+    _player = FlutterSoundPlayer();
+    _player.openAudioSession();
+  }
+
+  @override
+  Future<Function> close() {
+    _player.closeAudioSession();
+    _player = null;
+  }
 
   final String _workerId;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
-  static const String IS_LOADING =  "isLoading";
-  static const String REQUESTS =  "requests";
+  int _selectedPlayerId=-1;
+
+  static const String IS_LOADING = "isLoading";
+  static const String REQUESTS = "requests";
+
+  FlutterSoundPlayer _player;
 
   Map<DateTime, Map<String, dynamic>> requests = {};
 
@@ -37,6 +52,9 @@ class AdminWorkerAssignmentsCalenderCubit
       requests.addAll({
         date: {IS_LOADING: true, REQUESTS: []}
       });
+      if (isSameDay(_selectedDay, date)) {
+        emit(AdminWorkerAssignmentsCalenderLoading());
+      }
       if (date.month == focusedDay.month) {
         var requestsMap = await FirebaseFirestore.instance
             .collection('requests')
@@ -65,6 +83,11 @@ class AdminWorkerAssignmentsCalenderCubit
         requests[date][IS_LOADING] = false;
         requests[date][REQUESTS] = requestsList;
         emit(AdminWorkerAssignmentsCalenderFocusedDayChanged());
+        if (isSameDay(_selectedDay, date)) {
+          emit(AdminWorkerAssignmentsCalenderLoaded(requestsList));
+        }
+      } else {
+        requests[date] = null;
       }
     }
   }
@@ -80,4 +103,19 @@ class AdminWorkerAssignmentsCalenderCubit
   set selectedDay(DateTime value) {
     _selectedDay = value;
   }
+
+  int get selectedPlayerId => _selectedPlayerId;
+
+  set selectedPlayerId(int value) {
+    _selectedPlayerId = value;
+  }
+
+  String get workerId => _workerId;
+
+  FlutterSoundPlayer get player => _player;
+
+// set workerId(String value) {
+  //   _workerId = value;
+  // }
+
 }

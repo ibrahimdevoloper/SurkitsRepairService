@@ -2,14 +2,72 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_cubit.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/AdminWorkerAssignmentsCalenderPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_cubit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/CustomerRequests/customer_requests_cubit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/CustomerRequests/customer_requests_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_cubit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Widgets/DateBlueGradientAppBar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Widgets/RequestListItem.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Widgets/WorkerItem.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dialogs/CustomerRequestFilterDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dialogs/WorkerDidYouCompleteThisAssignmentDialog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/AdminSelectRequestForWorkerPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/CustomerRequestsPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/WorkerHomePage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/providers/SharedPreferences.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/App_IB_IB_04052021.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/App_IB_IB_04052021.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_asynclayoutinflater_asynclayoutinflater_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_ui_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_slidingpanelayout_slidingpanelayout_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__androidx_swiperefreshlayout_swiperefreshlayout_1_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__com_google_android_gms_play_services_base_16_0_1_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_16_0_1_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__com_google_android_gms_play_services_location_16_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__com_google_android_gms_play_services_places_placereport_16_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_16_0_1_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminAddWorker/admin_add_worker_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminAddWorker/admin_add_worker_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminWorkerAssignmentsCalender/admin_worker_assignments_calender_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/IntroWithSignIn/intro_with_sign_in_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/IntroWithSignIn/intro_with_sign_in_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/signUp/sign_up_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/signUp/sign_up_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/UIValuesFolder/TextStyles.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/UIValuesFolder/TextStyles.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dialogs/AdminAssignRequestFilterDialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dialogs/AdminAssignRequestFilterDialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dialogs/AdminDisplayRequestFilterDialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dialogs/AdminDisplayRequestFilterDialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dialogs/AdminSelectWorkerFilterDialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dialogs/AdminSelectWorkerFilterDialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminAddWorkerPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminAddWorkerPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/AdminAssignRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminAssignRequestPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminHomePage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminWorkerAssignmentsCalenderPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminWorkerAssignmentsCalenderPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/CalendarPage.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/RepairCategoryPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerRepairCategoryPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/RepairmanPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/RepairmanPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/RequestRepairPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerRequestRepairPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/SignupPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/SignupPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +109,7 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\dialogs" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\pages" />
+      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Widgets" />
     </key>
   </component>
   <component name="RunManager">
@@ -80,10 +139,10 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1622819195068">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1623103922714">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1622819195068" />
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1623103922714" />
     <state x="92" y="92" width="1182" height="554" key="AVDManager" timestamp="1622312163514">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -92,29 +151,33 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
-    <state width="661" height="182" key="GridCell.Tab.0.bottom" timestamp="1622820572095">
+    <state x="463" y="123" key="FileChooserDialogImpl" timestamp="1623464395269">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="182" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1622820572095" />
-    <state width="661" height="182" key="GridCell.Tab.0.center" timestamp="1622820572095">
+    <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1623464395269" />
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1623465182502">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="182" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1622820572095" />
-    <state width="661" height="182" key="GridCell.Tab.0.left" timestamp="1622820572094">
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1623465182502" />
+    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1623465182502">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="182" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1622820572094" />
-    <state width="661" height="182" key="GridCell.Tab.0.right" timestamp="1622820572095">
+    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1623465182502" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1623465182502">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="661" height="182" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1622820572095" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1623465182502" />
+    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1623465182502">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1623465182502" />
     <state x="184" y="13" key="SettingsEditor" timestamp="1622314272261">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
-    <state x="390" y="102" width="610" height="592" key="find.popup" timestamp="1622632989947">
+    <state x="372" y="64" width="610" height="672" key="find.popup" timestamp="1623454250649">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="390" y="102" width="610" height="592" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1622632989947" />
+    <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1623454250649" />
   </component>
 </project>

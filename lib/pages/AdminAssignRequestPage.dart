@@ -3,6 +3,7 @@ import 'package:an_app/Functions/dateFormatter.dart';
 import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
+import 'package:an_app/Widgets/WorkerItem.dart';
 import 'package:an_app/dialogs/AdminAssignRequestFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/user_data.dart';
@@ -78,84 +79,13 @@ class _AdminAssignRequestPageState extends State<AdminAssignRequestPage> {
                     itemCount: state.usersData.length,
                     itemBuilder: (context, i) {
                       UserData item = state.usersData[i];
-                      return Card(
-                          child: InkWell(
-                        onTap: () {
-                          //TODO: dispaly worker calender
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  AdminWorkerAssignmentsCalenderPage(item.uid),),);
-                        },
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  "Worker: ${item.fullName}",
-                                  style: titileStyleBlack,
-                                  textDirection: TextDirection.ltr,
-                                ),
-                                Text(
-                                  "Category: ${item.category}",
-                                  style: TextStyle(
-                                      fontFamily: 'Avenir',
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                  textDirection: TextDirection.ltr,
-                                ),
-                                Text(
-                                  "E-mail: ${item.email}",
-                                  style: TextStyle(
-                                      fontFamily: 'Avenir',
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
-                                  textDirection: TextDirection.ltr,
-                                ),
-                                Text(
-                                  "Number: ${item.phoneNumber}",
-                                  style: TextStyle(
-                                      fontFamily: 'Avenir',
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
-                                  textDirection: TextDirection.ltr,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      dateFormater(
-                                          item.startHour.toDate(), 'hh:mm a'),
-                                      style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 16),
-                                      textDirection: TextDirection.ltr,
-                                    ),
-                                    Icon(Icons.arrow_forward),
-                                    Text(
-                                      dateFormater(
-                                          item.endHour.toDate(), 'hh:mm a'),
-                                      style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 16),
-                                      textDirection: TextDirection.ltr,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ));
+                      return WorkerItem(item: item,
+                      onItemPressed: () {
+                        //TODO: dispaly worker calender
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              AdminWorkerAssignmentsCalenderPage(item),),);
+                      },);
                     },
                   );
                 }
@@ -167,3 +97,5 @@ class _AdminAssignRequestPageState extends State<AdminAssignRequestPage> {
     );
   }
 }
+
+

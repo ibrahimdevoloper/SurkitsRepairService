@@ -3,10 +3,12 @@ import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
+import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 // import '../global.dart';
 
 class SignupPage extends StatefulWidget {
@@ -288,23 +290,25 @@ class _SignupPageState extends State<SignupPage> {
                                 bottomRight: Radius.circular(10))
                             //borderRadius: BorderRadius.circular(20.0),
                             ),
-                        child: GestureDetector(
-                          onTap: () {
-                            var cubit = BlocProvider.of<SignUpCubit>(context);
-                            if (cubit.validator()) {
-                              cubit.SignUp();
-                            } else {
-                              cubit.emit(SignUpError(
-                                  "Check Fields", "تحقق من الحقول"));
-                            }
-                          },
-                          child: Center(
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
+                        child: Consumer<SharedPreferencesProvider>(
+                          builder: (_,provider,__)=>GestureDetector(
+                            onTap: () {
+                              var cubit = BlocProvider.of<SignUpCubit>(context);
+                              if (cubit.validator()) {
+                                cubit.SignUp(provider.pref);
+                              } else {
+                                cubit.emit(SignUpError(
+                                    "Check Fields", "تحقق من الحقول"));
+                              }
+                            },
+                            child: Center(
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
                             ),
                           ),
                         ),

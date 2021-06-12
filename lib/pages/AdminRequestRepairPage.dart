@@ -199,7 +199,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                   groupValue: BlocProvider.of<
                                       RequestRepairCubit>(context)
                                       .category,
-                                  value: "Electrical",
+                                  value: Request.CATEGORY_ELECTRICAL,
                                 ),
                               ),
                               Expanded(
@@ -218,7 +218,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                   groupValue: BlocProvider.of<
                                       RequestRepairCubit>(context)
                                       .category,
-                                  value: "Pluming",
+                                  value: Request.CATEGORY_PLUMING,
                                 ),
                               ),
                             ],
@@ -251,7 +251,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                   groupValue: BlocProvider.of<
                                       RequestRepairCubit>(context)
                                       .category,
-                                  value: "Heating",
+                                  value: Request.CATEGORY_HEATING,
                                 ),
                               ),
                               Expanded(
@@ -271,7 +271,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                   groupValue: BlocProvider.of<
                                       RequestRepairCubit>(context)
                                       .category,
-                                  value: "Electronics",
+                                  value: Request.CATEGORY_ELECTRONICS,
                                 ),
                               ),
                             ],

@@ -3,6 +3,7 @@ import 'package:an_app/Functions/dateFormatter.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/models/TextPair.dart';
+import 'package:an_app/models/request.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -314,7 +315,7 @@ class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
                                       groupValue: BlocProvider.of<
                                                   AdminAddWorkerCubit>(context)
                                               .category,
-                                      value: "Electrical",
+                                      value: Request.CATEGORY_ELECTRICAL,
                                     ),
                                   ),
                                   Expanded(
@@ -333,7 +334,7 @@ class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
                                       groupValue: BlocProvider.of<
                                                   AdminAddWorkerCubit>(context)
                                               .category,
-                                      value: "Pluming",
+                                      value: Request.CATEGORY_PLUMING,
                                     ),
                                   ),
                                 ],
@@ -366,7 +367,7 @@ class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
                                       groupValue: BlocProvider.of<
                                                   AdminAddWorkerCubit>(context)
                                               .category,
-                                      value: "Heating",
+                                      value: Request.CATEGORY_HEATING,
                                     ),
                                   ),
                                   Expanded(
@@ -386,7 +387,7 @@ class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
                                       groupValue: BlocProvider.of<
                                                   AdminAddWorkerCubit>(context)
                                               .category,
-                                      value: "Electronics",
+                                      value: Request.CATEGORY_ELECTRONICS,
                                     ),
                                   ),
                                 ],
