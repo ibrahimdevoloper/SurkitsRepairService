@@ -25,10 +25,15 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-        },
+      floatingActionButton:  Consumer<SharedPreferencesProvider>(
+          builder: (context, provider,_) {
+            return FloatingActionButton(
+              onPressed: () {
+                provider.pref.setString(UserData.ROLE, "");
+                FirebaseAuth.instance.signOut();
+              },
+            );
+          }
       ),
       body: Column(
         children: <Widget>[

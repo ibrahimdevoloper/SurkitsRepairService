@@ -17,6 +17,7 @@ class UserData {
   String _password;
   Timestamp _startHour;
   Timestamp _endHour;
+  String _fcmToken;
 
   String get uid => _uid;
 
@@ -38,6 +39,8 @@ class UserData {
 
   Timestamp get endHour => _endHour;
 
+  String get fcmToken => _fcmToken;
+
   UserData({
     String uid,
     String phoneNumber,
@@ -49,6 +52,7 @@ class UserData {
     String password,
     Timestamp startHour,
     Timestamp endHour,
+    String fcmToken,
   }) {
     _uid = uid;
     _phoneNumber = phoneNumber;
@@ -60,6 +64,7 @@ class UserData {
     _password = password;
     _startHour = startHour;
     _endHour = endHour;
+    _fcmToken=fcmToken;
   }
 
   UserData.fromJson(dynamic json) {
@@ -73,6 +78,7 @@ class UserData {
     _password = json["password"];
     _startHour = json["startHour"];
     _endHour = json["endHour"];
+    _fcmToken= json["fcmToken"];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +93,7 @@ class UserData {
     map["password"] = _password;
     map["startHour"] = _startHour;
     map["endHour"] = _endHour;
+    map["fcmToken"] = _fcmToken;
     return map;
   }
 
@@ -113,4 +120,6 @@ class UserData {
   static const String START_HOUR = "startHour";
 
   static const String END_HOUR = "endHour";
+
+  static const String FCM_TOKEN="fcmToken";
 }

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -62,30 +64,36 @@ class AdminSelectWorkerForAdisplayedRequestCubit
     }
   }
 
-  assignRequest(String documentId, UserData worker,
-      SharedPreferences pref) async {
+  assignRequest(
+      String documentId, UserData worker, SharedPreferences pref) async {
     emit(AdminSelectWorkerForAdisplayedRequestLoading());
 
     try {
       Map<String, dynamic> map = {
-      Request.WORKER_ID: worker.uid,
-      Request.WORKER_NAME: worker.fullName,
-      Request.WORKER_EMAIL: worker.email,
-      Request.WORKER_PHONE_NUMBER: worker.phoneNumber,
-      Request.STATUS:Request.STATUS_ASSIGNED,
-      Request.ASSIGNED_BY_NAME : pref.get(UserData.FULL_NAME),
-      Request.ASSIGNED_BY_ID: pref.get(UserData.UID),
-    };
-    await FirebaseFirestore.instance
-        .collection('requests')
-        .doc(documentId)
-        .update(map);
-
-    emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
-  } catch (e) {
-    //TODO: handle errors
-    print("error: $e");
-    emit(AdminSelectWorkerForAdisplayedRequestError());
+        Request.WORKER_ID: worker.uid,
+        Request.WORKER_NAME: worker.fullName,
+        Request.WORKER_EMAIL: worker.email,
+        Request.WORKER_PHONE_NUMBER: worker.phoneNumber,
+        Request.FCM_TOKEN_FOR_WORKER: worker.fcmToken,
+        Request.STATUS: Request.STATUS_ASSIGNED,
+        Request.ASSIGNED_BY_NAME: pref.get(UserData.FULL_NAME),
+        Request.ASSIGNED_BY_ID: pref.get(UserData.UID),
+        Request.FCM_TOKEN_FOR_ADMIN: await FirebaseMessaging.instance.getToken()
+      };
+      await FirebaseFirestore.instance
+          .collection('requests')
+          .doc(documentId)
+          .update(map);
+      await sendNotificationMethod(
+          title: "New Request|طلب جديد",
+          text: "Press Here|أضغط هنا",
+          fcmToken: worker.fcmToken
+      );
+      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+    } catch (e) {
+      //TODO: handle errors
+      print("error: $e");
+      emit(AdminSelectWorkerForAdisplayedRequestError());
     }
   }
 
@@ -97,10 +105,11 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       request.workerName = worker.fullName;
       request.workerEmail = worker.email;
       request.workerPhoneNumber = worker.phoneNumber;
+      request.fcmTokenForWorker = worker.fcmToken;
       request.status = Request.STATUS_ASSIGNED;
       request.assignedByName = pref.get(UserData.FULL_NAME);
       request.assignedById = pref.get(UserData.UID);
-
+      request.fcmTokenForAdmin = await FirebaseMessaging.instance.getToken();
 
       print(request.recordPath);
 
@@ -112,7 +121,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       // var requestRef = await submitRef.add(map);
 
       var storageRef =
-      FirebaseStorage.instance.ref().child("requests").child(doc.id);
+          FirebaseStorage.instance.ref().child("requests").child(doc.id);
       Map<String, dynamic> pathMap = {};
       if (request.recordPath.isNotEmpty) {
         File recordFile = File(request.recordPath);
@@ -132,6 +141,13 @@ class AdminSelectWorkerForAdisplayedRequestCubit
         pathMap.addAll({"imagePath": ""});
 
       submitRef.doc(doc.id).update(pathMap);
+
+      //TODO: send Notifications
+      await sendNotificationMethod(
+          title: "New Request|طلب جديد",
+          text: "Press Here|أضغط هنا",
+          fcmToken: worker.fcmToken
+      );
 
       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
     } catch (e) {

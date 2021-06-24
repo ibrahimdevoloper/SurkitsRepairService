@@ -32,6 +32,9 @@ class Request {
   String _status;
   String _assignedByName;
   String _assignedById;
+  String _fcmTokenForRequester;
+  String _fcmTokenForAdmin;
+  String _fcmTokenForWorker;
 
   String get requestText => _requestText;
 
@@ -72,9 +75,11 @@ class Request {
 
   String get assignedById => _assignedById;
 
-  set requestId(String value) {
-    _requestId = value;
-  }
+  String get fcmTokenForAdmin => _fcmTokenForAdmin;
+
+  String get fcmTokenForWorker => _fcmTokenForWorker;
+
+  String get fcmTokenForRequester => _fcmTokenForRequester;
 
   Request({
     String requestText,
@@ -95,6 +100,9 @@ class Request {
     String status,
     String assignedByName,
     String assignedById,
+    String fcmTokenForAdmin,
+    String fcmTokenForWorker,
+    String fcmTokenForRequester,
   }) {
     _requestText = requestText;
     _requesterId = requesterId;
@@ -114,6 +122,9 @@ class Request {
     _status = status;
     _assignedById = assignedById;
     _assignedByName = assignedByName;
+    _fcmTokenForAdmin = fcmTokenForAdmin;
+    _fcmTokenForWorker = fcmTokenForWorker;
+    _fcmTokenForRequester = fcmTokenForRequester;
   }
 
   Request.fromJson(dynamic json, [String requestId]) {
@@ -137,6 +148,9 @@ class Request {
     _status = json["status"];
     _assignedByName = json["assignedByName"];
     _assignedById = json["assignedById"];
+    _fcmTokenForAdmin=json["fcmTokenForAdmin"];
+    _fcmTokenForWorker=json["fcmTokenForWorker"];
+    _fcmTokenForRequester=json["fcmTokenForRequester"];
   }
 
   Map<String, dynamic> toJson() {
@@ -160,6 +174,9 @@ class Request {
     map["status"] = _status;
     map["assignedByName"] = _assignedByName;
     map["assignedById"] = _assignedById;
+    map["fcmTokenForAdmin"]=_fcmTokenForAdmin;
+    map["fcmTokenForWorker"]=_fcmTokenForWorker;
+    map["fcmTokenForRequester"]=_fcmTokenForRequester;
     return map;
   }
 
@@ -188,7 +205,10 @@ class Request {
   static const String STATUS_ASSIGNED = "assigned";
   static const String STATUS_COMPLETED = "completed";
   static const String ASSIGNED_BY_NAME = "assignedByName";
-  static const String ASSIGNED_BY_ID = "_assignedById";
+  static const String ASSIGNED_BY_ID = "assignedById";
+  static const String FCM_TOKEN_FOR_ADMIN = "fcmTokenForAdmin";
+  static const String FCM_TOKEN_FOR_WORKER = "fcmTokenForWorker";
+  static const String FCM_TOKEN_FOR_REQUESTER = "fcmTokenForRequester";
 
   set requestText(String value) {
     _requestText = value;
@@ -260,5 +280,21 @@ class Request {
 
   set assignedByName(String value) {
     _assignedByName = value;
+  }
+
+  set requestId(String value) {
+    _requestId = value;
+  }
+
+  set fcmTokenForWorker(String value) {
+    _fcmTokenForWorker = value;
+  }
+
+  set fcmTokenForAdmin(String value) {
+    _fcmTokenForAdmin = value;
+  }
+
+  set fcmTokenForRequester(String value) {
+    _fcmTokenForRequester = value;
   }
 }

@@ -54,10 +54,16 @@ dependencies:
   location: ^4.1.1
   flutter_cache_manager: ^3.0.2
   provider: ^5.0.0
+  firebase_messaging: ^10.0.2
+  flash: ^2.0.0
+  chopper: ^4.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  chopper_generator: ^4.0.1
+    # No version number means the latest version
+  build_runner:
 #  integration_test:
 #    sdk: flutter
 

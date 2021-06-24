@@ -1,7 +1,9 @@
+import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,11 +48,19 @@ class AdminSelectRequestForWorkerCubit
     request.status=Request.STATUS_ASSIGNED;
     request.assignedById=pref.get(UserData.UID);
     request.assignedByName=pref.get(UserData.FULL_NAME);
+    request.fcmTokenForAdmin = await FirebaseMessaging.instance.getToken();
     request.workerName=_worker.fullName;
     request.workerId = _worker.uid;
     request.workerPhoneNumber=_worker.phoneNumber;
     request.workerEmail = _worker.email;
+    request.fcmTokenForWorker = _worker.fcmToken;
     query.update(request.toJson());
+    //TODO: send Notifications
+    await sendNotificationMethod(
+        title: "New Assignment|مهمة جديدة",
+        text: "Press Here|أضغط هنا",
+        fcmToken: _worker.fcmToken
+    );
     getRequests();
   }
 

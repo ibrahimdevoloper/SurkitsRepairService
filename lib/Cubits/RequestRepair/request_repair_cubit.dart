@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:meta/meta.dart';
@@ -43,7 +45,8 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
             imagePath.isNotEmpty);
   }
 
-  RequestRepairCubit([String category="Electrical"]) : super(RequestRepairInitial()) {
+  RequestRepairCubit([String category = "Electrical"])
+      : super(RequestRepairInitial()) {
     _player.openAudioSession();
     _recorder.openAudioSession();
     _firebaseFirestore = FirebaseFirestore.instance;
@@ -80,7 +83,8 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       imagePath: "",
       recordPath: "",
       appointmentTimeZoneName: _appointmentDate.timeZoneName,
-      appointmentMicrosecondsSinceEpoch: _appointmentDate.microsecondsSinceEpoch,
+      appointmentMicrosecondsSinceEpoch:
+          _appointmentDate.microsecondsSinceEpoch,
       appointmentDate: Timestamp.fromDate(_appointmentDate),
       requesterAddress: userData.address,
       requesterName: userData.fullName,
@@ -92,6 +96,7 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       assignedById: "",
       assignedByName: "",
       status: Request.STATUS_REQUESTED,
+      fcmTokenForRequester: await FirebaseMessaging.instance.getToken(),
     );
     var submitRef = _firebaseFirestore.collection("requests");
     var requestRef = await submitRef.add(request.toJson());
@@ -121,6 +126,13 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     }
     // print(pathMap);
     if (pathMap.isNotEmpty) await requestRef.update(request.toJson());
+
+    //TODO: send Notifications
+    await sendNotificationMethod(
+      title: "New Request|طلب جديد",
+      text: "Press Here|أضغط هنا",
+      fcmToken: "/topics/admin"
+    );
     emit(RequestRepairLoaded());
   }
 
@@ -163,6 +175,7 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
       workerName: "",
       workerId: "",
       workerEmail: "",
+      fcmTokenForRequester: await FirebaseMessaging.instance.getToken(),
     );
     return request;
     // var submitRef = _firebaseFirestore.collection("requests");

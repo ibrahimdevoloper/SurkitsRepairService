@@ -93,7 +93,7 @@ class _AdminSelectWorkerForADisplayedRequestPageState
                     itemCount: state.usersData.length,
                     itemBuilder: (context, i) {
                       UserData item = state.usersData[i];
-                      return Card(child: Consumer<SharedPreferencesProvider>(
+                      return Consumer<SharedPreferencesProvider>(
                           builder: (context, provider, _) {
                         return WorkerItem(
                             item: item,
@@ -113,7 +113,7 @@ class _AdminSelectWorkerForADisplayedRequestPageState
                               }
                               //TODO: handle Error
                             });
-                      }));
+                      });
                     },
                   );
                 }

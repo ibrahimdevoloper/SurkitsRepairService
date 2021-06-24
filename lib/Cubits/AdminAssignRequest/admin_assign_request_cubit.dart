@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:an_app/Functions/sendNotificationMethod.dart';
+import 'package:an_app/Services/SendNotificationService/SendNotificationService.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,15 +69,21 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
         Request.WORKER_NAME: user.fullName,
         Request.WORKER_EMAIL: user.email,
         Request.WORKER_PHONE_NUMBER: user.phoneNumber,
+        Request.FCM_TOKEN_FOR_WORKER: user.fcmToken,
         Request.STATUS: Request.STATUS_ASSIGNED,
-        //TODO: add admin name from pref
         Request.ASSIGNED_BY_NAME: pref.get(UserData.FULL_NAME),
         Request.ASSIGNED_BY_ID: pref.get(UserData.UID),
+        Request.FCM_TOKEN_FOR_ADMIN: await FirebaseMessaging.instance.getToken()
       };
       await FirebaseFirestore.instance
           .collection('requests')
           .doc(id)
           .update(map);
+      //TODO: send Notifications
+
+      //send to the worker a notification
+      await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
+      fcmToken: user.fcmToken);
 
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
@@ -83,6 +92,22 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       emit(AdminAssignRequestError());
     }
   }
+  //
+  // Future sendNotificationMethod({String title, String text, fcmToken}) async {
+  //   assert(fcmToken is String || fcmToken is List<String>,
+  //       "fcmToken type must be from String or List<String>");
+  //   var notificationMap = {
+  //     "notification": {
+  //       "title": title,
+  //       "text": text,
+  //     },
+  //     "priority": "high",
+  //     "to": fcmToken
+  //   };
+  //   var response =await SendNotificationService.create().sendNotification(notificationMap);
+  //   //TODO: handle Errors
+  //   print(response.body);
+  // }
 
   addRequest(Request request, UserData worker, SharedPreferences pref) async {
     emit(AdminAssignRequestLoading());
@@ -92,10 +117,11 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       request.workerName = worker.fullName;
       request.workerEmail = worker.email;
       request.workerPhoneNumber = worker.phoneNumber;
+      request.fcmTokenForWorker = worker.fcmToken;
       request.status = Request.STATUS_ASSIGNED;
-      //TODO: add admin name from pref
       request.assignedByName = pref.get(UserData.FULL_NAME);
       request.assignedById = pref.get(UserData.UID);
+      request.fcmTokenForAdmin = await FirebaseMessaging.instance.getToken();
 
       print(request.recordPath);
 
@@ -127,7 +153,9 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
         pathMap.addAll({"imagePath": ""});
 
       submitRef.doc(doc.id).update(pathMap);
-
+      //TODO: send Notifications
+      await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
+          fcmToken: worker.fcmToken);
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
       //TODO: handle errors
