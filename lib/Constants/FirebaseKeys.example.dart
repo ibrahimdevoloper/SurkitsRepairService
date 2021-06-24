@@ -11,5 +11,5 @@
 //   // not a good practice
 //   // i repeat : DO NOT PUT YOUR SERVER KEY IN THE CLIENT SIDE, YOU IGNORANT
 //   // good luck :)
-//   static String serverKey ="your server key";
+//   static const String serverKey ="your server key";
 // }

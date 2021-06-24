@@ -83,7 +83,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
 
       //send to the worker a notification
       await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
-      fcmToken: user.fcmToken);
+      fcmToken: user.fcmToken,);
 
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {

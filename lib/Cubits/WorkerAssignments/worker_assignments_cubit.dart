@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
@@ -51,6 +52,12 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
     // request.workerPhoneNumber=_worker.phoneNumber;
     // request.workerEmail = _worker.email;
     query.update(request.toJson());
+    sendNotificationMethod(
+      text: "Press Here|أضغط هنا",
+      title:
+          "Assignment Done by ${request.workerName}\n${request.workerName} مهمة تم أنهاؤها من قبل ",
+      fcmToken: [request.fcmTokenForAdmin, request.fcmTokenForRequester],
+    );
     getRequests();
   }
 

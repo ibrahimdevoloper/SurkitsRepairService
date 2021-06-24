@@ -5,38 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/Constants/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminAddAdmin/admin_add_admin_cubit.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/AdminAddAdmin/admin_add_admin_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Functions/registeringFCMTokenByPref.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Functions/registeringFCMTokenByUserData.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Functions/sendNotificationMethod.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Services/SendNotificationService/SendNotificationService.chopper.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Services/SendNotificationService/SendNotificationService.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/AdminAddAdminPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Constants/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Constants/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/user_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/user_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminHomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/WorkerHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/WorkerHomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_cubit.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +48,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/Constants" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -125,10 +101,14 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
-    <state x="463" y="123" key="FileChooserDialogImpl" timestamp="1623464395269">
+    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog" timestamp="1624558669857">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1623464395269" />
+    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1624558669857" />
+    <state x="463" y="123" key="FileChooserDialogImpl" timestamp="1624558626493">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1624558626493" />
     <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1624526742381">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -149,10 +129,10 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
-    <state x="372" y="64" width="610" height="672" key="find.popup" timestamp="1624482890833">
+    <state x="372" y="64" width="610" height="672" key="find.popup" timestamp="1624557431437">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1624482890833" />
+    <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1624557431437" />
     <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1624222385720">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
