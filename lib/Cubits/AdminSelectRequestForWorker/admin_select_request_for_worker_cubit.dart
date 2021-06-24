@@ -59,7 +59,7 @@ class AdminSelectRequestForWorkerCubit
     await sendNotificationMethod(
         title: "New Assignment|مهمة جديدة",
         text: "Press Here|أضغط هنا",
-        fcmToken: _worker.fcmToken
+        usersId:  _worker.uid
     );
     getRequests();
   }

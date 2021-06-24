@@ -43,7 +43,7 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
     var query =
         FirebaseFirestore.instance.collection('requests').doc(requestId);
     var map = await query.get();
-    var request = Request.fromJson(map);
+    var request = Request.fromJson(map.data());
     request.status = Request.STATUS_COMPLETED;
     // request.assignedById=pref.get(UserData.UID);
     // request.assignedByName=pref.get(UserData.FULL_NAME);
@@ -52,11 +52,11 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
     // request.workerPhoneNumber=_worker.phoneNumber;
     // request.workerEmail = _worker.email;
     query.update(request.toJson());
-    sendNotificationMethod(
+    await sendNotificationMethod(
       text: "Press Here|أضغط هنا",
       title:
           "Assignment Done by ${request.workerName}\n${request.workerName} مهمة تم أنهاؤها من قبل ",
-      fcmToken: [request.fcmTokenForAdmin, request.fcmTokenForRequester],
+      usersId:  [request.assignedById, request.workerId],
     );
     getRequests();
   }

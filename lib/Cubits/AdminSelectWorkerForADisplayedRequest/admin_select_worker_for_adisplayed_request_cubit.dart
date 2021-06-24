@@ -87,7 +87,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       await sendNotificationMethod(
           title: "New Request|طلب جديد",
           text: "Press Here|أضغط هنا",
-          fcmToken: worker.fcmToken
+          usersId:  worker.uid
       );
       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
     } catch (e) {
@@ -146,7 +146,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       await sendNotificationMethod(
           title: "New Request|طلب جديد",
           text: "Press Here|أضغط هنا",
-          fcmToken: worker.fcmToken
+          usersId:  worker.uid,
       );
 
       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));

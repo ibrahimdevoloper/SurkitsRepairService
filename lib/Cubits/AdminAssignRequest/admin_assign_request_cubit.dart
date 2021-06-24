@@ -83,7 +83,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
 
       //send to the worker a notification
       await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
-      fcmToken: user.fcmToken,);
+      usersId:  user.uid,);
 
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
@@ -155,7 +155,7 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       submitRef.doc(doc.id).update(pathMap);
       //TODO: send Notifications
       await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
-          fcmToken: worker.fcmToken);
+          usersId: worker.uid);
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
       //TODO: handle errors

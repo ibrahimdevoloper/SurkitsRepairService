@@ -131,7 +131,8 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     await sendNotificationMethod(
       title: "New Request|طلب جديد",
       text: "Press Here|أضغط هنا",
-      fcmToken: "/topics/admin"
+      // fcmToken: "/topics/admin"
+      topic: "/topics/admin"
     );
     emit(RequestRepairLoaded());
   }
