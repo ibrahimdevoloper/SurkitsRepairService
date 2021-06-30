@@ -69,13 +69,13 @@ class WorkerAssignmentsPage extends StatelessWidget {
             // BlueGradientAppBar(TextPair('Add Worker', 'أضف عامل')),
             Expanded(
               child: BlocConsumer<WorkerAssignmentsCubit,
-                  WorkerAssignmentsState>(
-                // listenWhen: (previous, current) {},
+                      WorkerAssignmentsState>(
+                  // listenWhen: (previous, current) {},
                   listener: (context, state) {},
                   buildWhen: (previous, current) {
                     return current is WorkerAssignmentsLoaded ||
                         current
-                        is WorkerAssignmentsPlayRecordButtonStateChange ||
+                            is WorkerAssignmentsPlayRecordButtonStateChange ||
                         current is WorkerAssignmentsLoading ||
                         current is WorkerAssignmentsError;
                   },
@@ -93,14 +93,15 @@ class WorkerAssignmentsPage extends StatelessWidget {
                             var item = list[i];
                             return RequestListItem(
                               onItemClicked: () {
-                               //TODO: Confirm Completion
+                                //TODO: Confirm Completion
                                 showDialog(
                                   context: context,
                                   builder: (context1) => BlocProvider.value(
                                       value: BlocProvider.of<
                                           WorkerAssignmentsCubit>(context),
                                       child:
-                                      workerDidYouCompleteThisAssignmentDialog(context,item)),
+                                          workerDidYouCompleteThisAssignmentDialog(
+                                              context, item)),
                                 );
                               },
                               request: item,
@@ -110,104 +111,104 @@ class WorkerAssignmentsPage extends StatelessWidget {
                               requesterName: item.requesterName,
                               recordURL: item.recordPath,
                               appointmentDate:
-                              dateFormater(item.appointmentDate.toDate()),
+                                  dateFormater(item.appointmentDate.toDate()),
                               playIconButton: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: BlocProvider.of<
-                                      WorkerAssignmentsCubit>(
-                                      context)
-                                      .playerIndex !=
-                                      i
+                                                      WorkerAssignmentsCubit>(
+                                                  context)
+                                              .playerIndex !=
+                                          i
                                       ? FloatingActionButton(
-                                      heroTag: null,
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.play_arrow,
-                                        color: myIconColor,
-                                        size: 34,
-                                      ),
-                                      elevation: 16,
-                                      onPressed: () {
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .playerIndex = i;
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .emit(
-                                            WorkerAssignmentsPlayRecordButtonStateChange());
-                                      })
-                                      : StreamBuilder<FileResponse>(
-                                    stream: DefaultCacheManager()
-                                        .getFileStream(item.recordPath,
-                                        withProgress: true),
-                                    builder: (context, value) {
-                                      // var progress =
-                                      //     value.data as DownloadProgress;
-                                      if (value.hasError) {
-                                        return FloatingActionButton(
-                                            heroTag: null,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.error,
-                                              color: myIconColor,
-                                              size: 34,
-                                            ),
-                                            elevation: 16,
-                                            onPressed: () {});
-                                      } else if (value.connectionState ==
-                                          ConnectionState.waiting) {
-                                        var data = value.data
-                                        as DownloadProgress;
-                                        return Container(
-                                          height: 15,
-                                          width: 15,
-                                          child:
-                                          CircularProgressIndicator(
-                                            value: data.progress,
+                                          heroTag: null,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                            color: myIconColor,
+                                            size: 34,
                                           ),
-                                        );
-                                      }else if (value
-                                          .connectionState ==
-                                          ConnectionState
-                                              .done|| value.data is DownloadProgress) {
-                                        return Container(
-                                          child:
-                                          CircularProgressIndicator(),
-                                        );
-                                      } else {
-                                        var file = value.data as FileInfo;
-                                        print(file.file.path);
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .player
-                                            .startPlayer(
-                                            fromURI:
-                                            'file://${file.file.path}');
-                                        return FloatingActionButton(
-                                            heroTag: null,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.stop,
-                                              color: myIconColor,
-                                              size: 34,
-                                            ),
-                                            elevation: 16,
-                                            onPressed: () {});
-                                      }
-                                    },
-                                  ),
+                                          elevation: 16,
+                                          onPressed: () {
+                                            BlocProvider.of<
+                                                        WorkerAssignmentsCubit>(
+                                                    context)
+                                                .playerIndex = i;
+                                            BlocProvider.of<
+                                                        WorkerAssignmentsCubit>(
+                                                    context)
+                                                .emit(
+                                                    WorkerAssignmentsPlayRecordButtonStateChange());
+                                          })
+                                      : StreamBuilder<FileResponse>(
+                                          stream: DefaultCacheManager()
+                                              .getFileStream(item.recordPath,
+                                                  withProgress: true),
+                                          builder: (context, value) {
+                                            // var progress =
+                                            //     value.data as DownloadProgress;
+                                            if (value.hasError) {
+                                              return FloatingActionButton(
+                                                  heroTag: null,
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(
+                                                    Icons.error,
+                                                    color: myIconColor,
+                                                    size: 34,
+                                                  ),
+                                                  elevation: 16,
+                                                  onPressed: () {});
+                                            } else if (value.connectionState ==
+                                                ConnectionState.waiting) {
+                                              var data = value.data
+                                                  as DownloadProgress;
+                                              return Container(
+                                                height: 15,
+                                                width: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  value: data.progress,
+                                                ),
+                                              );
+                                            } else if (value.connectionState ==
+                                                    ConnectionState.done ||
+                                                value.data
+                                                    is DownloadProgress) {
+                                              return Container(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else {
+                                              var file = value.data as FileInfo;
+                                              print(file.file.path);
+                                              BlocProvider.of<
+                                                          WorkerAssignmentsCubit>(
+                                                      context)
+                                                  .player
+                                                  .startPlayer(
+                                                      fromURI:
+                                                          'file://${file.file.path}');
+                                              return FloatingActionButton(
+                                                  heroTag: null,
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(
+                                                    Icons.stop,
+                                                    color: myIconColor,
+                                                    size: 34,
+                                                  ),
+                                                  elevation: 16,
+                                                  onPressed: () {});
+                                            }
+                                          },
+                                        ),
                                 ),
                               ),
                             );
                           });
                     } else if (state
-                    is WorkerAssignmentsPlayRecordButtonStateChange) {
+                        is WorkerAssignmentsPlayRecordButtonStateChange) {
                       var cubit =
-                      BlocProvider.of<WorkerAssignmentsCubit>(context);
+                          BlocProvider.of<WorkerAssignmentsCubit>(context);
                       var list = cubit.requests;
                       return ListView.builder(
                           padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
@@ -215,6 +216,18 @@ class WorkerAssignmentsPage extends StatelessWidget {
                           itemBuilder: (context, i) {
                             var item = list[i];
                             return RequestListItem(
+                              onItemClicked: () {
+                                //TODO: Confirm Completion
+                                showDialog(
+                                  context: context,
+                                  builder: (context1) => BlocProvider.value(
+                                      value: BlocProvider.of<
+                                          WorkerAssignmentsCubit>(context),
+                                      child:
+                                          workerDidYouCompleteThisAssignmentDialog(
+                                              context, item)),
+                                );
+                              },
                               request: item,
                               imagePath: item.imagePath,
                               requestText: item.requestText,
@@ -222,109 +235,110 @@ class WorkerAssignmentsPage extends StatelessWidget {
                               requesterName: item.requesterName,
                               recordURL: item.recordPath,
                               appointmentDate:
-                              dateFormater(item.appointmentDate.toDate()),
+                                  dateFormater(item.appointmentDate.toDate()),
                               playIconButton: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: BlocProvider.of<
-                                      WorkerAssignmentsCubit>(
-                                      context)
-                                      .playerIndex !=
-                                      i
+                                                      WorkerAssignmentsCubit>(
+                                                  context)
+                                              .playerIndex !=
+                                          i
                                       ? FloatingActionButton(
-                                      heroTag: null,
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.play_arrow,
-                                        color: myIconColor,
-                                        size: 34,
-                                      ),
-                                      elevation: 16,
-                                      onPressed: () {
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .playerIndex = i;
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .emit(
-                                            WorkerAssignmentsPlayRecordButtonStateChange());
-                                      })
-                                      : StreamBuilder<FileResponse>(
-                                    stream: DefaultCacheManager()
-                                        .getFileStream(item.recordPath,
-                                        withProgress: true),
-                                    builder: (context, value) {
-                                      // var progress =
-                                      //     value.data as DownloadProgress;
-                                      print(value.connectionState);
-                                      print(value.data.toString());
-                                      if (value.hasError) {
-                                        return FloatingActionButton(
-                                            heroTag: null,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.error,
-                                              color: myIconColor,
-                                              size: 34,
-                                            ),
-                                            elevation: 16,
-                                            onPressed: () {});
-                                      } else if (value.connectionState ==
-                                          ConnectionState.waiting|| value.data is DownloadProgress) {
-                                        return Container(
-                                          child:
-                                          CircularProgressIndicator(),
-                                        );
-                                      } else {
-                                        var file = value.data as FileInfo;
-                                        print(file.file.path);
-                                        BlocProvider.of<
-                                            WorkerAssignmentsCubit>(
-                                            context)
-                                            .player
-                                            .startPlayer(
-                                            fromURI:
-                                            'file://${file.file.path}',
-                                            whenFinished: () {
-                                              BlocProvider.of<
-                                                  WorkerAssignmentsCubit>(
-                                                  context)
-                                                  .playerIndex = -1;
-                                              BlocProvider.of<
-                                                  WorkerAssignmentsCubit>(
-                                                  context)
-                                                  .emit(
-                                                  WorkerAssignmentsPlayRecordButtonStateChange());
-                                            });
-                                        return FloatingActionButton(
                                           heroTag: null,
                                           backgroundColor: Colors.white,
                                           child: Icon(
-                                            Icons.stop,
+                                            Icons.play_arrow,
                                             color: myIconColor,
                                             size: 34,
                                           ),
                                           elevation: 16,
                                           onPressed: () {
-                                            var cubit = BlocProvider.of<
-                                                WorkerAssignmentsCubit>(
-                                                context);
-                                            if (cubit.player.isPlaying) {
-                                              cubit.player.stopPlayer();
+                                            BlocProvider.of<
+                                                        WorkerAssignmentsCubit>(
+                                                    context)
+                                                .playerIndex = i;
+                                            BlocProvider.of<
+                                                        WorkerAssignmentsCubit>(
+                                                    context)
+                                                .emit(
+                                                    WorkerAssignmentsPlayRecordButtonStateChange());
+                                          })
+                                      : StreamBuilder<FileResponse>(
+                                          stream: DefaultCacheManager()
+                                              .getFileStream(item.recordPath,
+                                                  withProgress: true),
+                                          builder: (context, value) {
+                                            // var progress =
+                                            //     value.data as DownloadProgress;
+                                            print(value.connectionState);
+                                            print(value.data.toString());
+                                            if (value.hasError) {
+                                              return FloatingActionButton(
+                                                  heroTag: null,
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(
+                                                    Icons.error,
+                                                    color: myIconColor,
+                                                    size: 34,
+                                                  ),
+                                                  elevation: 16,
+                                                  onPressed: () {});
+                                            } else if (value.connectionState ==
+                                                    ConnectionState.waiting ||
+                                                value.data
+                                                    is DownloadProgress) {
+                                              return Container(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else {
+                                              var file = value.data as FileInfo;
+                                              print(file.file.path);
+                                              BlocProvider.of<
+                                                          WorkerAssignmentsCubit>(
+                                                      context)
+                                                  .player
+                                                  .startPlayer(
+                                                      fromURI:
+                                                          'file://${file.file.path}',
+                                                      whenFinished: () {
+                                                        BlocProvider.of<
+                                                                    WorkerAssignmentsCubit>(
+                                                                context)
+                                                            .playerIndex = -1;
+                                                        BlocProvider.of<
+                                                                    WorkerAssignmentsCubit>(
+                                                                context)
+                                                            .emit(
+                                                                WorkerAssignmentsPlayRecordButtonStateChange());
+                                                      });
+                                              return FloatingActionButton(
+                                                heroTag: null,
+                                                backgroundColor: Colors.white,
+                                                child: Icon(
+                                                  Icons.stop,
+                                                  color: myIconColor,
+                                                  size: 34,
+                                                ),
+                                                elevation: 16,
+                                                onPressed: () {
+                                                  var cubit = BlocProvider.of<
+                                                          WorkerAssignmentsCubit>(
+                                                      context);
+                                                  if (cubit.player.isPlaying) {
+                                                    cubit.player.stopPlayer();
+                                                  }
+                                                  cubit.playerIndex = -1;
+                                                  cubit.emit(
+                                                      WorkerAssignmentsPlayRecordButtonStateChange());
+                                                },
+                                              );
                                             }
-                                            cubit.playerIndex = -1;
-                                            cubit.emit(
-                                                WorkerAssignmentsPlayRecordButtonStateChange());
                                           },
-                                        );
-                                      }
-                                    },
-                                  ),
+                                        ),
                                 ),
                               ),
-
                             );
                           });
                     } else if (state is WorkerAssignmentsError) {
