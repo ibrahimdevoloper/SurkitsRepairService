@@ -5,16 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/resetSuccess.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/ResetPasswordRequest/reset_password_request_cubit.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Cubits/ResetPasswordRequest/reset_password_request_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/ResetPasswordRequestPage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Widgets/LocationPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Widgets/RequestListItem.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Widgets/RequestListItem.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,15 +50,15 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/Widgets" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\assets" />
-      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Widgets" />
+      <recent name="C:\Users\ibrahim.s\AndroidStudioProjects\SurkitsRepairService\lib\Widgets" />
+      <recent name="C:\Users\ibrahim.s\AndroidStudioProjects\SurkitsRepairService\lib\Constants" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Constants" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\pages" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\dialogs" />
@@ -94,53 +95,61 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="441" y="170" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.738@0.0.1366.738" timestamp="1624217470428" />
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1625197530801">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1623970511797">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1625197530801" />
-    <state x="100" y="100" width="1182" height="554" key="AVDManager" timestamp="1625196183744">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1623970511797" />
+    <state x="100" y="100" width="1182" height="554" key="AVDManager" timestamp="1624566215939">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="100" y="100" width="1182" height="554" key="AVDManager/0.0.1366.738@0.0.1366.738" timestamp="1625196183744" />
+    <state x="100" y="100" width="1182" height="554" key="AVDManager/0.0.1366.738@0.0.1366.738" timestamp="1624566215939" />
     <state x="502" y="115" key="AndroidProcessChooserDialog" timestamp="1622226995271">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="502" y="115" key="AndroidProcessChooserDialog/0.0.1366.738@0.0.1366.738" timestamp="1622226995271" />
-    <state x="92" y="92" width="1182" height="554" key="DiffContextDialog" timestamp="1624558669857">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state x="103" y="103" width="1330" height="619" key="DiffContextDialog" timestamp="1624977813365">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="92" y="92" width="1182" height="554" key="DiffContextDialog/0.0.1366.738@0.0.1366.738" timestamp="1624558669857" />
-    <state x="463" y="123" key="FileChooserDialogImpl" timestamp="1624558626493">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state x="103" y="103" width="1330" height="619" key="DiffContextDialog/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1624977813365" />
+    <state x="521" y="137" key="FileChooserDialogImpl" timestamp="1624977371645">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1624558626493" />
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1625200950611">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state x="521" y="137" key="FileChooserDialogImpl/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1624977371645" />
+    <state width="1476" height="207" key="GridCell.Tab.0.bottom" timestamp="1625073439456">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1625200950611" />
-    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1625200950610">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1624568867186" />
+    <state width="1476" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625073439456" />
+    <state width="1476" height="207" key="GridCell.Tab.0.center" timestamp="1625073439456">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1625200950610" />
-    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1625200950610">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1624568867185" />
+    <state width="1476" height="207" key="GridCell.Tab.0.center/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625073439456" />
+    <state width="1476" height="207" key="GridCell.Tab.0.left" timestamp="1625073439455">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1625200950610" />
-    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1625200950611">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1624568867184" />
+    <state width="1476" height="207" key="GridCell.Tab.0.left/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625073439455" />
+    <state width="1476" height="207" key="GridCell.Tab.0.right" timestamp="1625073439456">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1625200950611" />
-    <state x="184" y="13" key="SettingsEditor" timestamp="1625198915324">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1624568867185" />
+    <state width="1476" height="207" key="GridCell.Tab.0.right/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625073439456" />
+    <state x="207" y="15" key="SettingsEditor" timestamp="1624976006417">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1625198915324" />
-    <state x="372" y="64" width="610" height="672" key="find.popup" timestamp="1624557431437">
-      <screen x="0" y="0" width="1366" height="738" />
+    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
+    <state x="207" y="15" key="SettingsEditor/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1624976006417" />
+    <state x="418" y="71" width="686" height="751" key="find.popup" timestamp="1625071373239">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1624557431437" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1625195892209">
+    <state x="418" y="71" width="686" height="751" key="find.popup/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625071373239" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1624222385720">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1625195892209" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1624222385720" />
   </component>
 </project>

@@ -57,6 +57,7 @@ dependencies:
   firebase_messaging: ^10.0.2
   flash: ^2.0.0
   chopper: ^4.0.1
+  flutter_webview_plugin: ^0.4.0
 
 dev_dependencies:
   flutter_test:
