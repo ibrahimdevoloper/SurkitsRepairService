@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/Widgets/LocationPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Widgets/RequestListItem.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Widgets/RequestListItem.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,10 +126,10 @@
     </state>
     <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1624568867185" />
     <state width="1476" height="207" key="GridCell.Tab.0.right/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625073439456" />
-    <state x="207" y="15" key="SettingsEditor" timestamp="1624976006417">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="184" y="13" key="SettingsEditor" timestamp="1625202072838">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
+    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1625202072838" />
     <state x="207" y="15" key="SettingsEditor/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1624976006417" />
     <state x="418" y="71" width="686" height="751" key="find.popup" timestamp="1625071373239">
       <screen x="0" y="0" width="1536" height="824" />

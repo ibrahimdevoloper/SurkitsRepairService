@@ -108,7 +108,6 @@ class ResetRequestPage extends StatelessWidget {
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // getTopContainer(TextPair('Sign up', 'تسجيل دخول')),
                     BlueGradientAppBar(
                         TextPair('Forgot Password', 'نسيت كلمة السر')),
                     Expanded(
