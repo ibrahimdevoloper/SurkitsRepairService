@@ -5,24 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eed907f7-da2b-4076-adb3-0c267bb58bd3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/resetSuccess.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/ResetPasswordRequest/reset_password_request_cubit.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/Cubits/ResetPasswordRequest/reset_password_request_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/ResetPasswordRequestPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Constants/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Constants/FirebaseKeys.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectRequestForWorker/admin_select_request_for_worker_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/RequestRepair/request_repair_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/WorkerAssignments/worker_assignments_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Functions/registeringFCMTokenByUserData.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Functions/registeringFCMTokenByUserData.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Functions/sendNotificationMethod.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Functions/sendNotificationMethod.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/IntroWithSignInPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/WorkerAssignmentsPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[RZ8NB0XNXEL]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -49,17 +49,18 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/Constants" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.migrate.to.gradle.popup" value="false" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/lib/Constants/FirebaseKeys.example.dart" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\assets" />
+      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Widgets" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Constants" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\pages" />
       <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\dialogs" />
-      <recent name="C:\Users\ibrah\Desktop\Projects\Flutter\SurkitsRepairService\lib\Widgets" />
     </key>
   </component>
   <component name="RunManager">
@@ -93,14 +94,14 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="441" y="170" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.738@0.0.1366.738" timestamp="1624217470428" />
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1623970511797">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser" timestamp="1625197530801">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1623970511797" />
-    <state x="100" y="100" width="1182" height="554" key="AVDManager" timestamp="1624566215939">
+    <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1625197530801" />
+    <state x="100" y="100" width="1182" height="554" key="AVDManager" timestamp="1625196183744">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="100" y="100" width="1182" height="554" key="AVDManager/0.0.1366.738@0.0.1366.738" timestamp="1624566215939" />
+    <state x="100" y="100" width="1182" height="554" key="AVDManager/0.0.1366.738@0.0.1366.738" timestamp="1625196183744" />
     <state x="502" y="115" key="AndroidProcessChooserDialog" timestamp="1622226995271">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
@@ -113,33 +114,33 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1624558626493" />
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1624568867186">
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1625200950611">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1624568867186" />
-    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1624568867185">
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1625200950611" />
+    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1625200950610">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1624568867185" />
-    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1624568867184">
+    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1625200950610" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1625200950610">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1624568867184" />
-    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1624568867185">
+    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1625200950610" />
+    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1625200950611">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1624568867185" />
-    <state x="184" y="13" key="SettingsEditor" timestamp="1622314272261">
+    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1625200950611" />
+    <state x="184" y="13" key="SettingsEditor" timestamp="1625198915324">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1622314272261" />
+    <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1625198915324" />
     <state x="372" y="64" width="610" height="672" key="find.popup" timestamp="1624557431437">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1624557431437" />
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1624222385720">
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1625195892209">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1624222385720" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1625195892209" />
   </component>
 </project>

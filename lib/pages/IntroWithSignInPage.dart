@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/IntroTopContainer.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
+import 'package:an_app/pages/ResetPasswordRequestPage.dart';
 import 'package:an_app/pages/SignupPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:email_validator/email_validator.dart';
@@ -149,16 +150,20 @@ class IntroPage extends StatelessWidget {
                               }
                             ),
                             // SizedBox(height: 20.0),
-                            Container(
-                              // alignment: Alignment(1.0, 0.0), // same as centerRight
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                onTap: () {
-                                  //TODO: send to repair man screen
-                                  // Navigator.of(context).pushNamed('/repairmanScreen');
-                                },
-                                child: Text("Forgot password?",
-                                    style: noteClickStyle),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Container(
+                                // alignment: Alignment(1.0, 0.0), // same as centerRight
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context)=>ResetRequestPage())
+                                    );
+                                  },
+                                  child: Text("Forgot password?",
+                                      style: noteClickStyle),
+                                ),
                               ),
                             ),
                           ],

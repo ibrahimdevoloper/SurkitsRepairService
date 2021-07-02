@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/dialogs/WorkerDidYouCompleteThisAssignmentDialog.dart';
 import 'package:an_app/models/TextPair.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -215,6 +216,17 @@ class WorkerAssignmentsPage extends StatelessWidget {
                           itemBuilder: (context, i) {
                             var item = list[i];
                             return RequestListItem(
+                              onItemClicked: () {
+                                //TODO: Confirm Completion
+                                showDialog(
+                                  context: context,
+                                  builder: (context1) => BlocProvider.value(
+                                      value: BlocProvider.of<
+                                          WorkerAssignmentsCubit>(context),
+                                      child:
+                                      workerDidYouCompleteThisAssignmentDialog(context,item)),
+                                );
+                              },
                               request: item,
                               imagePath: item.imagePath,
                               requestText: item.requestText,
