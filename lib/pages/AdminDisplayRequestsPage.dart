@@ -2,6 +2,8 @@ import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.
 import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
+import 'package:an_app/Widgets/EmptyListIndicator.dart';
+import 'package:an_app/Widgets/ErrorIndicator.dart';
 import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/dialogs/AdminDisplayRequestFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
@@ -11,16 +13,17 @@ import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../Functions/dateFormatter.dart';
 
 class AdminDisplayRequestsPage extends StatelessWidget {
-  var _scrollController = ScrollController();
+  var _pageController = PagingController<int, Request>(firstPageKey: 0);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminDisplayRequestsCubit>(
-      create: (context) => AdminDisplayRequestsCubit(),
+      create: (context) => AdminDisplayRequestsCubit(_pageController),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
             heroTag: null,
@@ -33,7 +36,12 @@ class AdminDisplayRequestsPage extends StatelessWidget {
             elevation: 16,
             onPressed: () {
               // TODO: Add request
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminRequestRepairPage(),),);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AdminRequestRepairPage(),
+                ),
+              );
             }),
         body: Column(
           children: [
@@ -89,33 +97,142 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                         current is AdminDisplayRequestsError;
                   },
                   builder: (context, state) {
-                    if (state is AdminDisplayRequestsLoading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is AdminDisplayRequestsLoaded) {
-                      var list = state.requests;
-                      return ListView.builder(
-                          padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
-                          itemCount: list.length,
-                          itemBuilder: (context, i) {
-                            var item = list[i];
-                            return RequestListItem(
+                    // if (state is AdminDisplayRequestsLoading) {
+                    //   return Center(
+                    //     child: CircularProgressIndicator(),
+                    //   );
+                    // } else
+                    if (state
+                        is AdminDisplayRequestsPlayRecordButtonStateChange) {
+                      // var list = state.requests;
+                      // return ListView.builder(
+                      //     padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
+                      //     itemCount: list.length,
+                      //     itemBuilder: (context, i) {
+                      //       var item = list[i];
+                      //       return RequestListItem(
+                      //         onItemClicked: () {
+                      //           Navigator.of(context).push(MaterialPageRoute(
+                      //             builder: (context) =>
+                      //                 AdminSelectWorkerForADisplayedRequestPage(
+                      //               requestId: item.requestId,
+                      //             ),
+                      //           ));
+                      //         },
+                      //         request: item,
+                      //         playIconButton: Padding(
+                      //           padding: const EdgeInsets.all(8.0),
+                      //           child: Center(
+                      //             child: BlocProvider.of<
+                      //                                 AdminDisplayRequestsCubit>(
+                      //                             context)
+                      //                         .playerIndex !=
+                      //                     i
+                      //                 ? FloatingActionButton(
+                      //                     heroTag: null,
+                      //                     backgroundColor: Colors.white,
+                      //                     child: Icon(
+                      //                       Icons.play_arrow,
+                      //                       color: myIconColor,
+                      //                       size: 34,
+                      //                     ),
+                      //                     elevation: 16,
+                      //                     onPressed: () {
+                      //                       BlocProvider.of<
+                      //                                   AdminDisplayRequestsCubit>(
+                      //                               context)
+                      //                           .playerIndex = i;
+                      //                       BlocProvider.of<
+                      //                                   AdminDisplayRequestsCubit>(
+                      //                               context)
+                      //                           .emit(
+                      //                               AdminDisplayRequestsPlayRecordButtonStateChange());
+                      //                     })
+                      //                 : StreamBuilder<FileResponse>(
+                      //                     stream: DefaultCacheManager()
+                      //                         .getFileStream(item.recordPath,
+                      //                             withProgress: true),
+                      //                     builder: (context, value) {
+                      //                       // var progress =
+                      //                       //     value.data as DownloadProgress;
+                      //                       if (value.hasError) {
+                      //                         return FloatingActionButton(
+                      //                             heroTag: null,
+                      //                             backgroundColor: Colors.white,
+                      //                             child: Icon(
+                      //                               Icons.error,
+                      //                               color: myIconColor,
+                      //                               size: 34,
+                      //                             ),
+                      //                             elevation: 16,
+                      //                             onPressed: () {});
+                      //                       } else if (value.connectionState ==
+                      //                           ConnectionState.waiting) {
+                      //                         var data = value.data
+                      //                             as DownloadProgress;
+                      //                         return Container(
+                      //                           height: 15,
+                      //                           width: 15,
+                      //                           child:
+                      //                               CircularProgressIndicator(
+                      //                             value: data.progress,
+                      //                           ),
+                      //                         );
+                      //                       } else if (value.connectionState ==
+                      //                               ConnectionState.done ||
+                      //                           value.data
+                      //                               is DownloadProgress) {
+                      //                         return Container(
+                      //                           child:
+                      //                               CircularProgressIndicator(),
+                      //                         );
+                      //                       } else {
+                      //                         var file = value.data as FileInfo;
+                      //                         print(file.file.path);
+                      //                         BlocProvider.of<
+                      //                                     AdminDisplayRequestsCubit>(
+                      //                                 context)
+                      //                             .player
+                      //                             .startPlayer(
+                      //                                 fromURI:
+                      //                                     'file://${file.file.path}');
+                      //                         return FloatingActionButton(
+                      //                             heroTag: null,
+                      //                             backgroundColor: Colors.white,
+                      //                             child: Icon(
+                      //                               Icons.stop,
+                      //                               color: myIconColor,
+                      //                               size: 34,
+                      //                             ),
+                      //                             elevation: 16,
+                      //                             onPressed: () {});
+                      //                       }
+                      //                     },
+                      //                   ),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     });
+                      return RefreshIndicator(
+                        onRefresh: () =>
+                            BlocProvider.of<AdminDisplayRequestsCubit>(context)
+                                .getRequestsPage(0),
+                        child: PagedListView<int, Request>(
+                          pagingController:
+                              BlocProvider.of<AdminDisplayRequestsCubit>(
+                                      context)
+                                  .pagingController,
+                          builderDelegate: PagedChildBuilderDelegate<Request>(
+                            itemBuilder: (context, item, i) => RequestListItem(
                               onItemClicked: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => AdminSelectWorkerForADisplayedRequestPage(
+                                  builder: (context) =>
+                                      AdminSelectWorkerForADisplayedRequestPage(
                                     requestId: item.requestId,
                                   ),
                                 ));
                               },
                               request: item,
-                              imagePath: item.imagePath,
-                              requestText: item.requestText,
-                              category: item.category,
-                              requesterName: item.requesterName,
-                              recordURL: item.recordPath,
-                              appointmentDate:
-                                  dateFormater(item.appointmentDate.toDate()),
                               playIconButton: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
@@ -146,8 +263,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                           })
                                       : StreamBuilder<FileResponse>(
                                           stream: DefaultCacheManager()
-                                              .getFileStream(item.recordPath,
-                                                  withProgress: true),
+                                              .getFileStream(item.recordPath),
                                           builder: (context, value) {
                                             // var progress =
                                             //     value.data as DownloadProgress;
@@ -161,26 +277,30 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                     size: 34,
                                                   ),
                                                   elevation: 16,
-                                                  onPressed: () {});
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                AdminDisplayRequestsCubit>(
+                                                            context)
+                                                        .playerIndex = i;
+                                                    BlocProvider.of<
+                                                                AdminDisplayRequestsCubit>(
+                                                            context)
+                                                        .emit(
+                                                            AdminDisplayRequestsPlayRecordButtonStateChange());
+                                                  });
                                             } else if (value.connectionState ==
-                                                ConnectionState.waiting) {
-                                              var data = value.data
-                                                  as DownloadProgress;
+                                                    ConnectionState.waiting ||
+                                                value.data
+                                                    is DownloadProgress) {
                                               return Container(
-                                                height: 15,
-                                                width: 15,
                                                 child:
-                                                    CircularProgressIndicator(
-                                                  value: data.progress,
-                                                ),
+                                                    CircularProgressIndicator(),
                                               );
-                                            }else if (value
-                                                .connectionState ==
-                                                ConnectionState
-                                                    .done|| value.data is DownloadProgress) {
+                                            } else if (value.connectionState ==
+                                                ConnectionState.done) {
                                               return Container(
                                                 child:
-                                                CircularProgressIndicator(),
+                                                    CircularProgressIndicator(),
                                               );
                                             } else {
                                               var file = value.data as FileInfo;
@@ -201,33 +321,167 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                     size: 34,
                                                   ),
                                                   elevation: 16,
-                                                  onPressed: () {});
+                                                  onPressed: () {
+                                                    var cubit = BlocProvider.of<
+                                                            AdminDisplayRequestsCubit>(
+                                                        context);
+                                                    if (cubit
+                                                        .player.isPlaying) {
+                                                      cubit.player.stopPlayer();
+                                                    }
+                                                    cubit.playerIndex = -1;
+                                                    cubit.emit(
+                                                        AdminDisplayRequestsPlayRecordButtonStateChange());
+                                                  });
                                             }
                                           },
                                         ),
                                 ),
                               ),
-                            );
-                          });
-                    } else if (state
-                        is AdminDisplayRequestsPlayRecordButtonStateChange) {
-                      var cubit =
-                          BlocProvider.of<AdminDisplayRequestsCubit>(context);
-                      var list = cubit.requests;
-                      return ListView.builder(
-                          padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
-                          itemCount: list.length,
-                          itemBuilder: (context, i) {
-                            var item = list[i];
-                            return RequestListItem(
+                            ),
+                            firstPageErrorIndicatorBuilder: (context) =>
+                                ErrorIndicator(),
+                            noItemsFoundIndicatorBuilder: (context) =>
+                                EmptyListIndicator(),
+                          ),
+                        ),
+                      );
+                    } else {
+                      // var cubit =
+                      //     BlocProvider.of<AdminDisplayRequestsCubit>(context);
+                      // var list = cubit.requests;
+                      // return ListView.builder(
+                      //     padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
+                      //     itemCount: list.length,
+                      //     itemBuilder: (context, i) {
+                      //       var item = list[i];
+                      //       return RequestListItem(
+                      //         request: item,
+                      //         playIconButton: Padding(
+                      //           padding: const EdgeInsets.all(8.0),
+                      //           child: Center(
+                      //             child: BlocProvider.of<
+                      //                                 AdminDisplayRequestsCubit>(
+                      //                             context)
+                      //                         .playerIndex !=
+                      //                     i
+                      //                 ? FloatingActionButton(
+                      //                     heroTag: null,
+                      //                     backgroundColor: Colors.white,
+                      //                     child: Icon(
+                      //                       Icons.play_arrow,
+                      //                       color: myIconColor,
+                      //                       size: 34,
+                      //                     ),
+                      //                     elevation: 16,
+                      //                     onPressed: () {
+                      //                       BlocProvider.of<
+                      //                                   AdminDisplayRequestsCubit>(
+                      //                               context)
+                      //                           .playerIndex = i;
+                      //                       BlocProvider.of<
+                      //                                   AdminDisplayRequestsCubit>(
+                      //                               context)
+                      //                           .emit(
+                      //                               AdminDisplayRequestsPlayRecordButtonStateChange());
+                      //                     })
+                      //                 : StreamBuilder<FileResponse>(
+                      //                     stream: DefaultCacheManager()
+                      //                         .getFileStream(item.recordPath,
+                      //                             withProgress: true),
+                      //                     builder: (context, value) {
+                      //                       // var progress =
+                      //                       //     value.data as DownloadProgress;
+                      //                       print(value.connectionState);
+                      //                       print(value.data.toString());
+                      //                       if (value.hasError) {
+                      //                         return FloatingActionButton(
+                      //                             heroTag: null,
+                      //                             backgroundColor: Colors.white,
+                      //                             child: Icon(
+                      //                               Icons.error,
+                      //                               color: myIconColor,
+                      //                               size: 34,
+                      //                             ),
+                      //                             elevation: 16,
+                      //                             onPressed: () {});
+                      //                       } else if (value.connectionState ==
+                      //                               ConnectionState.waiting ||
+                      //                           value.data
+                      //                               is DownloadProgress) {
+                      //                         return Container(
+                      //                           child:
+                      //                               CircularProgressIndicator(),
+                      //                         );
+                      //                       } else {
+                      //                         var file = value.data as FileInfo;
+                      //                         print(file.file.path);
+                      //                         BlocProvider.of<
+                      //                                     AdminDisplayRequestsCubit>(
+                      //                                 context)
+                      //                             .player
+                      //                             .startPlayer(
+                      //                                 fromURI:
+                      //                                     'file://${file.file.path}',
+                      //                                 whenFinished: () {
+                      //                                   BlocProvider.of<
+                      //                                               AdminDisplayRequestsCubit>(
+                      //                                           context)
+                      //                                       .playerIndex = -1;
+                      //                                   BlocProvider.of<
+                      //                                               AdminDisplayRequestsCubit>(
+                      //                                           context)
+                      //                                       .emit(
+                      //                                           AdminDisplayRequestsPlayRecordButtonStateChange());
+                      //                                 });
+                      //                         return FloatingActionButton(
+                      //                           heroTag: null,
+                      //                           backgroundColor: Colors.white,
+                      //                           child: Icon(
+                      //                             Icons.stop,
+                      //                             color: myIconColor,
+                      //                             size: 34,
+                      //                           ),
+                      //                           elevation: 16,
+                      //                           onPressed: () {
+                      //                             var cubit = BlocProvider.of<
+                      //                                     AdminDisplayRequestsCubit>(
+                      //                                 context);
+                      //                             if (cubit.player.isPlaying) {
+                      //                               cubit.player.stopPlayer();
+                      //                             }
+                      //                             cubit.playerIndex = -1;
+                      //                             cubit.emit(
+                      //                                 AdminDisplayRequestsPlayRecordButtonStateChange());
+                      //                           },
+                      //                         );
+                      //                       }
+                      //                     },
+                      //                   ),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     });
+                      return RefreshIndicator(
+                        onRefresh: () =>
+                            BlocProvider.of<AdminDisplayRequestsCubit>(context)
+                                .getRequestsPage(0),
+                        child: PagedListView<int, Request>(
+                          pagingController:
+                              BlocProvider.of<AdminDisplayRequestsCubit>(
+                                      context)
+                                  .pagingController,
+                          builderDelegate: PagedChildBuilderDelegate<Request>(
+                            itemBuilder: (context, item, i) => RequestListItem(
+                              onItemClicked: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      AdminSelectWorkerForADisplayedRequestPage(
+                                    requestId: item.requestId,
+                                  ),
+                                ));
+                              },
                               request: item,
-                              imagePath: item.imagePath,
-                              requestText: item.requestText,
-                              category: item.category,
-                              requesterName: item.requesterName,
-                              recordURL: item.recordPath,
-                              appointmentDate:
-                                  dateFormater(item.appointmentDate.toDate()),
                               playIconButton: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
@@ -263,8 +517,6 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                           builder: (context, value) {
                                             // var progress =
                                             //     value.data as DownloadProgress;
-                                            print(value.connectionState);
-                                            print(value.data.toString());
                                             if (value.hasError) {
                                               return FloatingActionButton(
                                                   heroTag: null,
@@ -275,9 +527,27 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                     size: 34,
                                                   ),
                                                   elevation: 16,
-                                                  onPressed: () {});
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                AdminDisplayRequestsCubit>(
+                                                            context)
+                                                        .playerIndex = i;
+                                                    BlocProvider.of<
+                                                                AdminDisplayRequestsCubit>(
+                                                            context)
+                                                        .emit(
+                                                            AdminDisplayRequestsPlayRecordButtonStateChange());
+                                                  });
                                             } else if (value.connectionState ==
-                                                ConnectionState.waiting|| value.data is DownloadProgress) {
+                                                ConnectionState.waiting||
+                                                value.data
+                                                is DownloadProgress) {
+                                              return Container(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            } else if (value.connectionState ==
+                                                    ConnectionState.done) {
                                               return Container(
                                                 child:
                                                     CircularProgressIndicator(),
@@ -291,52 +561,48 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                   .player
                                                   .startPlayer(
                                                       fromURI:
-                                                          'file://${file.file.path}',
-                                                      whenFinished: () {
-                                                        BlocProvider.of<
-                                                                    AdminDisplayRequestsCubit>(
-                                                                context)
-                                                            .playerIndex = -1;
-                                                        BlocProvider.of<
-                                                                    AdminDisplayRequestsCubit>(
-                                                                context)
-                                                            .emit(
-                                                                AdminDisplayRequestsPlayRecordButtonStateChange());
-                                                      });
+                                                          'file://${file.file.path}');
                                               return FloatingActionButton(
-                                                heroTag: null,
-                                                backgroundColor: Colors.white,
-                                                child: Icon(
-                                                  Icons.stop,
-                                                  color: myIconColor,
-                                                  size: 34,
-                                                ),
-                                                elevation: 16,
-                                                onPressed: () {
-                                                  var cubit = BlocProvider.of<
-                                                          AdminDisplayRequestsCubit>(
-                                                      context);
-                                                  if (cubit.player.isPlaying) {
-                                                    cubit.player.stopPlayer();
-                                                  }
-                                                  cubit.playerIndex = -1;
-                                                  cubit.emit(
-                                                      AdminDisplayRequestsPlayRecordButtonStateChange());
-                                                },
-                                              );
+                                                  heroTag: null,
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(
+                                                    Icons.stop,
+                                                    color: myIconColor,
+                                                    size: 34,
+                                                  ),
+                                                  elevation: 16,
+                                                  onPressed: () {
+                                                    var cubit = BlocProvider.of<
+                                                            AdminDisplayRequestsCubit>(
+                                                        context);
+                                                    if (cubit
+                                                        .player.isPlaying) {
+                                                      cubit.player.stopPlayer();
+                                                    }
+                                                    cubit.playerIndex = -1;
+                                                    cubit.emit(
+                                                        AdminDisplayRequestsPlayRecordButtonStateChange());
+                                                  });
                                             }
                                           },
                                         ),
                                 ),
                               ),
-
-                            );
-                          });
-                    } else if (state is AdminDisplayRequestsError) {
-                      return Center(
-                        child: Text("Error"),
+                            ),
+                            firstPageErrorIndicatorBuilder: (context) =>
+                                ErrorIndicator(),
+                            noItemsFoundIndicatorBuilder: (context) =>
+                                EmptyListIndicator(),
+                          ),
+                        ),
                       );
                     }
+                    //   else if (state is AdminDisplayRequestsError) {
+                    //   //TODO: add ErrorIndicator
+                    //   return Center(
+                    //     child: Text("Error"),
+                    //   );
+                    // }
                   }),
             ),
           ],

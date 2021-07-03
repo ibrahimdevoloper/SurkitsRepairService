@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/dateFormatter.dart';
 import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/Widgets/LocationPage.dart';
 import 'package:an_app/models/request.dart';
@@ -5,14 +6,14 @@ import 'package:flutter/material.dart';
 
 class RequestListItem extends StatelessWidget {
   Request _request;
-  String _requesterName;
-  String _category;
-  String _imagePath;
-  String _requestText;
-  String _recordURL;
+  // String _requesterName;
+  // String _category;
+  // String _imagePath;
+  // String _requestText;
+  // String _recordURL;
 
   // bool _isPlaying;
-  String _appointmentDate;
+  // String _appointmentDate;
 
   // Function _onPlayButtonPressed;
 
@@ -22,23 +23,24 @@ class RequestListItem extends StatelessWidget {
   RequestListItem({
     Key key,
     @required Request request,
-    @required String requesterName,
-    @required String category,
-    @required String imagePath,
-    @required String requestText,
-    @required String recordURL,
+    // @required String requesterName,
+    // @required String category,
+    // @required String imagePath,
+    // @required String requestText,
+    // @required String recordURL,
     // @required bool isPlaying,
-    @required String appointmentDate,
+    // @required String appointmentDate,
     // @required Function onPlayButtonPressed,
     @required Widget playIconButton,
     @required Function onItemClicked,
-  })  : this._requesterName = requesterName,
-        this._category = category,
-        this._imagePath = imagePath,
-        this._requestText = requestText,
-        this._recordURL = recordURL,
+  })  :
+        // this._requesterName = requesterName,
+        // this._category = category,
+        // this._imagePath = imagePath,
+        // this._requestText = requestText,
+        // this._recordURL = recordURL,
         // this._isPlaying = isPlaying,
-        this._appointmentDate = appointmentDate,
+        // this._appointmentDate = appointmentDate,
         // this._onPlayButtonPressed = onPlayButtonPressed,
         this._playIconButton = playIconButton,
         this._request = request,
@@ -67,12 +69,12 @@ class RequestListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              "Customer:$_requesterName",
+                              "Customer:${_request.requesterName}",
                               style: titileStyleBlack,
                               textDirection: TextDirection.ltr,
                             ),
                             Text(
-                              "Category: $_category",
+                              "Category: ${_request.category}",
                               style: TextStyle(
                                   fontFamily: 'Avenir',
                                   color: Colors.black,
@@ -81,7 +83,7 @@ class RequestListItem extends StatelessWidget {
                               textDirection: TextDirection.ltr,
                             ),
                             Text(
-                              "Appointment: $_appointmentDate",
+                              "Appointment: ${dateFormater(_request.appointmentDate.toDate())}",
                               style: TextStyle(
                                   fontFamily: 'Avenir',
                                   color: Colors.black,
@@ -151,11 +153,11 @@ class RequestListItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                _imagePath.isNotEmpty
+                _request.imagePath.isNotEmpty
                     ? AspectRatio(
                         aspectRatio: 16 / 9,
                         child: Image.network(
-                          _imagePath,
+                          _request.imagePath,
                           fit: BoxFit.cover,
                         ),
                       )
@@ -166,18 +168,18 @@ class RequestListItem extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    _recordURL.isNotEmpty
+                    _request.recordPath.isNotEmpty
                         ? _playIconButton
                         : Container(
                             height: 0,
                             width: 0,
                           ),
-                    _requestText.isNotEmpty
+                    _request.requestText.isNotEmpty
                         ? Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                _requestText,
+                                _request.requestText,
                                 textAlign: TextAlign.center,
                               ),
                             ),

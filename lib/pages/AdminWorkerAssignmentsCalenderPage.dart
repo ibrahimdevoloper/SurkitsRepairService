@@ -22,557 +22,552 @@ class AdminWorkerAssignmentsCalenderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AdminWorkerAssignmentsCalenderCubit>(
-      create: (context) => AdminWorkerAssignmentsCalenderCubit(_worker.uid),
-      child: Scaffold(
-        floatingActionButton: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
-          AdminWorkerAssignmentsCalenderState>(
-          builder: (context, snapshot) {
-            return FloatingActionButton(
-              heroTag: null,
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.add,
-                color: myIconColor,
-                size: 34,
-              ),
-              elevation: 15,
-              onPressed: () {
-                //TODO: add assigments
-                var cubit =
-                    BlocProvider.of<AdminWorkerAssignmentsCalenderCubit>(context);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => AdminSelectRequestForWorkerPage(
-                      assignedRequests: cubit.requests[cubit.selectedDay]!=null?cubit.requests[cubit.selectedDay]
-                          [AdminWorkerAssignmentsCalenderCubit.REQUESTS]:[],
-                      selectedDate: cubit.selectedDay,
-                      worker: _worker,
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-        ),
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                BlueGradientAppBar(
-                    TextPair('Worker Calender', 'جدول العامل')),
-                AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  // actions: [
-                  //   BlocBuilder<AdminAssignRequestCubit,
-                  //       AdminAssignRequestState>(builder: (context, state) {
-                  //     if (state is! AdminAssignRequestLoading) {
-                  //       return IconButton(
-                  //         icon: Icon(
-                  //           Icons.filter_list_sharp,
-                  //           color: Colors.white,
-                  //         ),
-                  //         onPressed: () {
-                  //           showDialog(
-                  //             context: context,
-                  //             builder: (context1) => BlocProvider.value(
-                  //                 value:
-                  //                 BlocProvider.of<AdminAssignRequestCubit>(
-                  //                     context),
-                  //                 child:
-                  //                 adminAssignRequestFilterDialog(context)),
-                  //           );
-                  //         },
-                  //       );
-                  //     } else {
-                  //       return Container(
-                  //         height: 0,
-                  //         width: 0,
-                  //       );
-                  //     }
-                  //   }),
-                  // ],
-                )
-              ],
-            ),
-            Expanded(
-              child: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
-                  AdminWorkerAssignmentsCalenderState>(
-                builder: (context, state) {
-                  print(BlocProvider.of<AdminWorkerAssignmentsCalenderCubit>(
-                          context)
-                      .focusedDay
-                      .toString());
-                  return Column(
-                    children: [
-                      TableCalendar<Request>(
-                        firstDay: DateTime(
-                          DateTime.now().year - 10,
-                        ),
-                        lastDay: DateTime(
-                          DateTime.now().year + 10,
-                        ),
-                        focusedDay: BlocProvider.of<
-                                AdminWorkerAssignmentsCalenderCubit>(context)
-                            .focusedDay,
-                        selectedDayPredicate: (day) {
-                          return isSameDay(
-                              BlocProvider.of<
-                                          AdminWorkerAssignmentsCalenderCubit>(
-                                      context)
-                                  .selectedDay,
-                              day);
-                        },
-                        onDaySelected:
-                            (DateTime selectedDay, DateTime focusedDay) {
-                          var cubit = BlocProvider.of<
-                              AdminWorkerAssignmentsCalenderCubit>(context);
-                          cubit.focusedDay = focusedDay;
-                          print(cubit.focusedDay.toString());
-                          cubit.selectedDay = selectedDay;
-                          cubit.emit(
-                            AdminWorkerAssignmentsCalenderSelectedDayChanged(),
-                          );
-                        },
-                        weekendDays: [
-                          DateTime.friday,
-                          DateTime.saturday,
-                        ],
-                        eventLoader: (date) => BlocProvider.of<
-                                AdminWorkerAssignmentsCalenderCubit>(context)
-                            .getEventList(date),
-                        //     (date) {
-                        //   if (date.weekday == DateTime.monday) {
-                        //     return [
-                        //       Request(
-                        //         requestText: "hello",
-                        //       )
-                        //     ];
-                        //   }
-                        //
-                        //   return [];
-                        // },
-                        onPageChanged: (focusedDay) {
-                          print(focusedDay);
-                          var cubit = BlocProvider.of<
-                              AdminWorkerAssignmentsCalenderCubit>(context);
-                          cubit.focusedDay = focusedDay;
-                          cubit.emit(
-                              AdminWorkerAssignmentsCalenderFocusedDayChanged());
-                        },
-                        calendarBuilders: CalendarBuilders(
-                          markerBuilder: (context, date, requests) {
-                            var cubit = BlocProvider.of<
-                                AdminWorkerAssignmentsCalenderCubit>(context);
-
-                            if (date.month == cubit.focusedDay.month) {
-                              print(
-                                  "$date:${cubit.requests[date][AdminWorkerAssignmentsCalenderCubit.IS_LOADING]}");
-                              return cubit.requests[date][
-                                      AdminWorkerAssignmentsCalenderCubit
-                                          .IS_LOADING]
-                                  ? Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                          height: 16,
-                                          width: 16,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          )),
-                                    )
-                                  : cubit
-                                          .requests[date][
-                                              AdminWorkerAssignmentsCalenderCubit
-                                                  .REQUESTS]
-                                          .isNotEmpty
-                                      ? Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              child: Text(
-                                                cubit
-                                                    .requests[date][
-                                                        AdminWorkerAssignmentsCalenderCubit
-                                                            .REQUESTS]
-                                                    .length
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.indigo),
-                                          ),
-                                        )
-                                      : Container(
-                                          width: 0,
-                                          height: 0,
-                                        );
-                            } else
-                              return Container(
-                                width: 0,
-                                height: 0,
-                              );
-                            // return requests.length != 0
-                            //     ? Align(
-                            //         alignment: Alignment.topLeft,
-                            //         child: Container(
-                            //           child: Padding(
-                            //             padding: const EdgeInsets.all(6.0),
-                            //             child: Text(
-                            //               requests.length.toString(),
-                            //               style: TextStyle(color: Colors.white),
-                            //             ),
-                            //           ),
-                            //           decoration: BoxDecoration(
-                            //               shape: BoxShape.circle,
-                            //               color: Colors.indigo),
-                            //         ),
-                            //       )
-                            //     :
-                          },
-                        ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                              child: Text(
-                            "Assignments",
-                            style: Theme.of(context).textTheme.headline5,
-                            textAlign: TextAlign.center,
-                          )),
-                          Expanded(
-                            child: Text(
-                              "المهمات",
-                              textDirection: TextDirection.rtl,
-                              style: Theme.of(context).textTheme.headline5,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
-                            AdminWorkerAssignmentsCalenderState>(
-                          // stream: null,
-                          buildWhen: (previous, current) {
-                            return current
-                                is! AdminWorkerAssignmentsCalenderFocusedDayChanged;
-                          },
-                          builder: (context, state) {
-                            if (state
-                                    is AdminWorkerAssignmentsCalenderLoading ||
-                                state
-                                    is AdminWorkerAssignmentsCalenderInitial) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state
-                                is AdminWorkerAssignmentsCalenderLoaded) {
-                              List<Request> items = state.requests;
-                              if (items.isNotEmpty) {
-                                return ListView.builder(
-                                  itemCount: items.length,
-                                  itemBuilder: (context, index) {
-                                    Request item = items[index];
-                                    return RequestListItem(
-                                      request: item,
-                                      requesterName: item.requesterName,
-                                      category: item.category,
-                                      imagePath: item.imagePath,
-                                      requestText: item.requestText,
-                                      recordURL: item.recordPath,
-                                      appointmentDate: dateFormater(
-                                          item.appointmentDate.toDate()),
-                                      playIconButton: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: BlocProvider.of<
-                                                              AdminWorkerAssignmentsCalenderCubit>(
-                                                          context)
-                                                      .selectedPlayerId !=
-                                                  index
-                                              ? FloatingActionButton(
-                                                  heroTag: null,
-                                                  backgroundColor: Colors.white,
-                                                  child: Icon(
-                                                    Icons.play_arrow,
-                                                    color: myIconColor,
-                                                    size: 34,
-                                                  ),
-                                                  elevation: 16,
-                                                  onPressed: () {
-                                                    BlocProvider.of<
-                                                                AdminWorkerAssignmentsCalenderCubit>(
-                                                            context)
-                                                        .selectedPlayerId = index;
-                                                    BlocProvider.of<
-                                                                AdminWorkerAssignmentsCalenderCubit>(
-                                                            context)
-                                                        .emit(
-                                                            AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                  })
-                                              : StreamBuilder<FileResponse>(
-                                                  stream: DefaultCacheManager()
-                                                      .getFileStream(
-                                                          item.recordPath,
-                                                          withProgress: true),
-                                                  builder: (context, value) {
-                                                    // var progress =
-                                                    //     value.data as DownloadProgress;
-                                                    print(
-                                                        value.connectionState);
-                                                    print(
-                                                        value.data.toString());
-                                                    if (value.hasError) {
-                                                      return FloatingActionButton(
-                                                          heroTag: null,
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          child: Icon(
-                                                            Icons.error,
-                                                            color: myIconColor,
-                                                            size: 34,
-                                                          ),
-                                                          elevation: 16,
-                                                          onPressed: () {});
-                                                    } else if (value
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting|| value.data is DownloadProgress) {
-                                                      return Container(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      );
-                                                    } else {
-                                                      var file = value.data
-                                                          as FileInfo;
-                                                      print(file.file.path);
-                                                      BlocProvider.of<
-                                                                  AdminWorkerAssignmentsCalenderCubit>(
-                                                              context)
-                                                          .player
-                                                          .startPlayer(
-                                                              fromURI:
-                                                                  'file://${file.file.path}',
-                                                              whenFinished: () {
-                                                                BlocProvider.of<
-                                                                            AdminWorkerAssignmentsCalenderCubit>(
-                                                                        context)
-                                                                    .selectedPlayerId = -1;
-                                                                BlocProvider.of<
-                                                                            AdminWorkerAssignmentsCalenderCubit>(
-                                                                        context)
-                                                                    .emit(
-                                                                        AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                              });
-                                                      return FloatingActionButton(
-                                                        heroTag: null,
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        child: Icon(
-                                                          Icons.stop,
-                                                          color: myIconColor,
-                                                          size: 34,
-                                                        ),
-                                                        elevation: 16,
-                                                        onPressed: () {
-                                                          var cubit = BlocProvider
-                                                              .of<AdminWorkerAssignmentsCalenderCubit>(
-                                                                  context);
-                                                          if (cubit.player
-                                                              .isPlaying) {
-                                                            cubit.player
-                                                                .stopPlayer();
-                                                          }
-                                                          cubit.selectedPlayerId =
-                                                              -1;
-                                                          cubit.emit(
-                                                              AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                        },
-                                                      );
-                                                    }
-                                                  },
-                                                ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else {
-                                return Center(
-                                    child: Text("add assignments using \n'+'",
-                                      textAlign: TextAlign.center,));
-                              }
-                            } else if (state
-                                    is AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange ||
-                                state
-                                    is AdminWorkerAssignmentsCalenderSelectedDayChanged) {
-                              var cubit = BlocProvider.of<
-                                  AdminWorkerAssignmentsCalenderCubit>(context);
-                              List<Request> items = cubit
-                                      .requests[cubit.selectedDay][
-                                  AdminWorkerAssignmentsCalenderCubit.REQUESTS];
-                              if (items.isNotEmpty) {
-                                return ListView.builder(
-                                  itemCount: items.length,
-                                  itemBuilder: (context, index) {
-                                    Request item = items[index];
-                                    return RequestListItem(
-                                      request: item,
-                                      requesterName: item.requesterName,
-                                      category: item.category,
-                                      imagePath: item.imagePath,
-                                      requestText: item.requestText,
-                                      recordURL: item.recordPath,
-                                      appointmentDate: dateFormater(
-                                          item.appointmentDate.toDate()),
-                                      playIconButton: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: BlocProvider.of<
-                                                              AdminWorkerAssignmentsCalenderCubit>(
-                                                          context)
-                                                      .selectedPlayerId !=
-                                                  index
-                                              ? FloatingActionButton(
-                                                  heroTag: null,
-                                                  backgroundColor: Colors.white,
-                                                  child: Icon(
-                                                    Icons.play_arrow,
-                                                    color: myIconColor,
-                                                    size: 34,
-                                                  ),
-                                                  elevation: 16,
-                                                  onPressed: () {
-                                                    BlocProvider.of<
-                                                                AdminWorkerAssignmentsCalenderCubit>(
-                                                            context)
-                                                        .selectedPlayerId = index;
-                                                    BlocProvider.of<
-                                                                AdminWorkerAssignmentsCalenderCubit>(
-                                                            context)
-                                                        .emit(
-                                                            AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                  })
-                                              : StreamBuilder<FileResponse>(
-                                                  stream: DefaultCacheManager()
-                                                      .getFileStream(
-                                                          item.recordPath,
-                                                          withProgress: true),
-                                                  builder: (context, value) {
-                                                    // var progress =
-                                                    //     value.data as DownloadProgress;
-                                                    if (value.hasError) {
-                                                      return FloatingActionButton(
-                                                          heroTag: null,
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          child: Icon(
-                                                            Icons.error,
-                                                            color: myIconColor,
-                                                            size: 34,
-                                                          ),
-                                                          elevation: 16,
-                                                          onPressed: () {});
-                                                    } else if (value
-                                                            .connectionState ==
-                                                        ConnectionState
-                                                            .waiting) {
-                                                      return Container(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      );
-                                                    } else if (value
-                                                            .connectionState ==
-                                                        ConnectionState.done|| value.data is DownloadProgress) {
-                                                      return Container(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      );
-                                                    } else {
-                                                      var file = value.data
-                                                          as FileInfo;
-                                                      print(file.file.path);
-                                                      BlocProvider.of<
-                                                                  AdminWorkerAssignmentsCalenderCubit>(
-                                                              context)
-                                                          .player
-                                                          .startPlayer(
-                                                              fromURI:
-                                                                  'file://${file.file.path}',
-                                                              whenFinished: () {
-                                                                BlocProvider.of<
-                                                                            AdminWorkerAssignmentsCalenderCubit>(
-                                                                        context)
-                                                                    .selectedPlayerId = -1;
-                                                                BlocProvider.of<
-                                                                            AdminWorkerAssignmentsCalenderCubit>(
-                                                                        context)
-                                                                    .emit(
-                                                                        AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                              });
-                                                      return FloatingActionButton(
-                                                        heroTag: null,
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        child: Icon(
-                                                          Icons.stop,
-                                                          color: myIconColor,
-                                                          size: 34,
-                                                        ),
-                                                        elevation: 16,
-                                                        onPressed: () {
-                                                          var cubit = BlocProvider
-                                                              .of<AdminWorkerAssignmentsCalenderCubit>(
-                                                                  context);
-                                                          if (cubit.player
-                                                              .isPlaying) {
-                                                            cubit.player
-                                                                .stopPlayer();
-                                                          }
-                                                          cubit.selectedPlayerId =
-                                                              -1;
-                                                          cubit.emit(
-                                                              AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
-                                                        },
-                                                      );
-                                                    }
-                                                  },
-                                                ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else {
-                                return  Center(
-                                    child: Text("add assignments using \n'+'",
-                                      textAlign: TextAlign.center,));
-                              }
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-    // return Scaffold(
-    //   body: Column(
-    //     children: [
+    //TODO: remove Comment
+    return Container();
+    // return BlocProvider<AdminWorkerAssignmentsCalenderCubit>(
+    //   create: (context) => AdminWorkerAssignmentsCalenderCubit(_worker.uid),
+    //   child: Scaffold(
+    //     floatingActionButton: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
+    //       AdminWorkerAssignmentsCalenderState>(
+    //       builder: (context, snapshot) {
+    //         return FloatingActionButton(
+    //           heroTag: null,
+    //           backgroundColor: Colors.white,
+    //           child: Icon(
+    //             Icons.add,
+    //             color: myIconColor,
+    //             size: 34,
+    //           ),
+    //           elevation: 15,
+    //           onPressed: () {
+    //             //TODO: add assigments
+    //             var cubit =
+    //                 BlocProvider.of<AdminWorkerAssignmentsCalenderCubit>(context);
+    //             Navigator.of(context).push(
+    //               MaterialPageRoute(
+    //                 builder: (context) => AdminSelectRequestForWorkerPage(
+    //                   assignedRequests: cubit.requests[cubit.selectedDay]!=null?cubit.requests[cubit.selectedDay]
+    //                       [AdminWorkerAssignmentsCalenderCubit.REQUESTS]:[],
+    //                   selectedDate: cubit.selectedDay,
+    //                   worker: _worker,
+    //                 ),
+    //               ),
+    //             );
+    //           },
+    //         );
+    //       }
+    //     ),
+    //     body: Column(
+    //       children: [
+    //         Stack(
+    //           children: [
+    //             BlueGradientAppBar(
+    //                 TextPair('Worker Calender', 'جدول العامل')),
+    //             AppBar(
+    //               backgroundColor: Colors.transparent,
+    //               elevation: 0,
+    //               // actions: [
+    //               //   BlocBuilder<AdminAssignRequestCubit,
+    //               //       AdminAssignRequestState>(builder: (context, state) {
+    //               //     if (state is! AdminAssignRequestLoading) {
+    //               //       return IconButton(
+    //               //         icon: Icon(
+    //               //           Icons.filter_list_sharp,
+    //               //           color: Colors.white,
+    //               //         ),
+    //               //         onPressed: () {
+    //               //           showDialog(
+    //               //             context: context,
+    //               //             builder: (context1) => BlocProvider.value(
+    //               //                 value:
+    //               //                 BlocProvider.of<AdminAssignRequestCubit>(
+    //               //                     context),
+    //               //                 child:
+    //               //                 adminAssignRequestFilterDialog(context)),
+    //               //           );
+    //               //         },
+    //               //       );
+    //               //     } else {
+    //               //       return Container(
+    //               //         height: 0,
+    //               //         width: 0,
+    //               //       );
+    //               //     }
+    //               //   }),
+    //               // ],
+    //             )
+    //           ],
+    //         ),
+    //         Expanded(
+    //           child: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
+    //               AdminWorkerAssignmentsCalenderState>(
+    //             builder: (context, state) {
+    //               print(BlocProvider.of<AdminWorkerAssignmentsCalenderCubit>(
+    //                       context)
+    //                   .focusedDay
+    //                   .toString());
+    //               return Column(
+    //                 children: [
+    //                   TableCalendar<Request>(
+    //                     firstDay: DateTime(
+    //                       DateTime.now().year - 10,
+    //                     ),
+    //                     lastDay: DateTime(
+    //                       DateTime.now().year + 10,
+    //                     ),
+    //                     focusedDay: BlocProvider.of<
+    //                             AdminWorkerAssignmentsCalenderCubit>(context)
+    //                         .focusedDay,
+    //                     selectedDayPredicate: (day) {
+    //                       return isSameDay(
+    //                           BlocProvider.of<
+    //                                       AdminWorkerAssignmentsCalenderCubit>(
+    //                                   context)
+    //                               .selectedDay,
+    //                           day);
+    //                     },
+    //                     onDaySelected:
+    //                         (DateTime selectedDay, DateTime focusedDay) {
+    //                       var cubit = BlocProvider.of<
+    //                           AdminWorkerAssignmentsCalenderCubit>(context);
+    //                       cubit.focusedDay = focusedDay;
+    //                       print(cubit.focusedDay.toString());
+    //                       cubit.selectedDay = selectedDay;
+    //                       cubit.emit(
+    //                         AdminWorkerAssignmentsCalenderSelectedDayChanged(),
+    //                       );
+    //                     },
+    //                     weekendDays: [
+    //                       DateTime.friday,
+    //                       DateTime.saturday,
+    //                     ],
+    //                     eventLoader: (date) => BlocProvider.of<
+    //                             AdminWorkerAssignmentsCalenderCubit>(context)
+    //                         .getEventList(date),
+    //                     //     (date) {
+    //                     //   if (date.weekday == DateTime.monday) {
+    //                     //     return [
+    //                     //       Request(
+    //                     //         requestText: "hello",
+    //                     //       )
+    //                     //     ];
+    //                     //   }
+    //                     //
+    //                     //   return [];
+    //                     // },
+    //                     onPageChanged: (focusedDay) {
+    //                       print(focusedDay);
+    //                       var cubit = BlocProvider.of<
+    //                           AdminWorkerAssignmentsCalenderCubit>(context);
+    //                       cubit.focusedDay = focusedDay;
+    //                       cubit.emit(
+    //                           AdminWorkerAssignmentsCalenderFocusedDayChanged());
+    //                     },
+    //                     calendarBuilders: CalendarBuilders(
+    //                       markerBuilder: (context, date, requests) {
+    //                         var cubit = BlocProvider.of<
+    //                             AdminWorkerAssignmentsCalenderCubit>(context);
     //
-    //     ],
+    //                         if (date.month == cubit.focusedDay.month) {
+    //                           print(
+    //                               "$date:${cubit.requests[date][AdminWorkerAssignmentsCalenderCubit.IS_LOADING]}");
+    //                           return cubit.requests[date][
+    //                                   AdminWorkerAssignmentsCalenderCubit
+    //                                       .IS_LOADING]
+    //                               ? Align(
+    //                                   alignment: Alignment.topLeft,
+    //                                   child: Container(
+    //                                       height: 16,
+    //                                       width: 16,
+    //                                       child: CircularProgressIndicator(
+    //                                         strokeWidth: 2,
+    //                                       )),
+    //                                 )
+    //                               : cubit
+    //                                       .requests[date][
+    //                                           AdminWorkerAssignmentsCalenderCubit
+    //                                               .REQUESTS]
+    //                                       .isNotEmpty
+    //                                   ? Align(
+    //                                       alignment: Alignment.topLeft,
+    //                                       child: Container(
+    //                                         child: Padding(
+    //                                           padding:
+    //                                               const EdgeInsets.all(6.0),
+    //                                           child: Text(
+    //                                             cubit
+    //                                                 .requests[date][
+    //                                                     AdminWorkerAssignmentsCalenderCubit
+    //                                                         .REQUESTS]
+    //                                                 .length
+    //                                                 .toString(),
+    //                                             style: TextStyle(
+    //                                                 color: Colors.white),
+    //                                           ),
+    //                                         ),
+    //                                         decoration: BoxDecoration(
+    //                                             shape: BoxShape.circle,
+    //                                             color: Colors.indigo),
+    //                                       ),
+    //                                     )
+    //                                   : Container(
+    //                                       width: 0,
+    //                                       height: 0,
+    //                                     );
+    //                         } else
+    //                           return Container(
+    //                             width: 0,
+    //                             height: 0,
+    //                           );
+    //                         // return requests.length != 0
+    //                         //     ? Align(
+    //                         //         alignment: Alignment.topLeft,
+    //                         //         child: Container(
+    //                         //           child: Padding(
+    //                         //             padding: const EdgeInsets.all(6.0),
+    //                         //             child: Text(
+    //                         //               requests.length.toString(),
+    //                         //               style: TextStyle(color: Colors.white),
+    //                         //             ),
+    //                         //           ),
+    //                         //           decoration: BoxDecoration(
+    //                         //               shape: BoxShape.circle,
+    //                         //               color: Colors.indigo),
+    //                         //         ),
+    //                         //       )
+    //                         //     :
+    //                       },
+    //                     ),
+    //                   ),
+    //                   Row(
+    //                     mainAxisSize: MainAxisSize.max,
+    //                     children: [
+    //                       Expanded(
+    //                           child: Text(
+    //                         "Assignments",
+    //                         style: Theme.of(context).textTheme.headline5,
+    //                         textAlign: TextAlign.center,
+    //                       )),
+    //                       Expanded(
+    //                         child: Text(
+    //                           "المهمات",
+    //                           textDirection: TextDirection.rtl,
+    //                           style: Theme.of(context).textTheme.headline5,
+    //                           textAlign: TextAlign.center,
+    //                         ),
+    //                       ),
+    //                     ],
+    //                   ),
+    //                   Expanded(
+    //                     child: BlocBuilder<AdminWorkerAssignmentsCalenderCubit,
+    //                         AdminWorkerAssignmentsCalenderState>(
+    //                       // stream: null,
+    //                       buildWhen: (previous, current) {
+    //                         return current
+    //                             is! AdminWorkerAssignmentsCalenderFocusedDayChanged;
+    //                       },
+    //                       builder: (context, state) {
+    //                         if (state
+    //                                 is AdminWorkerAssignmentsCalenderLoading ||
+    //                             state
+    //                                 is AdminWorkerAssignmentsCalenderInitial) {
+    //                           return Center(
+    //                             child: CircularProgressIndicator(),
+    //                           );
+    //                         } else if (state
+    //                             is AdminWorkerAssignmentsCalenderLoaded) {
+    //                           List<Request> items = state.requests;
+    //                           if (items.isNotEmpty) {
+    //                             return ListView.builder(
+    //                               itemCount: items.length,
+    //                               itemBuilder: (context, index) {
+    //                                 Request item = items[index];
+    //                                 return RequestListItem(
+    //                                   request: item,
+    //                                   requesterName: item.requesterName,
+    //                                   category: item.category,
+    //                                   imagePath: item.imagePath,
+    //                                   requestText: item.requestText,
+    //                                   recordURL: item.recordPath,
+    //                                   appointmentDate: dateFormater(
+    //                                       item.appointmentDate.toDate()),
+    //                                   playIconButton: Padding(
+    //                                     padding: const EdgeInsets.all(8.0),
+    //                                     child: Center(
+    //                                       child: BlocProvider.of<
+    //                                                           AdminWorkerAssignmentsCalenderCubit>(
+    //                                                       context)
+    //                                                   .selectedPlayerId !=
+    //                                               index
+    //                                           ? FloatingActionButton(
+    //                                               heroTag: null,
+    //                                               backgroundColor: Colors.white,
+    //                                               child: Icon(
+    //                                                 Icons.play_arrow,
+    //                                                 color: myIconColor,
+    //                                                 size: 34,
+    //                                               ),
+    //                                               elevation: 16,
+    //                                               onPressed: () {
+    //                                                 BlocProvider.of<
+    //                                                             AdminWorkerAssignmentsCalenderCubit>(
+    //                                                         context)
+    //                                                     .selectedPlayerId = index;
+    //                                                 BlocProvider.of<
+    //                                                             AdminWorkerAssignmentsCalenderCubit>(
+    //                                                         context)
+    //                                                     .emit(
+    //                                                         AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                               })
+    //                                           : StreamBuilder<FileResponse>(
+    //                                               stream: DefaultCacheManager()
+    //                                                   .getFileStream(
+    //                                                       item.recordPath,
+    //                                                       withProgress: true),
+    //                                               builder: (context, value) {
+    //                                                 // var progress =
+    //                                                 //     value.data as DownloadProgress;
+    //                                                 print(
+    //                                                     value.connectionState);
+    //                                                 print(
+    //                                                     value.data.toString());
+    //                                                 if (value.hasError) {
+    //                                                   return FloatingActionButton(
+    //                                                       heroTag: null,
+    //                                                       backgroundColor:
+    //                                                           Colors.white,
+    //                                                       child: Icon(
+    //                                                         Icons.error,
+    //                                                         color: myIconColor,
+    //                                                         size: 34,
+    //                                                       ),
+    //                                                       elevation: 16,
+    //                                                       onPressed: () {});
+    //                                                 } else if (value
+    //                                                         .connectionState ==
+    //                                                     ConnectionState
+    //                                                         .waiting|| value.data is DownloadProgress) {
+    //                                                   return Container(
+    //                                                     child:
+    //                                                         CircularProgressIndicator(),
+    //                                                   );
+    //                                                 } else {
+    //                                                   var file = value.data
+    //                                                       as FileInfo;
+    //                                                   print(file.file.path);
+    //                                                   BlocProvider.of<
+    //                                                               AdminWorkerAssignmentsCalenderCubit>(
+    //                                                           context)
+    //                                                       .player
+    //                                                       .startPlayer(
+    //                                                           fromURI:
+    //                                                               'file://${file.file.path}',
+    //                                                           whenFinished: () {
+    //                                                             BlocProvider.of<
+    //                                                                         AdminWorkerAssignmentsCalenderCubit>(
+    //                                                                     context)
+    //                                                                 .selectedPlayerId = -1;
+    //                                                             BlocProvider.of<
+    //                                                                         AdminWorkerAssignmentsCalenderCubit>(
+    //                                                                     context)
+    //                                                                 .emit(
+    //                                                                     AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                                           });
+    //                                                   return FloatingActionButton(
+    //                                                     heroTag: null,
+    //                                                     backgroundColor:
+    //                                                         Colors.white,
+    //                                                     child: Icon(
+    //                                                       Icons.stop,
+    //                                                       color: myIconColor,
+    //                                                       size: 34,
+    //                                                     ),
+    //                                                     elevation: 16,
+    //                                                     onPressed: () {
+    //                                                       var cubit = BlocProvider
+    //                                                           .of<AdminWorkerAssignmentsCalenderCubit>(
+    //                                                               context);
+    //                                                       if (cubit.player
+    //                                                           .isPlaying) {
+    //                                                         cubit.player
+    //                                                             .stopPlayer();
+    //                                                       }
+    //                                                       cubit.selectedPlayerId =
+    //                                                           -1;
+    //                                                       cubit.emit(
+    //                                                           AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                                     },
+    //                                                   );
+    //                                                 }
+    //                                               },
+    //                                             ),
+    //                                     ),
+    //                                   ),
+    //                                 );
+    //                               },
+    //                             );
+    //                           } else {
+    //                             return Center(
+    //                                 child: Text("add assignments using \n'+'",
+    //                                   textAlign: TextAlign.center,));
+    //                           }
+    //                         } else if (state
+    //                                 is AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange ||
+    //                             state
+    //                                 is AdminWorkerAssignmentsCalenderSelectedDayChanged) {
+    //                           var cubit = BlocProvider.of<
+    //                               AdminWorkerAssignmentsCalenderCubit>(context);
+    //                           List<Request> items = cubit
+    //                                   .requests[cubit.selectedDay][
+    //                               AdminWorkerAssignmentsCalenderCubit.REQUESTS];
+    //                           if (items.isNotEmpty) {
+    //                             return ListView.builder(
+    //                               itemCount: items.length,
+    //                               itemBuilder: (context, index) {
+    //                                 Request item = items[index];
+    //                                 return RequestListItem(
+    //                                   request: item,
+    //                                   requesterName: item.requesterName,
+    //                                   category: item.category,
+    //                                   imagePath: item.imagePath,
+    //                                   requestText: item.requestText,
+    //                                   recordURL: item.recordPath,
+    //                                   appointmentDate: dateFormater(
+    //                                       item.appointmentDate.toDate()),
+    //                                   playIconButton: Padding(
+    //                                     padding: const EdgeInsets.all(8.0),
+    //                                     child: Center(
+    //                                       child: BlocProvider.of<
+    //                                                           AdminWorkerAssignmentsCalenderCubit>(
+    //                                                       context)
+    //                                                   .selectedPlayerId !=
+    //                                               index
+    //                                           ? FloatingActionButton(
+    //                                               heroTag: null,
+    //                                               backgroundColor: Colors.white,
+    //                                               child: Icon(
+    //                                                 Icons.play_arrow,
+    //                                                 color: myIconColor,
+    //                                                 size: 34,
+    //                                               ),
+    //                                               elevation: 16,
+    //                                               onPressed: () {
+    //                                                 BlocProvider.of<
+    //                                                             AdminWorkerAssignmentsCalenderCubit>(
+    //                                                         context)
+    //                                                     .selectedPlayerId = index;
+    //                                                 BlocProvider.of<
+    //                                                             AdminWorkerAssignmentsCalenderCubit>(
+    //                                                         context)
+    //                                                     .emit(
+    //                                                         AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                               })
+    //                                           : StreamBuilder<FileResponse>(
+    //                                               stream: DefaultCacheManager()
+    //                                                   .getFileStream(
+    //                                                       item.recordPath,
+    //                                                       withProgress: true),
+    //                                               builder: (context, value) {
+    //                                                 // var progress =
+    //                                                 //     value.data as DownloadProgress;
+    //                                                 if (value.hasError) {
+    //                                                   return FloatingActionButton(
+    //                                                       heroTag: null,
+    //                                                       backgroundColor:
+    //                                                           Colors.white,
+    //                                                       child: Icon(
+    //                                                         Icons.error,
+    //                                                         color: myIconColor,
+    //                                                         size: 34,
+    //                                                       ),
+    //                                                       elevation: 16,
+    //                                                       onPressed: () {});
+    //                                                 } else if (value
+    //                                                         .connectionState ==
+    //                                                     ConnectionState
+    //                                                         .waiting) {
+    //                                                   return Container(
+    //                                                     child:
+    //                                                         CircularProgressIndicator(),
+    //                                                   );
+    //                                                 } else if (value
+    //                                                         .connectionState ==
+    //                                                     ConnectionState.done|| value.data is DownloadProgress) {
+    //                                                   return Container(
+    //                                                     child:
+    //                                                         CircularProgressIndicator(),
+    //                                                   );
+    //                                                 } else {
+    //                                                   var file = value.data
+    //                                                       as FileInfo;
+    //                                                   print(file.file.path);
+    //                                                   BlocProvider.of<
+    //                                                               AdminWorkerAssignmentsCalenderCubit>(
+    //                                                           context)
+    //                                                       .player
+    //                                                       .startPlayer(
+    //                                                           fromURI:
+    //                                                               'file://${file.file.path}',
+    //                                                           whenFinished: () {
+    //                                                             BlocProvider.of<
+    //                                                                         AdminWorkerAssignmentsCalenderCubit>(
+    //                                                                     context)
+    //                                                                 .selectedPlayerId = -1;
+    //                                                             BlocProvider.of<
+    //                                                                         AdminWorkerAssignmentsCalenderCubit>(
+    //                                                                     context)
+    //                                                                 .emit(
+    //                                                                     AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                                           });
+    //                                                   return FloatingActionButton(
+    //                                                     heroTag: null,
+    //                                                     backgroundColor:
+    //                                                         Colors.white,
+    //                                                     child: Icon(
+    //                                                       Icons.stop,
+    //                                                       color: myIconColor,
+    //                                                       size: 34,
+    //                                                     ),
+    //                                                     elevation: 16,
+    //                                                     onPressed: () {
+    //                                                       var cubit = BlocProvider
+    //                                                           .of<AdminWorkerAssignmentsCalenderCubit>(
+    //                                                               context);
+    //                                                       if (cubit.player
+    //                                                           .isPlaying) {
+    //                                                         cubit.player
+    //                                                             .stopPlayer();
+    //                                                       }
+    //                                                       cubit.selectedPlayerId =
+    //                                                           -1;
+    //                                                       cubit.emit(
+    //                                                           AdminWorkerAssignmentsCalenderPlayRecordButtonStateChange());
+    //                                                     },
+    //                                                   );
+    //                                                 }
+    //                                               },
+    //                                             ),
+    //                                     ),
+    //                                   ),
+    //                                 );
+    //                               },
+    //                             );
+    //                           } else {
+    //                             return  Center(
+    //                                 child: Text("add assignments using \n'+'",
+    //                                   textAlign: TextAlign.center,));
+    //                           }
+    //                         }
+    //                       },
+    //                     ),
+    //                   ),
+    //                 ],
+    //               );
+    //             },
+    //           ),
+    //         ),
+    //       ],
+    //     ),
     //   ),
     // );
   }

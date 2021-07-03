@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:meta/meta.dart';
 
 part 'admin_display_requests_state.dart';
@@ -15,10 +16,18 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   bool _isDescending=true;
   String _selectedCategory = "";
 
-  AdminDisplayRequestsCubit() : super(AdminDisplayRequestsInitial()) {
+  final PagingController<int, Request> _pagingController;
+
+  var _lastDoc;
+
+
+  AdminDisplayRequestsCubit(this._pagingController) : super(AdminDisplayRequestsInitial()) {
     _player = FlutterSoundPlayer();
     _player.openAudioSession();
-    getRequests();
+    _pagingController.addPageRequestListener((pageKey) {
+      getRequestsPage(pageKey);
+    });
+    // getRequests();
   }
 
 
@@ -26,66 +35,165 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   Future<Function> close() {
     _player.closeAudioSession();
     _player = null;
+    _pagingController.dispose();
   }
 
-  getRequests() async {
-    emit(AdminDisplayRequestsLoading());
-    try {
-    // var query = FirebaseFirestore.instance
-    //     .collection('requests')
-    //     .orderBy(
-    //       Request.Appointment_Date,
-    //   descending: _isDescending
-    //     ).where(Request.Category, isEqualTo: _selectedCategory,);
-    if(_selectedCategory.isNotEmpty)
+  getRequestsPage(int pageNumber) async {
+    // // print(pageNumber);
+    List<Request> requests = [];
+    var elementNumberPerPage = 3;
+    if (pageNumber == 0) {
+
+      if(_selectedCategory.isNotEmpty)
       {
         var query = FirebaseFirestore.instance
             .collection('requests')
             .orderBy(
             Request.APPOINTMENT_DATE,
             descending: _isDescending
-        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,);
+        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,).limit(elementNumberPerPage);
         var mapList =await query.get();
 
-        _requests= [];
+        // requests= [];
         mapList.docs
           ..forEach((element) {
-            // print(element.data());
-            _requests.add(Request.fromJson(element.data(), element.id));
+            requests.add(Request.fromJson(element.data(), element.id));
+            _lastDoc = element;
           });
-        emit(AdminDisplayRequestsLoaded(_requests));
+        // emit(AdminDisplayRequestsLoaded(_requests));
       }
-    else{
-      var query = FirebaseFirestore.instance
-          .collection('requests')
-          .orderBy(
-          Request.APPOINTMENT_DATE,
-          descending: _isDescending
-      );
-      var mapList =await query.get();
+      else{
+        var query = FirebaseFirestore.instance
+            .collection('requests')
+            .orderBy(
+            Request.APPOINTMENT_DATE,
+            descending: _isDescending
+        ).limit(elementNumberPerPage);
+        var mapList =await query.get();
 
-      _requests= [];
-      mapList.docs
-        ..forEach((element) {
-          // print(element.data());
-          _requests.add(Request.fromJson(element.data(), element.id));
-        });
-      emit(AdminDisplayRequestsLoaded(_requests));
-    }
-    // var mapList =await query.get();
-    //
-    //   _requests= [];
-    //   mapList.docs
-    //     ..forEach((element) {
-    //       // print(element.data());
-    //       _requests.add(Request.fromJson(element.data(), element.id));
-    //     });
-    } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
-      emit(AdminDisplayRequestsError());
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            requests.add(Request.fromJson(element.data(), element.id));
+            _lastDoc = element;
+          });
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      }
+
+      // var usersQuery =
+      // await firestore.collection("users").limit(elementNumberPerPage).get();
+      // usersQuery.docs.forEach((element) {
+      //   print("element:$element");
+      //   users.add(User.fromJson(element.data()));
+      //   lastDoc = element;
+      // });
+      // lastDoc = usersQuery.docs.last;
+      // return users;
+      if (elementNumberPerPage <= requests.length)
+        _pagingController.appendPage(requests, pageNumber + requests.length);
+      else
+        _pagingController.appendLastPage(requests);
+    } else {
+      // var usersQuery = await firestore
+      //     .collection("users")
+      //     .startAfterDocument(lastDoc)
+      //     .limit(elementNumberPerPage)
+      //     .get();
+      // usersQuery.docs.forEach((element) {
+      //   print("element:$element");
+      //   users.add(User.fromJson(element.data()));
+      //   lastDoc = element;
+      // });
+      // // lastDoc = usersQuery.docs.last;
+      // return users;
+      if(_selectedCategory.isNotEmpty)
+      {
+        var query = FirebaseFirestore.instance
+            .collection('requests')
+            .orderBy(
+            Request.APPOINTMENT_DATE,
+            descending: _isDescending
+        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,).limit(elementNumberPerPage).startAfter(_lastDoc);
+        var mapList =await query.get();
+
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            requests.add(Request.fromJson(element.data(), element.id));
+            // _lastDoc = element;
+          });
+        _lastDoc = mapList.docs.last.data();
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      }
+      else{
+        var query = FirebaseFirestore.instance
+            .collection('requests')
+            .orderBy(
+            Request.APPOINTMENT_DATE,
+            descending: _isDescending
+        ).limit(elementNumberPerPage).startAfter(_lastDoc);
+        var mapList =await query.get();
+
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            requests.add(Request.fromJson(element.data(), element.id));
+            // _lastDoc = element;
+          });
+        _lastDoc = mapList.docs.last.data();
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      }
+      if (elementNumberPerPage <= requests.length)
+        _pagingController.appendPage(requests, pageNumber + requests.length);
+      else
+        _pagingController.appendLastPage(requests);
     }
   }
+
+  // getRequests() async {
+  //   emit(AdminDisplayRequestsLoading());
+  //   try {
+  //   if(_selectedCategory.isNotEmpty)
+  //     {
+  //       var query = FirebaseFirestore.instance
+  //           .collection('requests')
+  //           .orderBy(
+  //           Request.APPOINTMENT_DATE,
+  //           descending: _isDescending
+  //       ).where(Request.CATEGORY, isEqualTo: _selectedCategory,);
+  //       var mapList =await query.get();
+  //
+  //       _requests= [];
+  //       mapList.docs
+  //         ..forEach((element) {
+  //           // print(element.data());
+  //           _requests.add(Request.fromJson(element.data(), element.id));
+  //         });
+  //       emit(AdminDisplayRequestsLoaded(_requests));
+  //     }
+  //   else{
+  //     var query = FirebaseFirestore.instance
+  //         .collection('requests')
+  //         .orderBy(
+  //         Request.APPOINTMENT_DATE,
+  //         descending: _isDescending
+  //     );
+  //     var mapList =await query.get();
+  //
+  //     _requests= [];
+  //     mapList.docs
+  //       ..forEach((element) {
+  //         // print(element.data());
+  //         _requests.add(Request.fromJson(element.data(), element.id));
+  //       });
+  //     emit(AdminDisplayRequestsLoaded(_requests));
+  //   }
+  //   } catch (e) {
+  //     //TODO: handle errors
+  //     print("error: $e");
+  //     emit(AdminDisplayRequestsError());
+  //   }
+  // }
 
   int get playerIndex => _playerIndex;
 
@@ -116,4 +224,7 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   set isDescending(bool value) {
     _isDescending = value;
   }
+
+  PagingController<int, Request> get pagingController => _pagingController;
+
 }

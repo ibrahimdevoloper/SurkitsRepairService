@@ -121,7 +121,8 @@ AlertDialog adminDisplayRequestFilterDialog(BuildContext context) {
         child: Text("Cancel"),
       ),ElevatedButton(
         onPressed: () {
-          BlocProvider.of<AdminDisplayRequestsCubit>(context).getRequests();
+          // BlocProvider.of<AdminDisplayRequestsCubit>(context).getRequests();
+          BlocProvider.of<AdminDisplayRequestsCubit>(context).pagingController.refresh();
           Navigator.pop(context);
         },
         child: Text("Ok"),
