@@ -312,7 +312,15 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                   .player
                                                   .startPlayer(
                                                       fromURI:
-                                                          'file://${file.file.path}');
+                                                          'file://${file.file.path}')
+                                                  .whenComplete(() {
+                                                var cubit = BlocProvider.of<
+                                                        AdminDisplayRequestsCubit>(
+                                                    context);
+                                                cubit.playerIndex = -1;
+                                                cubit.emit(
+                                                    AdminDisplayRequestsPlayRecordButtonStateChange());
+                                              });
                                               return FloatingActionButton(
                                                   heroTag: null,
                                                   backgroundColor: Colors.white,
@@ -566,7 +574,15 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                   .player
                                                   .startPlayer(
                                                       fromURI:
-                                                          'file://${file.file.path}');
+                                                          'file://${file.file.path}')
+                                                  .whenComplete(() {
+                                                var cubit = BlocProvider.of<
+                                                        AdminDisplayRequestsCubit>(
+                                                    context);
+                                                cubit.playerIndex = -1;
+                                                cubit.emit(
+                                                    AdminDisplayRequestsPlayRecordButtonStateChange());
+                                              });
                                               return FloatingActionButton(
                                                   heroTag: null,
                                                   backgroundColor: Colors.white,
