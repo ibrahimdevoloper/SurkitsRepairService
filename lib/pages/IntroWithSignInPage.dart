@@ -3,8 +3,6 @@ import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/IntroTopContainer.dart';
 import 'package:an_app/models/TextPair.dart';
-import 'package:an_app/models/request.dart';
-import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/ResetPasswordRequestPage.dart';
 import 'package:an_app/pages/SignupPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
@@ -20,7 +18,7 @@ class IntroPage extends StatelessWidget {
     return BlocProvider<IntroWithSignInCubit>(
       create: (context) => IntroWithSignInCubit(),
       child: Scaffold(
-        // resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset:  false,
         body: BlocConsumer<IntroWithSignInCubit, IntroWithSignInState>(
             // bloc: BlocProvider.of<IntroWithSignInCubit>(context),
             listenWhen: (previous, current) {
@@ -47,7 +45,6 @@ class IntroPage extends StatelessWidget {
               current is IntroWithSignInError ||
               current is IntroWithSignInInitial;
         }, builder: (context, state) {
-
           return ModalProgressHUD(
             inAsyncCall: state is IntroWithSignInLoading,
             child: Column(
@@ -60,7 +57,7 @@ class IntroPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Column(
                           children: [
@@ -112,43 +109,44 @@ class IntroPage extends StatelessWidget {
                                   );
                                 }),
                             BlocBuilder<IntroWithSignInCubit,
-                                IntroWithSignInState>(
+                                    IntroWithSignInState>(
                                 bloc: BlocProvider.of<IntroWithSignInCubit>(
                                     context),
                                 buildWhen: (previous, current) {
                                   print(current);
-                                  return current is IntroWithSignInPasswordError ||
+                                  return current
+                                          is IntroWithSignInPasswordError ||
                                       current is IntroWithSignInPasswordReset ||
                                       current is IntroWithSignInInitial;
                                 },
-                                builder: (context, state){
-                                return TextField(
-                                  decoration: InputDecoration(
-                                      errorText:
-                                      state is IntroWithSignInPasswordError
-                                          ? "Please Type Correct Password"
-                                          : null,
-                                      labelText: 'PASSWORD',
-                                      labelStyle: textFillStyle,
-                                      focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: middleColor))),
-                                  obscureText: true,
-                                  onTap: () {
-                                    var cubit =
-                                    BlocProvider.of<IntroWithSignInCubit>(
-                                        context);
-                                    cubit.emit(IntroWithSignInPasswordReset());
-                                  },
-                                  onChanged: (value) {
-                                    var cubit =
-                                        BlocProvider.of<IntroWithSignInCubit>(
-                                            context);
-                                    cubit.password = value;
-                                  },
-                                );
-                              }
-                            ),
+                                builder: (context, state) {
+                                  return TextField(
+                                    decoration: InputDecoration(
+                                        errorText: state
+                                                is IntroWithSignInPasswordError
+                                            ? "Please Type Correct Password"
+                                            : null,
+                                        labelText: 'PASSWORD',
+                                        labelStyle: textFillStyle,
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: middleColor))),
+                                    obscureText: true,
+                                    onTap: () {
+                                      var cubit =
+                                          BlocProvider.of<IntroWithSignInCubit>(
+                                              context);
+                                      cubit
+                                          .emit(IntroWithSignInPasswordReset());
+                                    },
+                                    onChanged: (value) {
+                                      var cubit =
+                                          BlocProvider.of<IntroWithSignInCubit>(
+                                              context);
+                                      cubit.password = value;
+                                    },
+                                  );
+                                }),
                             // SizedBox(height: 20.0),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -158,8 +156,9 @@ class IntroPage extends StatelessWidget {
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context)=>ResetRequestPage())
-                                    );
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ResetRequestPage()));
                                   },
                                   child: Text("Forgot password?",
                                       style: noteClickStyle),
@@ -187,7 +186,7 @@ class IntroPage extends StatelessWidget {
                                     bottomRight: Radius.circular(10))),
                             //child: GestureDetector(
                             child: Consumer<SharedPreferencesProvider>(
-                              builder:(context,provider,_)=> InkWell(
+                              builder: (context, provider, _) => InkWell(
                                 onTap: () {
                                   // Navigator.of(context).pushNamed('/firstScreen');
                                   // Navigator.push(
@@ -200,7 +199,9 @@ class IntroPage extends StatelessWidget {
                                   if (cubit.validator()) {
                                     cubit.SignIn(provider.pref);
                                   } else {
-                                    cubit.emit(IntroWithSignInError("Check Input Fields", "تحقق من حقول الإدخال"));
+                                    cubit.emit(IntroWithSignInError(
+                                        "Check Input Fields",
+                                        "تحقق من حقول الإدخال"));
                                   }
                                 },
                                 child: Center(

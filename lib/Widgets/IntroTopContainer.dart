@@ -14,19 +14,25 @@ class IntroTopAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 32,vertical: 32),
+      padding: EdgeInsets.fromLTRB(
+        32,
+        16,
+        32,
+        8,
+      ),
       constraints: BoxConstraints.expand(height: 246),
       decoration: BoxDecoration(
-        // gradient: new LinearGradient(
-        //     colors: [lightBlueIsh, lightGreen],
-        //     begin: const FractionalOffset(1.0, 1.0),
-        //     end: const FractionalOffset(0.2, 0.2),
-        //     stops: [0.0, 1.0],
-        //     tileMode: TileMode.clamp
-        // ),
-        // color: lightGreen,
+          // gradient: new LinearGradient(
+          //     colors: [lightBlueIsh, lightGreen],
+          //     begin: const FractionalOffset(1.0, 1.0),
+          //     end: const FractionalOffset(0.2, 0.2),
+          //     stops: [0.0, 1.0],
+          //     tileMode: TileMode.clamp
+          // ),
+          // color: lightGreen,
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30))),
       child: Container(
         // padding: EdgeInsets.only(top: 40),
         child: Stack(
@@ -56,5 +62,6 @@ class IntroTopAppBar extends StatelessWidget {
           ],
         ),
       ),
-    );  }
+    );
+  }
 }

@@ -11,17 +11,17 @@ part 'admin_display_requests_state.dart';
 class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   List<Request> _requests = [];
   FlutterSoundPlayer _player;
-  int _playerIndex=-1;
+  int _playerIndex = -1;
 
-  bool _isDescending=true;
+  bool _isDescending = true;
   String _selectedCategory = "";
 
   final PagingController<int, Request> _pagingController;
 
   var _lastDoc;
 
-
-  AdminDisplayRequestsCubit(this._pagingController) : super(AdminDisplayRequestsInitial()) {
+  AdminDisplayRequestsCubit(this._pagingController)
+      : super(AdminDisplayRequestsInitial()) {
     _player = FlutterSoundPlayer();
     _player.openAudioSession();
     _pagingController.addPageRequestListener((pageKey) {
@@ -29,7 +29,6 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
     });
     // getRequests();
   }
-
 
   @override
   Future<Function> close() {
@@ -41,112 +40,122 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   getRequestsPage(int pageNumber) async {
     // // print(pageNumber);
     List<Request> requests = [];
-    var elementNumberPerPage = 3;
-    if (pageNumber == 0) {
+    var elementNumberPerPage = 10;
+    try {
+      if (pageNumber == 0) {
+        // pagingController.refresh();
+        if (_selectedCategory.isNotEmpty) {
+          var query = FirebaseFirestore.instance
+              .collection('requests')
+              .orderBy(Request.APPOINTMENT_DATE, descending: _isDescending)
+              .where(
+                Request.CATEGORY,
+                isEqualTo: _selectedCategory,
+              )
+              .limit(elementNumberPerPage);
+          var mapList = await query.get();
 
-      if(_selectedCategory.isNotEmpty)
-      {
-        var query = FirebaseFirestore.instance
-            .collection('requests')
-            .orderBy(
-            Request.APPOINTMENT_DATE,
-            descending: _isDescending
-        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,).limit(elementNumberPerPage);
-        var mapList =await query.get();
+          // requests= [];
+          mapList.docs
+            ..forEach((element) {
+              requests.add(Request.fromJson(element.data(), element.id));
+              // _lastDoc = element;
+            });
+          _lastDoc = mapList.docs.last;
+          // emit(AdminDisplayRequestsLoaded(_requests));
+        } else {
+          var query = FirebaseFirestore.instance
+              .collection('requests')
+              .orderBy(Request.APPOINTMENT_DATE, descending: _isDescending)
+              .limit(elementNumberPerPage);
+          var mapList = await query.get();
 
-        // requests= [];
-        mapList.docs
-          ..forEach((element) {
-            requests.add(Request.fromJson(element.data(), element.id));
-            _lastDoc = element;
-          });
-        // emit(AdminDisplayRequestsLoaded(_requests));
+          // requests= [];
+          mapList.docs
+            ..forEach((element) {
+              requests.add(Request.fromJson(element.data(), element.id));
+              // _lastDoc = element;
+            });
+          _lastDoc = mapList.docs.last;
+          // emit(AdminDisplayRequestsLoaded(_requests));
+        }
+
+        // var usersQuery =
+        // await firestore.collection("users").limit(elementNumberPerPage).get();
+        // usersQuery.docs.forEach((element) {
+        //   print("element:$element");
+        //   users.add(User.fromJson(element.data()));
+        //   lastDoc = element;
+        // });
+        // lastDoc = usersQuery.docs.last;
+        // return users;
+        print(requests.length < elementNumberPerPage);
+        if (requests.length < elementNumberPerPage)
+          _pagingController.appendLastPage(requests);
+        else
+          _pagingController.appendPage(requests, pageNumber + requests.length);
+      } else {
+        // var usersQuery = await firestore
+        //     .collection("users")
+        //     .startAfterDocument(lastDoc)
+        //     .limit(elementNumberPerPage)
+        //     .get();
+        // usersQuery.docs.forEach((element) {
+        //   print("element:$element");
+        //   users.add(User.fromJson(element.data()));
+        //   lastDoc = element;
+        // });
+        // // lastDoc = usersQuery.docs.last;
+        // return users;
+        if (_selectedCategory.isNotEmpty) {
+          var query = FirebaseFirestore.instance
+              .collection('requests')
+              .orderBy(Request.APPOINTMENT_DATE, descending: _isDescending)
+              .where(
+                Request.CATEGORY,
+                isEqualTo: _selectedCategory,
+              )
+              .limit(elementNumberPerPage)
+              .startAfterDocument(_lastDoc);
+          var mapList = await query.get();
+
+          // requests= [];
+          mapList.docs
+            ..forEach((element) {
+              requests.add(Request.fromJson(element.data(), element.id));
+              // _lastDoc = element;
+            });
+          _lastDoc = mapList.docs.last;
+          // emit(AdminDisplayRequestsLoaded(_requests));
+        } else {
+          var query = FirebaseFirestore.instance
+              .collection('requests')
+              .orderBy(Request.APPOINTMENT_DATE, descending: _isDescending)
+              .limit(elementNumberPerPage)
+              .startAfterDocument(_lastDoc);
+          var mapList = await query.get();
+
+          // requests= [];
+          mapList.docs
+            ..forEach((element) {
+              requests.add(Request.fromJson(element.data(), element.id));
+              // _lastDoc = element;
+            });
+          if (mapList.docs.isNotEmpty)
+            _lastDoc = mapList.docs.last;
+          else
+            _lastDoc = null;
+          // emit(AdminDisplayRequestsLoaded(_requests));
+        }
+        print(requests.length < elementNumberPerPage);
+        if (requests.length < elementNumberPerPage)
+          _pagingController.appendLastPage(requests);
+        else
+          _pagingController.appendPage(requests, pageNumber + requests.length);
       }
-      else{
-        var query = FirebaseFirestore.instance
-            .collection('requests')
-            .orderBy(
-            Request.APPOINTMENT_DATE,
-            descending: _isDescending
-        ).limit(elementNumberPerPage);
-        var mapList =await query.get();
-
-        // requests= [];
-        mapList.docs
-          ..forEach((element) {
-            requests.add(Request.fromJson(element.data(), element.id));
-            _lastDoc = element;
-          });
-        // emit(AdminDisplayRequestsLoaded(_requests));
-      }
-
-      // var usersQuery =
-      // await firestore.collection("users").limit(elementNumberPerPage).get();
-      // usersQuery.docs.forEach((element) {
-      //   print("element:$element");
-      //   users.add(User.fromJson(element.data()));
-      //   lastDoc = element;
-      // });
-      // lastDoc = usersQuery.docs.last;
-      // return users;
-      if (elementNumberPerPage <= requests.length)
-        _pagingController.appendPage(requests, pageNumber + requests.length);
-      else
-        _pagingController.appendLastPage(requests);
-    } else {
-      // var usersQuery = await firestore
-      //     .collection("users")
-      //     .startAfterDocument(lastDoc)
-      //     .limit(elementNumberPerPage)
-      //     .get();
-      // usersQuery.docs.forEach((element) {
-      //   print("element:$element");
-      //   users.add(User.fromJson(element.data()));
-      //   lastDoc = element;
-      // });
-      // // lastDoc = usersQuery.docs.last;
-      // return users;
-      if(_selectedCategory.isNotEmpty)
-      {
-        var query = FirebaseFirestore.instance
-            .collection('requests')
-            .orderBy(
-            Request.APPOINTMENT_DATE,
-            descending: _isDescending
-        ).where(Request.CATEGORY, isEqualTo: _selectedCategory,).limit(elementNumberPerPage).startAfter(_lastDoc);
-        var mapList =await query.get();
-
-        // requests= [];
-        mapList.docs
-          ..forEach((element) {
-            requests.add(Request.fromJson(element.data(), element.id));
-            // _lastDoc = element;
-          });
-        _lastDoc = mapList.docs.last.data();
-        // emit(AdminDisplayRequestsLoaded(_requests));
-      }
-      else{
-        var query = FirebaseFirestore.instance
-            .collection('requests')
-            .orderBy(
-            Request.APPOINTMENT_DATE,
-            descending: _isDescending
-        ).limit(elementNumberPerPage).startAfter(_lastDoc);
-        var mapList =await query.get();
-
-        // requests= [];
-        mapList.docs
-          ..forEach((element) {
-            requests.add(Request.fromJson(element.data(), element.id));
-            // _lastDoc = element;
-          });
-        _lastDoc = mapList.docs.last.data();
-        // emit(AdminDisplayRequestsLoaded(_requests));
-      }
-      if (elementNumberPerPage <= requests.length)
-        _pagingController.appendPage(requests, pageNumber + requests.length);
-      else
-        _pagingController.appendLastPage(requests);
+    } catch (e) {
+      // TODO: handle Errors
+      _pagingController.error = e;
     }
   }
 
@@ -226,5 +235,4 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   }
 
   PagingController<int, Request> get pagingController => _pagingController;
-
 }

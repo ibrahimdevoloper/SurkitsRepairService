@@ -1,5 +1,4 @@
 import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart';
-import 'package:an_app/UIValuesFolder/TextStyles.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/Widgets/EmptyListIndicator.dart';
@@ -14,8 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
-import '../Functions/dateFormatter.dart';
 
 class AdminDisplayRequestsPage extends StatelessWidget {
   var _pageController = PagingController<int, Request>(firstPageKey: 0);
@@ -267,6 +264,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                           builder: (context, value) {
                                             // var progress =
                                             //     value.data as DownloadProgress;
+                                            // print(progress);
                                             if (value.hasError) {
                                               return FloatingActionButton(
                                                   heroTag: null,
@@ -292,17 +290,20 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                     ConnectionState.waiting ||
                                                 value.data
                                                     is DownloadProgress) {
+                                              print(value.data);
                                               return Container(
                                                 child:
                                                     CircularProgressIndicator(),
                                               );
-                                            } else if (value.connectionState ==
-                                                ConnectionState.done) {
-                                              return Container(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            } else {
+                                            }
+                                            // else if (value.connectionState ==
+                                            //     ConnectionState.done) {
+                                            //   return Container(
+                                            //     child:
+                                            //         CircularProgressIndicator(),
+                                            //   );
+                                            // }
+                                            else {
                                               var file = value.data as FileInfo;
                                               print(file.file.path);
                                               BlocProvider.of<
@@ -517,6 +518,7 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                           builder: (context, value) {
                                             // var progress =
                                             //     value.data as DownloadProgress;
+                                            // print(progress);
                                             if (value.hasError) {
                                               return FloatingActionButton(
                                                   heroTag: null,
@@ -539,20 +541,23 @@ class AdminDisplayRequestsPage extends StatelessWidget {
                                                             AdminDisplayRequestsPlayRecordButtonStateChange());
                                                   });
                                             } else if (value.connectionState ==
-                                                ConnectionState.waiting||
+                                                    ConnectionState.waiting ||
                                                 value.data
-                                                is DownloadProgress) {
+                                                    is DownloadProgress) {
+                                              print(value.data);
                                               return Container(
                                                 child:
                                                     CircularProgressIndicator(),
                                               );
-                                            } else if (value.connectionState ==
-                                                    ConnectionState.done) {
-                                              return Container(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            } else {
+                                            }
+                                            // else if (value.connectionState ==
+                                            //         ConnectionState.done) {
+                                            //   return Container(
+                                            //     child:
+                                            //         CircularProgressIndicator(),
+                                            //   );
+                                            // }
+                                            else {
                                               var file = value.data as FileInfo;
                                               print(file.file.path);
                                               BlocProvider.of<
