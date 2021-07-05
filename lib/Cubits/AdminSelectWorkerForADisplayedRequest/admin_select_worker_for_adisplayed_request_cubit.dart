@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,53 +17,184 @@ part 'admin_select_worker_for_adisplayed_request_state.dart';
 
 class AdminSelectWorkerForAdisplayedRequestCubit
     extends Cubit<AdminSelectWorkerForAdisplayedRequestState> {
+  var _selectedCategory = "";
+
+  QueryDocumentSnapshot<Map<String, dynamic>> _lastDoc;
+
+  PagingController<int, UserData> _pagingController;
+
   AdminSelectWorkerForAdisplayedRequestCubit()
       : super(AdminSelectWorkerForAdisplayedRequestInitial()) {
     // print("AdminSelectWorkerForAdisplayedRequestCubit");
-    getWorkers();
+    // getWorkers();
+    _pagingController = PagingController<int, UserData>(firstPageKey: 0);
+    _pagingController.addPageRequestListener((pageKey) {
+      getWorkersPage(pageKey);
+    });
   }
 
-  var _selectedCategory = "";
-  List<UserData> _usersData = [];
+  // List<UserData> _usersData = [];
 
-  getWorkers() async {
-    emit(AdminSelectWorkerForAdisplayedRequestLoading());
-
-    try {
-      if (_selectedCategory.isEmpty) {
-        var mapList = await FirebaseFirestore.instance
-            .collection('users')
-            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
-            .get();
-
-        _usersData = [];
-        mapList.docs
-          ..forEach((element) {
-            print(element.data());
-            _usersData.add(UserData.fromJson(element.data()));
-          });
-        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
-      } else {
-        var mapList = await FirebaseFirestore.instance
+  getWorkersPage(int pageNumber) async {
+    // // print(pageNumber);
+    List<UserData> workers = [];
+    var elementNumberPerPage = 10;
+    // try {
+    if (pageNumber == 0) {
+      // pagingController.refresh();
+      if (_selectedCategory.isNotEmpty) {
+        var query = FirebaseFirestore.instance
             .collection('users')
             .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
             .where(UserData.CATEGORY, isEqualTo: _selectedCategory)
-            .get();
+            .limit(elementNumberPerPage);
+        var mapList = await query.get();
 
-        _usersData = [];
+        // requests= [];
         mapList.docs
           ..forEach((element) {
-            print(element.data());
-            _usersData.add(UserData.fromJson(element.data()));
+            workers.add(UserData.fromJson(element.data()));
+            // _lastDoc = element;
           });
-        emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+        _lastDoc = mapList.docs.last;
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      } else {
+        var query = FirebaseFirestore.instance
+            .collection('users')
+            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+            .limit(elementNumberPerPage);
+        var mapList = await query.get();
+
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            workers.add(UserData.fromJson(element.data()));
+            // _lastDoc = element;
+          });
+        _lastDoc = mapList.docs.last;
+        // emit(AdminDisplayRequestsLoaded(_requests));
       }
-    } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
-      emit(AdminSelectWorkerForAdisplayedRequestError());
+
+      // var usersQuery =
+      // await firestore.collection("users").limit(elementNumberPerPage).get();
+      // usersQuery.docs.forEach((element) {
+      //   print("element:$element");
+      //   users.add(User.fromJson(element.data()));
+      //   lastDoc = element;
+      // });
+      // lastDoc = usersQuery.docs.last;
+      // return users;
+
+      if (_pagingController.nextPageKey != null) {
+        if (workers.length < elementNumberPerPage)
+          _pagingController.appendLastPage(workers);
+        else
+          _pagingController.appendPage(workers, pageNumber + workers.length);
+      }
+    } else {
+      // var usersQuery = await firestore
+      //     .collection("users")
+      //     .startAfterDocument(lastDoc)
+      //     .limit(elementNumberPerPage)
+      //     .get();
+      // usersQuery.docs.forEach((element) {
+      //   print("element:$element");
+      //   users.add(User.fromJson(element.data()));
+      //   lastDoc = element;
+      // });
+      // // lastDoc = usersQuery.docs.last;
+      // return users;
+      if (_selectedCategory.isNotEmpty) {
+        var query = FirebaseFirestore.instance
+            .collection('users')
+            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+            .where(UserData.CATEGORY, isEqualTo: _selectedCategory)
+            .limit(elementNumberPerPage)
+            .startAfterDocument(_lastDoc);
+        var mapList = await query.get();
+
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            workers.add(UserData.fromJson(
+              element.data(),
+            ));
+            // _lastDoc = element;
+          });
+        _lastDoc = mapList.docs.last;
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      } else {
+        var query = FirebaseFirestore.instance
+            .collection('users')
+            .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+            .limit(elementNumberPerPage)
+            .startAfterDocument(_lastDoc);
+        var mapList = await query.get();
+
+        // requests= [];
+        mapList.docs
+          ..forEach((element) {
+            workers.add(UserData.fromJson(element.data()));
+            // _lastDoc = element;
+          });
+        if (mapList.docs.isNotEmpty)
+          _lastDoc = mapList.docs.last;
+        else
+          _lastDoc = null;
+        // emit(AdminDisplayRequestsLoaded(_requests));
+      }
+      if (_pagingController.nextPageKey != null) {
+        if (workers.length < elementNumberPerPage)
+          _pagingController.appendLastPage(workers);
+        else
+          _pagingController.appendPage(workers, pageNumber + workers.length);
+      }
     }
+    // } catch (e) {
+    //   // TODO: handle Errors
+    //   _pagingController.error = e;
+    //   print(e);
+    // }
   }
+
+  // getWorkers() async {
+  //   emit(AdminSelectWorkerForAdisplayedRequestLoading());
+  //
+  //   try {
+  //     if (_selectedCategory.isEmpty) {
+  //       var mapList = await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+  //           .get();
+  //
+  //       _usersData = [];
+  //       mapList.docs
+  //         ..forEach((element) {
+  //           print(element.data());
+  //           _usersData.add(UserData.fromJson(element.data()));
+  //         });
+  //       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+  //     } else {
+  //       var mapList = await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .where(UserData.ROLE, isEqualTo: UserData.ROLE_WORKER)
+  //           .where(UserData.CATEGORY, isEqualTo: _selectedCategory)
+  //           .get();
+  //
+  //       _usersData = [];
+  //       mapList.docs
+  //         ..forEach((element) {
+  //           print(element.data());
+  //           _usersData.add(UserData.fromJson(element.data()));
+  //         });
+  //       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+  //     }
+  //   } catch (e) {
+  //     //TODO: handle errors
+  //     print("error: $e");
+  //     emit(AdminSelectWorkerForAdisplayedRequestError());
+  //   }
+  // }
 
   assignRequest(
       String documentId, UserData worker, SharedPreferences pref) async {
@@ -87,9 +219,8 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       await sendNotificationMethod(
           title: "New Request|طلب جديد",
           text: "Press Here|أضغط هنا",
-          usersId:  worker.uid
-      );
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+          usersId: worker.uid);
+      emit(AdminSelectWorkerForAdisplayedRequestLoaded());
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
@@ -144,12 +275,12 @@ class AdminSelectWorkerForAdisplayedRequestCubit
 
       //TODO: send Notifications
       await sendNotificationMethod(
-          title: "New Request|طلب جديد",
-          text: "Press Here|أضغط هنا",
-          usersId:  worker.uid,
+        title: "New Request|طلب جديد",
+        text: "Press Here|أضغط هنا",
+        usersId: worker.uid,
       );
 
-      emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
+      emit(AdminSelectWorkerForAdisplayedRequestLoaded());
     } catch (e) {
       //TODO: handle errors
       print("error: $e");
@@ -163,9 +294,11 @@ class AdminSelectWorkerForAdisplayedRequestCubit
     _selectedCategory = value;
   }
 
-  List<UserData> get usersData => _usersData;
+  PagingController<int, UserData> get pagingController => _pagingController;
 
-  set usersData(List<UserData> value) {
-    _usersData = value;
-  }
+// List<UserData> get usersData => _usersData;
+//
+// set usersData(List<UserData> value) {
+//   _usersData = value;
+// }
 }

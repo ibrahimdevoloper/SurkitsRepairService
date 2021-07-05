@@ -16,14 +16,14 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   bool _isDescending = true;
   String _selectedCategory = "";
 
-  final PagingController<int, Request> _pagingController;
+  PagingController<int, Request> _pagingController;
 
   var _lastDoc;
 
-  AdminDisplayRequestsCubit(this._pagingController)
-      : super(AdminDisplayRequestsInitial()) {
+  AdminDisplayRequestsCubit() : super(AdminDisplayRequestsInitial()) {
     _player = FlutterSoundPlayer();
     _player.openAudioSession();
+    _pagingController = PagingController<int, Request>(firstPageKey: 0);
     _pagingController.addPageRequestListener((pageKey) {
       getRequestsPage(pageKey);
     });

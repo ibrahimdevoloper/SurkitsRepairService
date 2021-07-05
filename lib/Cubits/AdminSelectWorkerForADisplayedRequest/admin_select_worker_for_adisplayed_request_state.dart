@@ -17,8 +17,8 @@ class AdminSelectWorkerForAdisplayedRequestLoading
 
 class AdminSelectWorkerForAdisplayedRequestLoaded
     extends AdminSelectWorkerForAdisplayedRequestState {
-  final List<UserData> usersData;
-  AdminSelectWorkerForAdisplayedRequestLoaded(this.usersData);
+  // final List<UserData> usersData;
+  AdminSelectWorkerForAdisplayedRequestLoaded();
 }
 
 class AdminSelectWorkerForAdisplayedRequestError

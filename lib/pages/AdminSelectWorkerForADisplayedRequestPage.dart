@@ -1,4 +1,6 @@
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
+import 'package:an_app/Widgets/EmptyListIndicator.dart';
+import 'package:an_app/Widgets/ErrorIndicator.dart';
 import 'package:an_app/Widgets/WorkerItem.dart';
 import 'package:an_app/dialogs/AdminSelectWorkerFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
@@ -7,6 +9,7 @@ import 'package:an_app/models/user_data.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 
 import '../Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
@@ -83,32 +86,71 @@ class _AdminSelectWorkerForADisplayedRequestPageState
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                if (state is AdminSelectWorkerForAdisplayedRequestLoaded) {
-                  return ListView.builder(
-                    padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
-                    itemCount: state.usersData.length,
-                    itemBuilder: (context, i) {
-                      UserData item = state.usersData[i];
-                      return Consumer<SharedPreferencesProvider>(
+                else
+                // (state is AdminSelectWorkerForAdisplayedRequestLoaded)
+                {
+                  return RefreshIndicator(
+                    onRefresh: () => BlocProvider.of<
+                            AdminSelectWorkerForAdisplayedRequestCubit>(context)
+                        .getWorkersPage(0),
+                    child: PagedListView<int, UserData>(
+                      pagingController: BlocProvider.of<
+                                  AdminSelectWorkerForAdisplayedRequestCubit>(
+                              context)
+                          .pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<UserData>(
+                        itemBuilder: (context, item, i) =>
+                            Consumer<SharedPreferencesProvider>(
                           builder: (context, provider, _) {
-                        return WorkerItem(
-                            item: item,
-                            onItemPressed: () {
-                              var cubit = BlocProvider.of<
-                                      AdminSelectWorkerForAdisplayedRequestCubit>(
-                                  context);
-                              if (widget.request != null) {
-                                cubit.addRequest(
-                                    widget.request, item, provider.pref);
-                              } else if (widget.requestId != null) {
-                                cubit.assignRequest(
-                                    widget.requestId, item, provider.pref);
-                              }
-                              //TODO: handle Error
-                            });
-                      });
-                    },
+                            return WorkerItem(
+                                item: item,
+                                onItemPressed: () {
+                                  var cubit = BlocProvider.of<
+                                          AdminSelectWorkerForAdisplayedRequestCubit>(
+                                      context);
+                                  if (widget.request != null) {
+                                    cubit.addRequest(
+                                        widget.request, item, provider.pref);
+                                  } else if (widget.requestId != null) {
+                                    cubit.assignRequest(
+                                        widget.requestId, item, provider.pref);
+                                  }
+                                  //TODO: handle Error
+                                });
+                          },
+                        ),
+                        firstPageErrorIndicatorBuilder: (context) =>
+                            ErrorIndicator(),
+                        noItemsFoundIndicatorBuilder: (context) =>
+                            EmptyListIndicator(),
+                      ),
+                    ),
                   );
+                  // return ListView.builder(
+                  //   padding: EdgeInsets.fromLTRB(16.0, 8, 16, 8),
+                  //   itemCount: state.usersData.length,
+                  //   itemBuilder: (context, i) {
+                  //     UserData item = state.usersData[i];
+                  //     return Consumer<SharedPreferencesProvider>(
+                  //         builder: (context, provider, _) {
+                  //       return WorkerItem(
+                  //           item: item,
+                  //           onItemPressed: () {
+                  //             var cubit = BlocProvider.of<
+                  //                     AdminSelectWorkerForAdisplayedRequestCubit>(
+                  //                 context);
+                  //             if (widget.request != null) {
+                  //               cubit.addRequest(
+                  //                   widget.request, item, provider.pref);
+                  //             } else if (widget.requestId != null) {
+                  //               cubit.assignRequest(
+                  //                   widget.requestId, item, provider.pref);
+                  //             }
+                  //             //TODO: handle Error
+                  //           });
+                  //     });
+                  //   },
+                  // );
                 }
               }),
             ),

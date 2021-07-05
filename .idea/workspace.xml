@@ -8,14 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Cubits/CustomerRequests/customer_requests_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/CustomerRequests/customer_requests_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dialogs/CustomerRequestFilterDialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dialogs/CustomerRequestFilterDialog.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminRequestRepairPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectRequestForWorkerPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectRequestForWorkerPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/dialogs/AdminSelectWorkerFilterDialog.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dialogs/AdminSelectWorkerFilterDialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminDisplayRequestsPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminSelectWorkerForADisplayedRequestPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/AdminWorkerAssignmentsCalenderPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/AdminWorkerAssignmentsCalenderPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerHomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/CustomerRequestsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/CustomerRequestsPage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,11 +91,11 @@
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="441" y="170" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.738@0.0.1366.738" timestamp="1624217470428" />
-    <state x="549" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1625412883572">
+    <state x="549" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1625499881034">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="488" y="84" key="#com.intellij.ide.util.MemberChooser/0.0.1366.738@0.0.1366.738" timestamp="1625269919612" />
-    <state x="549" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625412883572" />
+    <state x="549" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625499881034" />
     <state x="-390" y="103" width="1330" height="619" key="AVDManager" timestamp="1625323773338">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -118,36 +115,36 @@
     </state>
     <state x="463" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1625272829555" />
     <state x="521" y="137" key="FileChooserDialogImpl/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1624977371645" />
-    <state width="1476" height="205" key="GridCell.Tab.0.bottom" timestamp="1625497592708">
+    <state width="1478" height="354" key="GridCell.Tab.0.bottom" timestamp="1625501948108">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1625273865680" />
-    <state width="1476" height="205" key="GridCell.Tab.0.bottom/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625497592708" />
-    <state width="1476" height="205" key="GridCell.Tab.0.center" timestamp="1625497592708">
+    <state width="1478" height="354" key="GridCell.Tab.0.bottom/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625501948108" />
+    <state width="1478" height="354" key="GridCell.Tab.0.center" timestamp="1625501948108">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1625273865679" />
-    <state width="1476" height="205" key="GridCell.Tab.0.center/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625497592708" />
-    <state width="1476" height="205" key="GridCell.Tab.0.left" timestamp="1625497592708">
+    <state width="1478" height="354" key="GridCell.Tab.0.center/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625501948108" />
+    <state width="1478" height="354" key="GridCell.Tab.0.left" timestamp="1625501948108">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1625273865679" />
-    <state width="1476" height="205" key="GridCell.Tab.0.left/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625497592708" />
-    <state width="1476" height="205" key="GridCell.Tab.0.right" timestamp="1625497592708">
+    <state width="1478" height="354" key="GridCell.Tab.0.left/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625501948108" />
+    <state width="1478" height="354" key="GridCell.Tab.0.right" timestamp="1625501948108">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1625273865679" />
-    <state width="1476" height="205" key="GridCell.Tab.0.right/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625497592708" />
+    <state width="1478" height="354" key="GridCell.Tab.0.right/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625501948108" />
     <state x="207" y="15" key="SettingsEditor" timestamp="1625319376164">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="184" y="13" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1625202072838" />
     <state x="207" y="15" key="SettingsEditor/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625319376164" />
-    <state x="322" y="73" width="686" height="751" key="find.popup" timestamp="1625496147059">
+    <state x="322" y="73" width="686" height="751" key="find.popup" timestamp="1625498929677">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="372" y="64" width="610" height="672" key="find.popup/0.0.1366.738@0.0.1366.738" timestamp="1625272978016" />
-    <state x="322" y="73" width="686" height="751" key="find.popup/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625496147059" />
+    <state x="322" y="73" width="686" height="751" key="find.popup/0.0.1536.824/-1366.86.1366.728@0.0.1536.824" timestamp="1625498929677" />
     <state x="390" y="66" width="756" height="758" key="search.everywhere.popup" timestamp="1625327560068">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

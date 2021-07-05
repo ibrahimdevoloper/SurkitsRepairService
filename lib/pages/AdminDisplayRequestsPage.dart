@@ -15,12 +15,10 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AdminDisplayRequestsPage extends StatelessWidget {
-  var _pageController = PagingController<int, Request>(firstPageKey: 0);
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminDisplayRequestsCubit>(
-      create: (context) => AdminDisplayRequestsCubit(_pageController),
+      create: (context) => AdminDisplayRequestsCubit(),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
             heroTag: null,
