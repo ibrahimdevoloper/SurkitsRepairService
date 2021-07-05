@@ -123,7 +123,8 @@ AlertDialog adminAssignRequestFilterDialog(BuildContext context) {
         child: Text("Cancel"),
       ),ElevatedButton(
         onPressed: () {
-          BlocProvider.of<AdminAssignRequestCubit>(context).getWorkers();
+          // BlocProvider.of<AdminAssignRequestCubit>(context).getWorkers();
+          BlocProvider.of<AdminAssignRequestCubit>(context).pagingController.refresh();
           Navigator.pop(context);
         },
         child: Text("Ok"),

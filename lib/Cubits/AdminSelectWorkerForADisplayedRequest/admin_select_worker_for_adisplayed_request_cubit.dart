@@ -39,7 +39,7 @@ class AdminSelectWorkerForAdisplayedRequestCubit
     // // print(pageNumber);
     List<UserData> workers = [];
     var elementNumberPerPage = 10;
-    // try {
+    try {
     if (pageNumber == 0) {
       // pagingController.refresh();
       if (_selectedCategory.isNotEmpty) {
@@ -150,11 +150,11 @@ class AdminSelectWorkerForAdisplayedRequestCubit
           _pagingController.appendPage(workers, pageNumber + workers.length);
       }
     }
-    // } catch (e) {
-    //   // TODO: handle Errors
-    //   _pagingController.error = e;
-    //   print(e);
-    // }
+    } catch (e) {
+      // TODO: handle Errors
+      _pagingController.error = e;
+      print(e);
+    }
   }
 
   // getWorkers() async {
