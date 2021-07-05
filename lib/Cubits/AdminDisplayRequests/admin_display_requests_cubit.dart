@@ -89,11 +89,14 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
         // });
         // lastDoc = usersQuery.docs.last;
         // return users;
-        print(requests.length < elementNumberPerPage);
-        if (requests.length < elementNumberPerPage)
-          _pagingController.appendLastPage(requests);
-        else
-          _pagingController.appendPage(requests, pageNumber + requests.length);
+
+        if (_pagingController.nextPageKey != null) {
+          if (requests.length < elementNumberPerPage)
+            _pagingController.appendLastPage(requests);
+          else
+            _pagingController.appendPage(
+                requests, pageNumber + requests.length);
+        }
       } else {
         // var usersQuery = await firestore
         //     .collection("users")
@@ -147,11 +150,13 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
             _lastDoc = null;
           // emit(AdminDisplayRequestsLoaded(_requests));
         }
-        print(requests.length < elementNumberPerPage);
-        if (requests.length < elementNumberPerPage)
-          _pagingController.appendLastPage(requests);
-        else
-          _pagingController.appendPage(requests, pageNumber + requests.length);
+        if (_pagingController.nextPageKey != null) {
+          if (requests.length < elementNumberPerPage)
+            _pagingController.appendLastPage(requests);
+          else
+            _pagingController.appendPage(
+                requests, pageNumber + requests.length);
+        }
       }
     } catch (e) {
       // TODO: handle Errors

@@ -6,28 +6,18 @@ import 'package:an_app/Functions/getLocation.dart';
 import 'package:an_app/Functions/myImagePicker.dart';
 import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
-import 'package:an_app/Widgets/CustomCardButton.dart';
-import 'package:an_app/Widgets/GoBackButton.dart';
 import 'package:an_app/Widgets/ImageBanner.dart';
 import 'package:an_app/Widgets/RecordWidget.dart';
 import 'package:an_app/models/TextPair.dart';
-import 'package:an_app/models/global.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_sound/public/flutter_sound_player.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:path_provider/path_provider.dart';
 
-import '../Cubits/RequestRepair/request_repair_cubit.dart';
-import '../Cubits/RequestRepair/request_repair_cubit.dart';
-import '../Cubits/RequestRepair/request_repair_cubit.dart';
 import '../Cubits/RequestRepair/request_repair_cubit.dart';
 // import '../global.dart';
 
@@ -122,19 +112,7 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                           _locationData.latitude, _locationData.longitude));
                       print("returnRequest:${request.recordPath}");
                       cubit.emit(RequestRepairLoaded());
-                      // cubit.submitRequest(GeoPoint(
-                      //     _locationData.latitude, _locationData.longitude));
-                      //   "requesterId": user.uid,
-                      // //TODO: Change this when category needed
-                      // "category": "Heating",
-                      // "requesterName": userData.fullName,
-                      // "requesterAddress": userData.address,
-                      // "requestText": requestText,
-                      // "appointmentDate": Timestamp.fromDate(_appointmentDate),
-                      // "appointmentMicrosecondsSinceEpoch":
-                      // _appointmentDate.microsecondsSinceEpoch,
-                      // "appointmentTimeZoneName": _appointmentDate.timeZoneName,
-                      // "location":geoPoint
+
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) =>
@@ -175,9 +153,9 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                     children: <Widget>[
                       BlocBuilder<RequestRepairCubit, RequestRepairState>(
                           buildWhen: (previous, current) {
-                            return current is RequestRepairInitial ||
-                                current is RequestRepairCategorySelected;
-                          }, builder: (context, state) {
+                        return current is RequestRepairInitial ||
+                            current is RequestRepairCategorySelected;
+                      }, builder: (context, state) {
                         return IntrinsicHeight(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -187,18 +165,16 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                 child: RadioListTile<String>(
                                   title: Text("Electrical"),
                                   onChanged: (value) {
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
+                                    BlocProvider.of<RequestRepairCubit>(context)
                                         .category = value;
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
-                                        .emit(
-                                        RequestRepairCategorySelected(
+                                    BlocProvider.of<RequestRepairCubit>(context)
+                                        .emit(RequestRepairCategorySelected(
                                             value));
                                   },
-                                  groupValue: BlocProvider.of<
-                                      RequestRepairCubit>(context)
-                                      .category,
+                                  groupValue:
+                                      BlocProvider.of<RequestRepairCubit>(
+                                              context)
+                                          .category,
                                   value: Request.CATEGORY_ELECTRICAL,
                                 ),
                               ),
@@ -206,18 +182,16 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                 child: RadioListTile<String>(
                                   title: Text("Pluming"),
                                   onChanged: (value) {
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
+                                    BlocProvider.of<RequestRepairCubit>(context)
                                         .category = value;
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
-                                        .emit(
-                                        RequestRepairCategorySelected(
+                                    BlocProvider.of<RequestRepairCubit>(context)
+                                        .emit(RequestRepairCategorySelected(
                                             value));
                                   },
-                                  groupValue: BlocProvider.of<
-                                      RequestRepairCubit>(context)
-                                      .category,
+                                  groupValue:
+                                      BlocProvider.of<RequestRepairCubit>(
+                                              context)
+                                          .category,
                                   value: Request.CATEGORY_PLUMING,
                                 ),
                               ),
@@ -227,9 +201,9 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                       }),
                       BlocBuilder<RequestRepairCubit, RequestRepairState>(
                           buildWhen: (previous, current) {
-                            return current is RequestRepairInitial ||
-                                current is RequestRepairCategorySelected;
-                          }, builder: (context, state) {
+                        return current is RequestRepairInitial ||
+                            current is RequestRepairCategorySelected;
+                      }, builder: (context, state) {
                         return IntrinsicHeight(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -239,18 +213,16 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                 child: RadioListTile<String>(
                                   title: Text("Heating"),
                                   onChanged: (value) {
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
+                                    BlocProvider.of<RequestRepairCubit>(context)
                                         .category = value;
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
-                                        .emit(
-                                        RequestRepairCategorySelected(
+                                    BlocProvider.of<RequestRepairCubit>(context)
+                                        .emit(RequestRepairCategorySelected(
                                             value));
                                   },
-                                  groupValue: BlocProvider.of<
-                                      RequestRepairCubit>(context)
-                                      .category,
+                                  groupValue:
+                                      BlocProvider.of<RequestRepairCubit>(
+                                              context)
+                                          .category,
                                   value: Request.CATEGORY_HEATING,
                                 ),
                               ),
@@ -259,18 +231,16 @@ class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
                                   title: Text("Electronics"),
                                   onChanged: (value) {
                                     print(value);
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
+                                    BlocProvider.of<RequestRepairCubit>(context)
                                         .category = value;
-                                    BlocProvider.of<RequestRepairCubit>(
-                                        context)
-                                        .emit(
-                                        RequestRepairCategorySelected(
+                                    BlocProvider.of<RequestRepairCubit>(context)
+                                        .emit(RequestRepairCategorySelected(
                                             value));
                                   },
-                                  groupValue: BlocProvider.of<
-                                      RequestRepairCubit>(context)
-                                      .category,
+                                  groupValue:
+                                      BlocProvider.of<RequestRepairCubit>(
+                                              context)
+                                          .category,
                                   value: Request.CATEGORY_ELECTRONICS,
                                 ),
                               ),

@@ -1,6 +1,3 @@
-import 'package:an_app/Functions/dateFormatter.dart';
-import 'package:an_app/UIValuesFolder/TextStyles.dart';
-import 'package:an_app/UIValuesFolder/blueColors.dart';
 import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/Widgets/WorkerItem.dart';
 import 'package:an_app/dialogs/AdminSelectWorkerFilterDialog.dart';
@@ -53,7 +50,6 @@ class _AdminSelectWorkerForADisplayedRequestPageState
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            //TODO: show filter dialog
                             showDialog(
                               context: context,
                               builder: (context1) => BlocProvider.value(
@@ -98,9 +94,6 @@ class _AdminSelectWorkerForADisplayedRequestPageState
                         return WorkerItem(
                             item: item,
                             onItemPressed: () {
-                              //TODO: assign to repairman
-                              // print("request:${widget.request}");
-                              // print("requestId:${widget.requestId}");
                               var cubit = BlocProvider.of<
                                       AdminSelectWorkerForAdisplayedRequestCubit>(
                                   context);
