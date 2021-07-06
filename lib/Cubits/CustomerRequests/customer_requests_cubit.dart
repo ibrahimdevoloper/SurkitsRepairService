@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/models/request.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -192,8 +193,9 @@ class CustomerRequestsCubit extends Cubit<CustomerRequestsState> {
         }
       }
     } catch (e) {
-      // TODO: handle Errors
       _pagingController.error = e;
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "CustomerRequestsCubit.getRequestsPage", message: e.toString());
     }
   }
 
@@ -255,7 +257,6 @@ class CustomerRequestsCubit extends Cubit<CustomerRequestsState> {
   //     //       _requests.add(Request.fromJson(element.data(), element.id));
   //     //     });
   //   } catch (e) {
-  //     //TODO: handle errors
   //     print("error: $e");
   //     emit(CustomerRequestsError());
   //   }

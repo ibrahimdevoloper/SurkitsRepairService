@@ -7,6 +7,7 @@ import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/dialogs/CustomerRequestFilterDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -25,8 +26,15 @@ class CustomerRequestsPage extends StatelessWidget {
   //   super.initState();
   // }
 
+
   @override
   Widget build(BuildContext context) {
+
+      FirebaseAnalytics().setCurrentScreen(
+          screenName: "CustomerRequestsPage",
+          screenClassOverride: "CustomerRequestsPage");
+
+
     return BlocProvider<CustomerRequestsCubit>(
       create: (context) => CustomerRequestsCubit(customerId),
       child: Scaffold(

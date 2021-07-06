@@ -14,6 +14,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
 import 'package:an_app/models/request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -40,7 +41,12 @@ class RequestRepairPage extends StatefulWidget {
 }
 
 class _RequestRepairPageState extends State<RequestRepairPage> {
-
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "RequestRepairPage",
+        screenClassOverride: "RequestRepairPage");
+    super.initState();
+  }
   var map = {
     Request.CATEGORY_ELECTRONICS:"الكترونيات",
     Request.CATEGORY_ELECTRICAL:"كهربائيات",

@@ -1,12 +1,14 @@
 import 'package:an_app/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 AlertDialog adminSelectWorkerFilterDialog(BuildContext context) {
-  // FirebaseAnalytics().setCurrentScreen(
-  //     screenName: "aboutCompanyDialog",
-  //     screenClassOverride: "aboutCompanyDialog");
+  FirebaseAnalytics().setCurrentScreen(
+      screenName: "adminSelectWorkerFilterDialog",
+      screenClassOverride: "adminSelectWorkerFilterDialog");
+
   return AlertDialog(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

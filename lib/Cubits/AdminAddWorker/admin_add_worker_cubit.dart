@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,7 +69,6 @@ class AdminAddWorkerCubit extends Cubit<AdminAddWorkerState> {
       print("email: $_email, password: $_password");
       emit(AdminAddWorkerLoaded());
     } on FirebaseAuthException catch (e) {
-      //TODO: State error
       // print(e.toString().contains("There is no user record corresponding to this identifier"));
       //Password should be at least 6 characters
       //The email address is already in use by another account.
@@ -92,6 +92,9 @@ class AdminAddWorkerCubit extends Cubit<AdminAddWorkerState> {
         emit(AdminAddWorkerError("Try Again Later", "جرب التسجيل لاحقاً"));
       } else
         emit(AdminAddWorkerError('error', 'خطأ'));
+
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminAddWorkerCubit.AdminAddWorker", message: e.toString());
     }
   }
 

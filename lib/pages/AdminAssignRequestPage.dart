@@ -11,6 +11,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/AdminWorkerAssignmentsCalenderPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -22,6 +23,12 @@ class AdminAssignRequestPage extends StatefulWidget {
 }
 
 class _AdminAssignRequestPageState extends State<AdminAssignRequestPage> {
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AdminAssignRequestPage",
+        screenClassOverride: "AdminAssignRequestPage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminAssignRequestCubit>(

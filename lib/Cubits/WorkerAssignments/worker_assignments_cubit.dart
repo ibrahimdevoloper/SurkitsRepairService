@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
@@ -49,7 +50,6 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
   }
 
   assignRequest(String requestId) async {
-    //TODO: check if available
     emit(WorkerAssignmentsLoading());
     var query =
         FirebaseFirestore.instance.collection('requests').doc(requestId);
@@ -157,8 +157,9 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
           _pagingController.appendPage(requests, pageNumber + requests.length);
       }
     } catch (e) {
-      // TODO: handle Errors
       _pagingController.error = e;
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "WorkerAssignmentsCubit.assignRequest", message: e.toString());
     }
   }
 
@@ -194,7 +195,6 @@ class WorkerAssignmentsCubit extends Cubit<WorkerAssignmentsState> {
   //     //       _requests.add(Request.fromJson(element.data(), element.id));
   //     //     });
   //   } catch (e) {
-  //     //TODO: handle errors
   //     print("error: $e");
   //     emit(WorkerAssignmentsError());
   //   }

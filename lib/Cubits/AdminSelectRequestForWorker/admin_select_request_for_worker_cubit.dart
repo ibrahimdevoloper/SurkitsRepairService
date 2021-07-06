@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
@@ -55,7 +56,6 @@ class AdminSelectRequestForWorkerCubit
     request.workerEmail = _worker.email;
     request.fcmTokenForWorker = _worker.fcmToken;
     query.update(request.toJson());
-    //TODO: send Notifications
     await sendNotificationMethod(
         title: "New Assignment|مهمة جديدة",
         text: "Press Here|أضغط هنا",
@@ -114,9 +114,10 @@ class AdminSelectRequestForWorkerCubit
       //       _requests.add(Request.fromJson(element.data(), element.id));
       //     });
     } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
+      // print("error: $e");
       emit(AdminSelectRequestForWorkerError());
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminSelectRequestForWorkerCubit.getRequests", message: e.toString());
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,10 @@ class AdminWorkerAssignmentsCalenderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      FirebaseAnalytics().setCurrentScreen(
+          screenName: "AdminWorkerAssignmentsCalenderPage",
+          screenClassOverride: "AdminWorkerAssignmentsCalenderPage");
+
     return BlocProvider<AdminWorkerAssignmentsCalenderCubit>(
       create: (context) => AdminWorkerAssignmentsCalenderCubit(_worker.uid),
       child: Scaffold(

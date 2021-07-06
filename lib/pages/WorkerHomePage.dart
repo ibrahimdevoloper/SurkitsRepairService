@@ -8,6 +8,7 @@ import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/CustomerRequestsPage.dart';
 import 'package:an_app/pages/WorkerAssignmentsPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,12 @@ class WorkerHomePage extends StatefulWidget {
 
 class _WorkerHomePageState extends State<WorkerHomePage> {
   bool pressed = false;
-
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "WorkerHomePage",
+        screenClassOverride: "WorkerHomePage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +11,6 @@ import 'package:meta/meta.dart';
 part 'admin_add_admin_state.dart';
 
 class AdminAddAdminCubit extends Cubit<AdminAddAdminState> {
-
-
   FirebaseAuth _firebaseAuth;
   FirebaseFirestore _firebaseFirestore;
   String _fullName = "";
@@ -28,7 +27,6 @@ class AdminAddAdminCubit extends Cubit<AdminAddAdminState> {
     _firebaseAuth = FirebaseAuth.instance;
     _firebaseFirestore = FirebaseFirestore.instance;
   }
-
 
   Future<String> AdminAddAdmin(// {String email, String password}
       ) async {
@@ -50,8 +48,7 @@ class AdminAddAdminCubit extends Cubit<AdminAddAdminState> {
       //   "endHour": Timestamp.fromDate(_endHour),
       //   "startHour": Timestamp.fromDate(_startHour)
       // };
-      UserData userData=
-      UserData(
+      UserData userData = UserData(
         uid: user.uid,
         fullName: _fullName,
         email: _email,
@@ -66,20 +63,22 @@ class AdminAddAdminCubit extends Cubit<AdminAddAdminState> {
       // print(Timestamp.fromDate(_startHour).toDate());
       // print(map);
 
-      await _firebaseFirestore.collection("users").doc(user.uid).set(userData.toJson());
+      await _firebaseFirestore
+          .collection("users")
+          .doc(user.uid)
+          .set(userData.toJson());
       print("email: $_email, password: $_password");
       emit(AdminAddAdminLoaded());
     } on FirebaseAuthException catch (e) {
-      //TODO: State error
       // print(e.toString().contains("There is no user record corresponding to this identifier"));
       //Password should be at least 6 characters
       //The email address is already in use by another account.
       //We have blocked all requests from this device due to unusual activity. Try again later.
-      print(e);
+      // print(e);
+
       if (e.toString().contains(
           "There is no user record corresponding to this identifier")) {
-        emit(
-            AdminAddAdminError("Account isn't Available", "الحساب غير موجود"));
+        emit(AdminAddAdminError("Account isn't Available", "الحساب غير موجود"));
       } else if (e
           .toString()
           .contains("Password should be at least 6 characters")) {
@@ -94,7 +93,11 @@ class AdminAddAdminCubit extends Cubit<AdminAddAdminState> {
         emit(AdminAddAdminError("Try Again Later", "جرب التسجيل لاحقاً"));
       } else
         emit(AdminAddAdminError('error', 'خطأ'));
+
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminAddAdminCubit.AdminAddAdmin", message: e.toString());
     }
+
   }
 
   bool validator() {

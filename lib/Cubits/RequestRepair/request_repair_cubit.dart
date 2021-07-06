@@ -27,7 +27,6 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
 
   String _category = "Electrical";
 
-  //TODO: set Appointment
   DateTime _appointmentDate;
 
   bool validator() {
@@ -65,7 +64,6 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     UserData userData = UserData.fromJson(userDoc.data());
     // Map<String, dynamic> map = {
     //   "requesterId": user.uid,
-    //   //TODO: Change this when category needed
     //   "category": _category,
     //   "requesterName": userData.fullName,
     //   "requesterAddress": userData.address,
@@ -127,7 +125,6 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     // print(pathMap);
     if (pathMap.isNotEmpty) await requestRef.update(request.toJson());
 
-    //TODO: send Notifications
     await sendNotificationMethod(
       title: "New Request|طلب جديد",
       text: "Press Here|أضغط هنا",
@@ -146,7 +143,6 @@ class RequestRepairCubit extends Cubit<RequestRepairState> {
     UserData userData = UserData.fromJson(userDoc.data());
     // Map<String, dynamic> map = {
     //   "requesterId": user.uid,
-    //   //TODO: Change this when category needed
     //   "category": _category,
     //   "requesterName": userData.fullName,
     //   "requesterAddress": userData.address,    //   "appointmentDate": Timestamp.fromDate(_appointmentDate),

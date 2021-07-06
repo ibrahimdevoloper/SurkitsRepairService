@@ -59,6 +59,7 @@ dependencies:
   chopper: ^4.0.1
   flutter_webview_plugin: ^0.4.0
   infinite_scroll_pagination: ^3.0.1+1
+  firebase_crashlytics: ^2.0.7
 
 dev_dependencies:
   flutter_test:

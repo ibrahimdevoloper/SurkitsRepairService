@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/Services/SendNotificationService/SendNotificationService.dart';
 import 'package:an_app/models/request.dart';
@@ -145,9 +146,10 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
       }
     }
     } catch (e) {
-      // TODO: handle Errors
       _pagingController.error = e;
-      print(e);
+      // print(e);
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminAssignRequestCubit.getWorkersPage", message: e.toString());
     }
   }
 
@@ -184,7 +186,6 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
   //       emit(AdminAssignRequestLoaded(_usersData));
   //     }
   //   } catch (e) {
-  //     //TODO: handle errors
   //     print("error: $e");
   //     emit(AdminAssignRequestError());
   //   }
@@ -209,7 +210,6 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
           .collection('requests')
           .doc(id)
           .update(map);
-      //TODO: send Notifications
 
       //send to the worker a notification
       await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
@@ -217,9 +217,10 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
 
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
+      // print("error: $e");
       emit(AdminAssignRequestError());
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminAssignRequestCubit.assignRequest", message: e.toString());
     }
   }
   //
@@ -235,7 +236,6 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
   //     "to": fcmToken
   //   };
   //   var response =await SendNotificationService.create().sendNotification(notificationMap);
-  //   //TODO: handle Errors
   //   print(response.body);
   // }
 
@@ -283,14 +283,14 @@ class AdminAssignRequestCubit extends Cubit<AdminAssignRequestState> {
         pathMap.addAll({"imagePath": ""});
 
       submitRef.doc(doc.id).update(pathMap);
-      //TODO: send Notifications
       await sendNotificationMethod(text: "Press Here|أضغط هنا",title: "New Assignment|طلب جديد",
           usersId: worker.uid);
       emit(AdminAssignRequestLoaded(_usersData));
     } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
+      // print("error: $e");
       emit(AdminAssignRequestError());
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminAssignRequestCubit.addRequest", message: e.toString());
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/global.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -17,6 +18,12 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "SignupPage",
+        screenClassOverride: "SignupPage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SignUpCubit>(

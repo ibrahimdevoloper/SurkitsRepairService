@@ -9,14 +9,19 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/pages/AdminRequestRepairPage.dart';
 import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class AdminDisplayRequestsPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+      FirebaseAnalytics().setCurrentScreen(
+          screenName: "AdminDisplayRequestsPage",
+          screenClassOverride: "AdminDisplayRequestsPage");
     return BlocProvider<AdminDisplayRequestsCubit>(
       create: (context) => AdminDisplayRequestsCubit(),
       child: Scaffold(

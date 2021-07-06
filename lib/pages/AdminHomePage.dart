@@ -9,6 +9,7 @@ import 'package:an_app/pages/AdminAddAdminPage.dart';
 import 'package:an_app/pages/AdminAddWorkerPage.dart';
 import 'package:an_app/pages/AdminAssignRequestPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,12 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   bool pressed = false;
-
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AdminHomePage",
+        screenClassOverride: "AdminHomePage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

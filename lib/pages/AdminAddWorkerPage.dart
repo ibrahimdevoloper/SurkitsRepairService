@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/BlueGradientAppBar.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -16,6 +17,13 @@ class AdminAddWorkerPage extends StatefulWidget {
 }
 
 class _AdminAddWorkerPageState extends State<AdminAddWorkerPage> {
+  @override
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AdminAddWorkerPage",
+        screenClassOverride: "AdminAddWorkerPage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminAddWorkerCubit>(

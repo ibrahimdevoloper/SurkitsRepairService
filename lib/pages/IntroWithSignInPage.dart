@@ -7,6 +7,7 @@ import 'package:an_app/pages/ResetPasswordRequestPage.dart';
 import 'package:an_app/pages/SignupPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -15,10 +16,12 @@ import 'package:provider/provider.dart';
 class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "IntroPage", screenClassOverride: "IntroPage");
     return BlocProvider<IntroWithSignInCubit>(
       create: (context) => IntroWithSignInCubit(),
       child: Scaffold(
-        resizeToAvoidBottomInset:  false,
+        resizeToAvoidBottomInset: false,
         body: BlocConsumer<IntroWithSignInCubit, IntroWithSignInState>(
             // bloc: BlocProvider.of<IntroWithSignInCubit>(context),
             listenWhen: (previous, current) {

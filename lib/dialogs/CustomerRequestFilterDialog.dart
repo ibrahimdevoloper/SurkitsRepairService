@@ -1,12 +1,13 @@
 import 'package:an_app/Cubits/CustomerRequests/customer_requests_cubit.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 AlertDialog customerRequestFilterDialog(BuildContext context) {
-  // FirebaseAnalytics().setCurrentScreen(
-  //     screenName: "aboutCompanyDialog",
-  //     screenClassOverride: "aboutCompanyDialog");
+  FirebaseAnalytics().setCurrentScreen(
+      screenName: "customerRequestFilterDialog",
+      screenClassOverride: "customerRequestFilterDialog");
   return AlertDialog(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

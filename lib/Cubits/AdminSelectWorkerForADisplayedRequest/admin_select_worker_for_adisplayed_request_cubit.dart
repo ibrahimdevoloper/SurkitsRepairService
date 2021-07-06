@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/Functions/sendNotificationMethod.dart';
 import 'package:an_app/models/request.dart';
 import 'package:bloc/bloc.dart';
@@ -151,10 +152,12 @@ class AdminSelectWorkerForAdisplayedRequestCubit
       }
     }
     } catch (e) {
-      // TODO: handle Errors
       _pagingController.error = e;
-      print(e);
+      // print(e);
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminSelectWorkerForAdisplayedRequestCubit.getWorkersPage", message: e.toString());
     }
+
   }
 
   // getWorkers() async {
@@ -190,7 +193,6 @@ class AdminSelectWorkerForAdisplayedRequestCubit
   //       emit(AdminSelectWorkerForAdisplayedRequestLoaded(_usersData));
   //     }
   //   } catch (e) {
-  //     //TODO: handle errors
   //     print("error: $e");
   //     emit(AdminSelectWorkerForAdisplayedRequestError());
   //   }
@@ -222,8 +224,9 @@ class AdminSelectWorkerForAdisplayedRequestCubit
           usersId: worker.uid);
       emit(AdminSelectWorkerForAdisplayedRequestLoaded());
     } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
+      // print("error: $e");
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminSelectWorkerForAdisplayedRequestCubit.assignRequest", message: e.toString());
       emit(AdminSelectWorkerForAdisplayedRequestError());
     }
   }
@@ -273,7 +276,6 @@ class AdminSelectWorkerForAdisplayedRequestCubit
 
       submitRef.doc(doc.id).update(pathMap);
 
-      //TODO: send Notifications
       await sendNotificationMethod(
         title: "New Request|طلب جديد",
         text: "Press Here|أضغط هنا",
@@ -282,8 +284,9 @@ class AdminSelectWorkerForAdisplayedRequestCubit
 
       emit(AdminSelectWorkerForAdisplayedRequestLoaded());
     } catch (e) {
-      //TODO: handle errors
-      print("error: $e");
+      // print("error: $e");
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminSelectWorkerForAdisplayedRequestCubit.addRequest", message: e.toString());
       emit(AdminSelectWorkerForAdisplayedRequestError());
     }
   }

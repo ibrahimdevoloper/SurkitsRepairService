@@ -5,6 +5,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:an_app/pages/CustomerRequestsPage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,13 @@ class CustomerHomePage extends StatefulWidget {
 
 class _CustomerHomePageState extends State<CustomerHomePage> {
   bool pressed = false;
+
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "CustomerHomePage",
+        screenClassOverride: "CustomerHomePage");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/models/request.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -159,8 +160,9 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
         }
       }
     } catch (e) {
-      // TODO: handle Errors
       _pagingController.error = e;
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "AdminDisplayRequestsCubit.getRequestsPage", message: e.toString());
     }
   }
 
@@ -203,7 +205,6 @@ class AdminDisplayRequestsCubit extends Cubit<AdminDisplayRequestsState> {
   //     emit(AdminDisplayRequestsLoaded(_requests));
   //   }
   //   } catch (e) {
-  //     //TODO: handle errors
   //     print("error: $e");
   //     emit(AdminDisplayRequestsError());
   //   }

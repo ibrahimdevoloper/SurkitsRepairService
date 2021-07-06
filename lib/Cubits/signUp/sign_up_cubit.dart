@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:an_app/Functions/FirebaseCrashlyticsLog.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +26,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     _firebaseFirestore = FirebaseFirestore.instance;
   }
 
-  //TODO: Set up Validator
 
   Future<String> SignUp(SharedPreferences pref) async {
     emit(SignUpLoading());
@@ -53,12 +53,13 @@ class SignUpCubit extends Cubit<SignUpState> {
       pref.setString(UserData.FULL_NAME, userData.fullName);
       emit(SignUpSignedIn());
     } on FirebaseAuthException catch (e) {
-      //TODO: State error
       // print(e.toString().contains("There is no user record corresponding to this identifier"));
       //Password should be at least 6 characters
       //The email address is already in use by another account.
       //We have blocked all requests from this device due to unusual activity. Try again later.
-      print(e);
+      // print(e);
+      firebaseCrashLog(e, e.stackTrace,
+          tag: "SignUpCubit.SignUp", message: e.toString());
       if (e.toString().contains(
           "There is no user record corresponding to this identifier")) {
         emit(SignUpError("Account isn't Available", "الحساب غير موجود"));

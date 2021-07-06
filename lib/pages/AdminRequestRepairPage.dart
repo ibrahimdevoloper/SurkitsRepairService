@@ -12,6 +12,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/pages/AdminSelectWorkerForADisplayedRequestPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -31,6 +32,12 @@ class AdminRequestRepairPage extends StatefulWidget {
 }
 
 class _AdminRequestRepairPageState extends State<AdminRequestRepairPage> {
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AdminRequestRepairPage",
+        screenClassOverride: "AdminRequestRepairPage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RequestRepairCubit>(

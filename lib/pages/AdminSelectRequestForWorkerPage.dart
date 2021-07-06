@@ -6,6 +6,7 @@ import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
 import 'package:an_app/models/user_data.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -29,6 +30,9 @@ class AdminSelectRequestForWorkerPage extends StatelessWidget {
   //Does not need pagenation
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "AdminSelectRequestForWorkerPage",
+        screenClassOverride: "AdminSelectRequestForWorkerPage");
     return BlocProvider<AdminSelectRequestForWorkerCubit>(
       create: (context) => AdminSelectRequestForWorkerCubit(
           _selectedDate, _assignedRequests, _worker),

@@ -103,7 +103,6 @@ class IntroWithSignInCubit extends Cubit<IntroWithSignInState> {
 //
 //   }
 //   on FirebaseAuthException catch (e) {
-//     //TODO: State error
 //   }
 // }
 

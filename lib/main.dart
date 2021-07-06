@@ -10,8 +10,11 @@ import 'package:an_app/pages/IntroWithSignInPage.dart';
 import 'package:an_app/pages/WorkerHomePage.dart';
 import 'package:an_app/providers/SharedPreferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +46,14 @@ class MyApp extends StatelessWidget {
                 print(snapshot.data[1]);
                 SharedPreferences myPref = snapshot.data[1];
                 provider.pref = myPref;
-
+                FirebaseCrashlytics.instance
+                    .setCrashlyticsCollectionEnabled(true);
                 return MaterialApp(
                   title: 'AN App',
                   debugShowCheckedModeBanner: false,
+                  navigatorObservers: [
+                    FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+                  ],
                   routes: <String, WidgetBuilder>{
                     // '/signupScreen': (BuildContext context) => new SignupPage(),
                     // '/firstScreen': (BuildContext context) => new HomePage(),
@@ -69,10 +76,9 @@ class MyApp extends StatelessWidget {
                                 controller: controller,
                                 boxShadows: [
                                   BoxShadow(
-                                    color: Colors.black87,
-                                    blurRadius: 6,
-                                    offset: Offset(1,3)
-                                  )
+                                      color: Colors.black87,
+                                      blurRadius: 6,
+                                      offset: Offset(1, 3))
                                 ],
                                 // backgroundGradient: LinearGradient(
                                 //   colors: [leftColor, rightColor],
@@ -85,21 +91,30 @@ class MyApp extends StatelessWidget {
 
                                 // Allow dismissal by dragging to the side (and specify direction).
                                 horizontalDismissDirection:
-                                HorizontalDismissDirection.startToEnd,
+                                    HorizontalDismissDirection.startToEnd,
                                 margin: const EdgeInsets.all(8),
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
+                                    const BorderRadius.all(Radius.circular(8)),
                                 // Make the animation lively by experimenting with different curves.
                                 forwardAnimationCurve: Curves.easeOutBack,
                                 reverseAnimationCurve: Curves.slowMiddle,
                                 // While it's possible to use any widget you like as the child,
                                 // the FlashBar widget looks good without any effort on your side.
                                 child: FlashBar(
-                                  title:
-                                  Row(
+                                  title: Row(
                                     children: [
-                                      Text("New Message", style: Theme.of(context).textTheme.headline6,),
-                                      Text("رسالة جديدة", style: Theme.of(context).textTheme.headline6,),
+                                      Text(
+                                        "New Message",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                      Text(
+                                        "رسالة جديدة",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
                                     ],
                                   ),
                                   // content: Row(
@@ -128,8 +143,9 @@ class MyApp extends StatelessWidget {
                         if (user == null)
                           return IntroPage();
                         else if (provider.pref.containsKey(UserData.ROLE)) {
-
-                          if (provider.pref.getString(UserData.ROLE).isNotEmpty) {
+                          if (provider.pref
+                              .getString(UserData.ROLE)
+                              .isNotEmpty) {
                             registeringFCMTokenByPref(provider);
                             if (provider.pref
                                     .getString(UserData.ROLE)
@@ -160,7 +176,7 @@ class MyApp extends StatelessWidget {
                                 );
                                 break;
                             }
-                          }else{
+                          } else {
                             return FutureBuilder<DocumentSnapshot>(
                                 future: FirebaseFirestore.instance
                                     .collection('users')
@@ -170,19 +186,21 @@ class MyApp extends StatelessWidget {
                                   if (snapshot.connectionState ==
                                       ConnectionState.done) {
                                     if (snapshot.hasData) {
-                                      UserData userData =
-                                      UserData.fromJson(snapshot.data.data());
+                                      UserData userData = UserData.fromJson(
+                                          snapshot.data.data());
 
                                       provider.pref.setString(
                                           UserData.ROLE, userData.role);
                                       provider.pref.setString(
-                                          UserData.FULL_NAME, userData.fullName);
-                                      provider.pref
-                                          .setString(UserData.UID, userData.uid);
+                                          UserData.FULL_NAME,
+                                          userData.fullName);
+                                      provider.pref.setString(
+                                          UserData.UID, userData.uid);
                                       // print(provider.pref.get(userData.role));
-                                      registeringFCMTokenByUserData(userData.uid);
+                                      registeringFCMTokenByUserData(
+                                          userData.uid);
                                       if (userData.role
-                                          .compareTo(UserData.ROLE_ADMIN) ==
+                                              .compareTo(UserData.ROLE_ADMIN) ==
                                           0) {
                                         FirebaseMessaging.instance
                                             .subscribeToTopic("admin");

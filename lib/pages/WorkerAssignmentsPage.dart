@@ -7,6 +7,7 @@ import 'package:an_app/Widgets/RequestListItem.dart';
 import 'package:an_app/dialogs/WorkerDidYouCompleteThisAssignmentDialog.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -20,6 +21,10 @@ class WorkerAssignmentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      FirebaseAnalytics().setCurrentScreen(
+          screenName: "WorkerAssignmentsPage",
+          screenClassOverride: "WorkerAssignmentsPage");
+
     return BlocProvider<WorkerAssignmentsCubit>(
       create: (context) => WorkerAssignmentsCubit(pref),
       child: Scaffold(

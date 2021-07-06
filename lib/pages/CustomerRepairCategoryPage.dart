@@ -5,6 +5,7 @@ import 'package:an_app/Widgets/CustomCardButton.dart';
 import 'package:an_app/Widgets/GoBackButton.dart';
 import 'package:an_app/models/TextPair.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'CustomerRequestRepairPage.dart';
 
@@ -14,6 +15,12 @@ class CustomerRepairCategoryPage extends StatefulWidget {
 }
 
 class _CustomerRepairCategoryPageState extends State<CustomerRepairCategoryPage> {
+  void initState() {
+    FirebaseAnalytics().setCurrentScreen(
+        screenName: "CustomerRepairCategoryPage",
+        screenClassOverride: "CustomerRepairCategoryPage");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

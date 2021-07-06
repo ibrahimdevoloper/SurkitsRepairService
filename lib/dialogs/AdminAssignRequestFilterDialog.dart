@@ -2,13 +2,15 @@ import 'package:an_app/Cubits/AdminAssignRequest/admin_assign_request_cubit.dart
 import 'package:an_app/Cubits/AdminDisplayRequests/admin_display_requests_cubit.dart';
 import 'package:an_app/Cubits/AdminSelectWorkerForADisplayedRequest/admin_select_worker_for_adisplayed_request_cubit.dart';
 import 'package:an_app/models/request.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 AlertDialog adminAssignRequestFilterDialog(BuildContext context) {
-  // FirebaseAnalytics().setCurrentScreen(
-  //     screenName: "aboutCompanyDialog",
-  //     screenClassOverride: "aboutCompanyDialog");
+
+  FirebaseAnalytics().setCurrentScreen(
+      screenName: "adminAssignRequestFilterDialog",
+      screenClassOverride: "adminAssignRequestFilterDialog");
   return AlertDialog(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
