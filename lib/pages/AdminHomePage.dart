@@ -42,7 +42,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
               FirebaseAuth.instance.signOut();
             },
           );
-        }
+        },
+          child: Icon(Icons.logout),
       ),
       body: Column(
         children: <Widget>[
@@ -77,7 +78,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       icon: Icons.group,
                       onPressed: () {
                         print("true");
-                        //TODO: go to assign requests page
                         Navigator.push(
                           context,
                           MaterialPageRoute(

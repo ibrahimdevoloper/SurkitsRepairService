@@ -39,6 +39,7 @@ class _CustomerHomePageState extends State<CustomerHomePage> {
             provider.pref.setString(UserData.ROLE, "");
             FirebaseAuth.instance.signOut();
           },
+          child: Icon(Icons.logout),
         );
       }),
       body: Column(

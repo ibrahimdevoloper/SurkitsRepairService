@@ -40,7 +40,8 @@ class _WorkerHomePageState extends State<WorkerHomePage> {
                 FirebaseAuth.instance.signOut();
               },
             );
-          }
+          },
+        child: Icon(Icons.logout),
       ),
       body: Column(
         children: <Widget>[
